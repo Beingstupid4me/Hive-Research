@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Hive | The Risk Desk - HRP Visualization</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@300;400;500;600;700&amp;family=Inter:wght@300;400;500;600;700&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#ec5b13",
+                        "growth": "#00f5ff",
+                        "risk": "#bc00ff",
+                        "background-light": "#f8f6f6",
+                        "background-dark": "#221610",
+                        "slate-custom": "#64748b",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "Public Sans", "sans-serif"],
+                        "mono": ["JetBrains Mono", "monospace"]
+                    },
+                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<style>
+        body { font-family: 'Inter', sans-serif; }
+        .mono-data { font-family: 'JetBrains Mono', monospace; }
+        .dendrogram-line { stroke: #cbd5e1; stroke-width: 1.5; fill: none; }
+        .glass-panel { background: rgba(255, 255, 255, 0.7); backdrop-filter: blur(10px); border: 1px solid rgba(203, 213, 225, 0.5); }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 transition-colors duration-200">
+<div class="flex h-screen overflow-hidden">
+<!-- Sidebar Navigation -->
+<aside class="w-64 border-r border-slate-200 dark:border-slate-800 bg-white dark:bg-background-dark flex flex-col shrink-0">
+<div class="p-6 flex items-center gap-3">
+<div class="size-10 rounded-xl bg-primary flex items-center justify-center text-white">
+<span class="material-symbols-outlined">hive</span>
+</div>
+<div>
+<h1 class="font-display font-bold text-lg leading-none">Hive</h1>
+<p class="text-xs text-slate-custom font-medium uppercase tracking-wider">The Risk Desk</p>
+</div>
+</div>
+<nav class="flex-1 px-4 space-y-1 mt-4">
+<a class="flex items-center gap-3 px-3 py-2 text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg transition-colors group" href="#">
+<span class="material-symbols-outlined text-xl group-hover:text-primary">dashboard</span>
+<span class="text-sm font-medium">Dashboard</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 bg-primary/10 text-primary rounded-lg transition-colors" href="#">
+<span class="material-symbols-outlined text-xl">analytics</span>
+<span class="text-sm font-semibold">Risk Desk</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg transition-colors group" href="#">
+<span class="material-symbols-outlined text-xl group-hover:text-primary">hub</span>
+<span class="text-sm font-medium">Correlations</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg transition-colors group" href="#">
+<span class="material-symbols-outlined text-xl group-hover:text-primary">business_center</span>
+<span class="text-sm font-medium">Portfolio</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg transition-colors group" href="#">
+<span class="material-symbols-outlined text-xl group-hover:text-primary">settings</span>
+<span class="text-sm font-medium">Settings</span>
+</a>
+</nav>
+<div class="p-4 border-t border-slate-200 dark:border-slate-800">
+<button class="w-full bg-primary hover:bg-primary/90 text-white font-bold py-2.5 rounded-xl transition-all shadow-sm flex items-center justify-center gap-2">
+<span class="material-symbols-outlined text-sm">add_chart</span>
+<span>New Analysis</span>
+</button>
+</div>
+</aside>
+<!-- Main Content Area -->
+<main class="flex-1 flex flex-col overflow-y-auto">
+<!-- Header -->
+<header class="h-16 border-b border-slate-200 dark:border-slate-800 bg-white/80 dark:bg-background-dark/80 backdrop-blur flex items-center justify-between px-8 sticky top-0 z-10">
+<div class="flex items-center gap-4">
+<h2 class="font-display font-semibold text-slate-800 dark:text-slate-200">Risk Desk / <span class="text-primary">Hierarchical Risk Parity</span></h2>
+<nav class="hidden md:flex gap-6 ml-8">
+<a class="text-sm font-medium border-b-2 border-primary pb-5 mt-5" href="#">HRP Model</a>
+<a class="text-sm font-medium text-slate-500 hover:text-slate-800 dark:hover:text-slate-200 pb-5 mt-5 border-b-2 border-transparent" href="#">Backtest</a>
+<a class="text-sm font-medium text-slate-500 hover:text-slate-800 dark:hover:text-slate-200 pb-5 mt-5 border-b-2 border-transparent" href="#">Optimize</a>
+</nav>
+</div>
+<div class="flex items-center gap-4">
+<div class="relative">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-lg">search</span>
+<input class="pl-10 pr-4 py-2 bg-slate-100 dark:bg-slate-800 border-none rounded-xl text-sm w-64 focus:ring-1 focus:ring-primary/50" placeholder="Search assets..." type="text"/>
+</div>
+<button class="size-10 rounded-xl bg-slate-100 dark:bg-slate-800 flex items-center justify-center text-slate-600 dark:text-slate-400">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<div class="size-10 rounded-full bg-slate-200 dark:bg-slate-700 overflow-hidden border border-slate-300 dark:border-slate-600">
+<img class="w-full h-full object-cover" data-alt="User profile avatar portrait" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBjYU-C1KWZqVJ00UtCAL2vMZdoh3KHoOqzfD5MkArDuZeJpfqt1fzcb2AQjT_zcEcLR-Ete2_n05E8mWIwsdB9ckylWyb7zcaid0HQcNTwV-2weXktU1MKIxq1LV6pw0J9M32SVQ7HydNZ6kcY5UpK5khKwCFkcbMlDSWtRtpFN7xnYvF1gvViPS6FKOUVXCk8RF8zzK5Paexmn3q2981Wxa-_v1T-v6l35-Dg4wPHxCVqW_JV5EanHmIMBclag20Oei6B08qTMdo"/>
+</div>
+</div>
+</header>
+<div class="p-8 space-y-8">
+<!-- Page Title & Controls -->
+<div class="flex justify-between items-end">
+<div>
+<h1 class="text-3xl font-bold tracking-tight text-slate-900 dark:text-slate-50">HRP Visualization</h1>
+<p class="text-slate-500 dark:text-slate-400 mt-1">Asset clustering and risk-equal weight allocation based on correlation dendrograms.</p>
+</div>
+<div class="flex gap-3">
+<button class="px-4 py-2 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg text-sm font-medium hover:bg-slate-50 transition-colors flex items-center gap-2">
+<span class="material-symbols-outlined text-sm">download</span> Export PDF
+                        </button>
+<button class="px-4 py-2 bg-slate-900 dark:bg-slate-100 text-white dark:text-slate-900 rounded-lg text-sm font-semibold hover:opacity-90 transition-opacity flex items-center gap-2">
+<span class="material-symbols-outlined text-sm">refresh</span> Rebalance
+                        </button>
+</div>
+</div>
+<!-- Main Visualization Grid -->
+<div class="grid grid-cols-12 gap-6">
+<!-- Dendrogram Section -->
+<div class="col-span-12 lg:col-span-8 glass-panel rounded-xl p-6 shadow-sm">
+<div class="flex items-center justify-between mb-8">
+<h3 class="font-bold text-slate-800 dark:text-slate-200 flex items-center gap-2">
+<span class="material-symbols-outlined text-risk">account_tree</span>
+                                Asset Correlation Dendrogram
+                            </h3>
+<div class="flex gap-2 text-[10px] uppercase font-bold tracking-widest text-slate-400">
+<span class="flex items-center gap-1"><i class="w-2 h-2 rounded-full bg-growth"></i> Low Risk</span>
+<span class="flex items-center gap-1"><i class="w-2 h-2 rounded-full bg-risk"></i> High Risk</span>
+</div>
+</div>
+<!-- Dendrogram Placeholder UI -->
+<div class="h-96 w-full relative border-l border-b border-slate-100 dark:border-slate-800 flex items-end justify-center px-4">
+<svg class="w-full h-full" viewbox="0 0 800 400">
+<!-- Dendrogram Connections -->
+<path class="dendrogram-line" d="M 100 350 L 100 200 L 300 200 L 300 350"></path>
+<path class="dendrogram-line" d="M 500 350 L 500 150 L 700 150 L 700 350"></path>
+<path class="dendrogram-line" d="M 200 200 L 200 100 L 600 100 L 600 150"></path>
+<!-- Asset Nodes -->
+<g class="assets">
+<circle class="fill-growth" cx="100" cy="350" r="5"></circle>
+<circle class="fill-growth" cx="300" cy="350" r="5"></circle>
+<circle class="fill-risk" cx="500" cy="350" r="5"></circle>
+<circle class="fill-risk" cx="700" cy="350" r="5"></circle>
+<text class="text-[10px] font-mono fill-slate-400" text-anchor="middle" x="100" y="380">BTC</text>
+<text class="text-[10px] font-mono fill-slate-400" text-anchor="middle" x="300" y="380">ETH</text>
+<text class="text-[10px] font-mono fill-slate-400" text-anchor="middle" x="500" y="380">SPY</text>
+<text class="text-[10px] font-mono fill-slate-400" text-anchor="middle" x="700" y="380">GLD</text>
+</g>
+</svg>
+<div class="absolute inset-0 bg-gradient-to-t from-background-light/20 to-transparent pointer-events-none"></div>
+</div>
+</div>
+<!-- Risk Profile Stats -->
+<div class="col-span-12 lg:col-span-4 space-y-6">
+<div class="glass-panel rounded-xl p-6 shadow-sm">
+<h3 class="font-bold text-slate-800 dark:text-slate-200 mb-4 flex items-center gap-2">
+<span class="material-symbols-outlined text-growth">speed</span>
+                                Cluster Statistics
+                            </h3>
+<div class="space-y-4">
+<div class="flex justify-between items-center p-3 rounded-lg bg-slate-50 dark:bg-slate-800/50">
+<span class="text-sm text-slate-500">Total Clusters</span>
+<span class="mono-data font-bold">04</span>
+</div>
+<div class="flex justify-between items-center p-3 rounded-lg bg-slate-50 dark:bg-slate-800/50">
+<span class="text-sm text-slate-500">Inter-Cluster Corr</span>
+<span class="mono-data font-bold text-growth">0.12</span>
+</div>
+<div class="flex justify-between items-center p-3 rounded-lg bg-slate-50 dark:bg-slate-800/50">
+<span class="text-sm text-slate-500">Intra-Cluster Corr</span>
+<span class="mono-data font-bold text-risk">0.84</span>
+</div>
+</div>
+</div>
+<div class="bg-slate-900 dark:bg-slate-100 rounded-xl p-6 text-white dark:text-slate-900 shadow-lg relative overflow-hidden">
+<div class="relative z-10">
+<p class="text-xs font-bold uppercase tracking-widest opacity-60 mb-1">Expected Volatility</p>
+<div class="flex items-baseline gap-2">
+<span class="text-4xl font-mono font-bold tracking-tighter">14.2%</span>
+<span class="text-growth text-sm font-bold">↓ 2.4%</span>
+</div>
+<p class="text-xs mt-4 opacity-70">Based on HRP optimal weights across 12 asset classes.</p>
+</div>
+<!-- Abstract decoration -->
+<div class="absolute -right-4 -bottom-4 size-32 bg-primary/20 rounded-full blur-3xl"></div>
+</div>
+</div>
+<!-- Risk-equal Weight Allocation Bar -->
+<div class="col-span-12 glass-panel rounded-xl p-6 shadow-sm">
+<div class="flex items-center justify-between mb-6">
+<h3 class="font-bold text-slate-800 dark:text-slate-200 flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">equalizer</span>
+                                Risk-equal Weight Allocation
+                            </h3>
+<div class="text-xs font-mono text-slate-400">Sum = 100.00%</div>
+</div>
+<div class="w-full flex h-16 rounded-xl overflow-hidden shadow-inner">
+<div class="h-full bg-slate-800 dark:bg-slate-200 flex items-center justify-center transition-all hover:brightness-110" style="width: 28%">
+<span class="text-[10px] font-mono font-bold text-white dark:text-slate-800">BTC 28%</span>
+</div>
+<div class="h-full bg-primary flex items-center justify-center transition-all hover:brightness-110" style="width: 22%">
+<span class="text-[10px] font-mono font-bold text-white">ETH 22%</span>
+</div>
+<div class="h-full bg-growth flex items-center justify-center transition-all hover:brightness-110" style="width: 15%">
+<span class="text-[10px] font-mono font-bold text-slate-900">SPY 15%</span>
+</div>
+<div class="h-full bg-risk flex items-center justify-center transition-all hover:brightness-110" style="width: 20%">
+<span class="text-[10px] font-mono font-bold text-white">GLD 20%</span>
+</div>
+<div class="h-full bg-slate-300 dark:bg-slate-700 flex items-center justify-center transition-all hover:brightness-110" style="width: 15%">
+<span class="text-[10px] font-mono font-bold text-slate-600 dark:text-slate-400">CASH 15%</span>
+</div>
+</div>
+<div class="grid grid-cols-2 md:grid-cols-5 gap-4 mt-8">
+<div class="p-3 border border-slate-100 dark:border-slate-800 rounded-lg">
+<p class="text-[10px] text-slate-400 uppercase font-bold mb-1">Concentration</p>
+<p class="mono-data text-lg font-bold">Low</p>
+</div>
+<div class="p-3 border border-slate-100 dark:border-slate-800 rounded-lg">
+<p class="text-[10px] text-slate-400 uppercase font-bold mb-1">Diversification</p>
+<p class="mono-data text-lg font-bold">0.89</p>
+</div>
+<div class="p-3 border border-slate-100 dark:border-slate-800 rounded-lg">
+<p class="text-[10px] text-slate-400 uppercase font-bold mb-1">Marginal Risk</p>
+<p class="mono-data text-lg font-bold text-growth">1.2%</p>
+</div>
+<div class="p-3 border border-slate-100 dark:border-slate-800 rounded-lg">
+<p class="text-[10px] text-slate-400 uppercase font-bold mb-1">Tail Beta</p>
+<p class="mono-data text-lg font-bold">0.45</p>
+</div>
+<div class="p-3 border border-slate-100 dark:border-slate-800 rounded-lg">
+<p class="text-[10px] text-slate-400 uppercase font-bold mb-1">Sharpe Est.</p>
+<p class="mono-data text-lg font-bold text-primary">2.1</p>
+</div>
+</div>
+</div>
+<!-- Asset Details Table -->
+<div class="col-span-12 glass-panel rounded-xl overflow-hidden shadow-sm">
+<table class="w-full text-left">
+<thead class="bg-slate-50 dark:bg-slate-800/50 border-b border-slate-200 dark:border-slate-700">
+<tr>
+<th class="px-6 py-4 text-xs font-bold text-slate-500 uppercase">Asset Identifier</th>
+<th class="px-6 py-4 text-xs font-bold text-slate-500 uppercase">Weight</th>
+<th class="px-6 py-4 text-xs font-bold text-slate-500 uppercase">Risk Contribution</th>
+<th class="px-6 py-4 text-xs font-bold text-slate-500 uppercase">Clustering Index</th>
+<th class="px-6 py-4 text-xs font-bold text-slate-500 uppercase text-right">Status</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-slate-100 dark:divide-slate-800">
+<tr class="hover:bg-slate-50/50 dark:hover:bg-slate-800/30 transition-colors">
+<td class="px-6 py-4">
+<div class="flex items-center gap-3">
+<div class="size-8 rounded bg-slate-800 text-white flex items-center justify-center font-mono text-[10px]">BTC</div>
+<span class="font-semibold text-sm">Bitcoin / USD</span>
+</div>
+</td>
+<td class="px-6 py-4 font-mono text-sm">28.00%</td>
+<td class="px-6 py-4">
+<div class="w-24 h-1.5 bg-slate-100 dark:bg-slate-700 rounded-full overflow-hidden">
+<div class="h-full bg-risk" style="width: 45%"></div>
+</div>
+</td>
+<td class="px-6 py-4 font-mono text-sm">0.92</td>
+<td class="px-6 py-4 text-right">
+<span class="px-2 py-1 rounded-full bg-growth/10 text-growth text-[10px] font-bold uppercase">Optimal</span>
+</td>
+</tr>
+<tr class="hover:bg-slate-50/50 dark:hover:bg-slate-800/30 transition-colors">
+<td class="px-6 py-4">
+<div class="flex items-center gap-3">
+<div class="size-8 rounded bg-primary text-white flex items-center justify-center font-mono text-[10px]">ETH</div>
+<span class="font-semibold text-sm">Ethereum / USD</span>
+</div>
+</td>
+<td class="px-6 py-4 font-mono text-sm">22.00%</td>
+<td class="px-6 py-4">
+<div class="w-24 h-1.5 bg-slate-100 dark:bg-slate-700 rounded-full overflow-hidden">
+<div class="h-full bg-risk" style="width: 38%"></div>
+</div>
+</td>
+<td class="px-6 py-4 font-mono text-sm">0.88</td>
+<td class="px-6 py-4 text-right">
+<span class="px-2 py-1 rounded-full bg-growth/10 text-growth text-[10px] font-bold uppercase">Optimal</span>
+</td>
+</tr>
+<tr class="hover:bg-slate-50/50 dark:hover:bg-slate-800/30 transition-colors">
+<td class="px-6 py-4">
+<div class="flex items-center gap-3">
+<div class="size-8 rounded bg-growth text-slate-900 flex items-center justify-center font-mono text-[10px]">SPY</div>
+<span class="font-semibold text-sm">S&amp;P 500 ETF</span>
+</div>
+</td>
+<td class="px-6 py-4 font-mono text-sm">15.00%</td>
+<td class="px-6 py-4">
+<div class="w-24 h-1.5 bg-slate-100 dark:bg-slate-700 rounded-full overflow-hidden">
+<div class="h-full bg-growth" style="width: 12%"></div>
+</div>
+</td>
+<td class="px-6 py-4 font-mono text-sm">0.14</td>
+<td class="px-6 py-4 text-right">
+<span class="px-2 py-1 rounded-full bg-primary/10 text-primary text-[10px] font-bold uppercase">Reduced</span>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<!-- Footer Meta -->
+<footer class="p-8 mt-auto border-t border-slate-200 dark:border-slate-800 flex justify-between items-center text-slate-400 text-[10px] uppercase font-bold tracking-widest">
+<div class="flex gap-6">
+<span>Engine v4.2.0-stable</span>
+<span>Last Rebalance: 2023-11-24 14:22 UTC</span>
+</div>
+<div class="flex gap-4">
+<a class="hover:text-primary transition-colors" href="#">API Documentation</a>
+<a class="hover:text-primary transition-colors" href="#">Legal Disclosure</a>
+</div>
+</footer>
+</main>
+</div>
+</body></html>

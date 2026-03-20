@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&amp;family=JetBrains+Mono:wght@400;500;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#00f6ff",
+                        "bearish": "#ff00ff",
+                        "neutral": "#94a3b8",
+                        "background-light": "#f5f8f8",
+                        "background-dark": "#0a0a0c",
+                        "surface": "#161b22",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"],
+                        "mono": ["JetBrains Mono", "monospace"]
+                    },
+                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<style>
+        .glass-panel {
+            background: rgba(22, 27, 34, 0.7);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        .regime-gradient-bull {
+            background: linear-gradient(180deg, rgba(0, 246, 255, 0.15) 0%, rgba(0, 246, 255, 0) 100%);
+        }
+        .regime-gradient-bear {
+            background: linear-gradient(180deg, rgba(255, 0, 255, 0.15) 0%, rgba(255, 0, 255, 0) 100%);
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-display text-slate-900 dark:text-slate-100 antialiased overflow-x-hidden">
+<div class="flex h-screen overflow-hidden">
+<!-- Sidebar -->
+<aside class="w-64 border-r border-slate-200 dark:border-white/10 flex flex-col bg-white dark:bg-background-dark">
+<div class="p-6 flex items-center gap-3">
+<div class="size-8 bg-primary rounded-lg flex items-center justify-center">
+<span class="material-symbols-outlined text-background-dark font-bold">hive</span>
+</div>
+<h2 class="text-xl font-black tracking-tighter uppercase">Hive</h2>
+</div>
+<nav class="flex-1 px-4 py-4 space-y-2">
+<div class="text-[10px] font-bold text-slate-400 uppercase tracking-widest px-3 mb-2">Institutional Terminal</div>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg bg-primary/10 text-primary border border-primary/20" href="#">
+<span class="material-symbols-outlined">public</span>
+<span class="text-sm font-semibold">Macro Desk</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-400 hover:text-white hover:bg-white/5 transition-colors" href="#">
+<span class="material-symbols-outlined">precision_manufacturing</span>
+<span class="text-sm font-medium">Alpha Factory</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-400 hover:text-white hover:bg-white/5 transition-colors" href="#">
+<span class="material-symbols-outlined">shield</span>
+<span class="text-sm font-medium">Risk Desk</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-400 hover:text-white hover:bg-white/5 transition-colors" href="#">
+<span class="material-symbols-outlined">terminal</span>
+<span class="text-sm font-medium">Fin-OSS Agent</span>
+</a>
+</nav>
+<div class="p-4 border-t border-white/5">
+<div class="glass-panel p-4 rounded-xl flex items-center gap-3">
+<div class="size-10 rounded-full bg-slate-800 border border-white/10 overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="User profile avatar professionally dressed" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC8PqkVPheKc3JivGTOF1GROlos9wfhDnkPcfSznPED5e4oYiNeB7vAF97Tmlcg2Ao2jMcpBNhc9XwvPKS9BIJMJBl_46RUSaXmCP6UNFguX58Ug4xU4EHLbwLJ0yiqsscdnxAmMQNN1Rh9plRS4cHiUHOklkygvP_Rc6EyvVRsWX7l8vrl-gmMl1XwN5AJx_LdMvKrUZgUq_vlBbiY_nzMqfdeFHlAqJNrM9QoBXZygZGi3-s7sDmC1iy7LaESK8oP5_J2A9dufVk"/>
+</div>
+<div class="flex-1 min-w-0">
+<p class="text-xs font-bold truncate">Institutional Lead</p>
+<p class="text-[10px] text-slate-500 font-mono">ID: 882-QX</p>
+</div>
+<span class="material-symbols-outlined text-slate-500 text-sm">settings</span>
+</div>
+</div>
+</aside>
+<!-- Main Content -->
+<main class="flex-1 flex flex-col overflow-y-auto bg-[#0a0a0c]">
+<!-- Top Nav -->
+<header class="h-16 border-b border-white/10 flex items-center justify-between px-8 sticky top-0 bg-[#0a0a0c]/80 backdrop-blur-md z-10">
+<div class="flex items-center gap-6">
+<h1 class="text-lg font-bold">Regime Detection <span class="text-slate-500 font-normal">/</span> <span class="text-primary font-mono text-sm">HMM_V4_LATEST</span></h1>
+<div class="flex gap-2">
+<span class="px-2 py-0.5 rounded bg-primary/20 text-primary text-[10px] font-bold border border-primary/30 uppercase tracking-tighter">Live Analysis</span>
+<span class="px-2 py-0.5 rounded bg-white/5 text-slate-400 text-[10px] font-bold border border-white/10 uppercase tracking-tighter">Latency: 14ms</span>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<div class="relative">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-slate-500 text-sm">search</span>
+<input class="bg-white/5 border border-white/10 rounded-lg pl-9 pr-4 py-1.5 text-sm focus:ring-1 focus:ring-primary focus:border-primary transition-all font-mono" placeholder="Search Assets..." type="text"/>
+</div>
+<button class="size-9 flex items-center justify-center rounded-lg bg-white/5 border border-white/10 text-slate-300">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+</div>
+</header>
+<div class="p-8 space-y-6">
+<!-- Top Metrics & Weather Gauge -->
+<div class="grid grid-cols-12 gap-6">
+<!-- Market Weather Gauge -->
+<div class="col-span-12 lg:col-span-4 glass-panel rounded-xl p-6 relative overflow-hidden">
+<div class="flex justify-between items-start mb-6">
+<div>
+<h3 class="text-slate-400 text-xs font-bold uppercase tracking-widest mb-1">Market Weather</h3>
+<p class="text-2xl font-black text-primary uppercase">Low Vol Bull</p>
+</div>
+<div class="bg-primary/20 text-primary px-2 py-1 rounded text-[10px] font-mono border border-primary/30">CONFIDENCE: 98.4%</div>
+</div>
+<div class="flex flex-col items-center py-4">
+<div class="relative size-48">
+<!-- Circular Gauge Placeholder (CSS SVG) -->
+<svg class="w-full h-full -rotate-90" viewbox="0 0 100 100">
+<circle class="text-white/5" cx="50" cy="50" fill="none" r="45" stroke="currentColor" stroke-width="8"></circle>
+<circle class="text-primary" cx="50" cy="50" fill="none" r="45" stroke="currentColor" stroke-dasharray="283" stroke-dashoffset="180" stroke-width="8"></circle>
+</svg>
+<div class="absolute inset-0 flex flex-col items-center justify-center">
+<span class="material-symbols-outlined text-5xl text-primary">trending_up</span>
+<span class="font-mono text-xl font-bold mt-1">REGIME 0</span>
+</div>
+</div>
+<div class="w-full mt-8 grid grid-cols-3 gap-2 text-center">
+<div class="p-2 border border-primary/50 bg-primary/10 rounded-lg">
+<p class="text-[8px] text-primary uppercase font-bold">Bullish</p>
+<p class="font-mono text-xs font-bold text-primary">82% Prob</p>
+</div>
+<div class="p-2 border border-white/10 bg-white/5 rounded-lg opacity-50">
+<p class="text-[8px] text-slate-400 uppercase font-bold">Transition</p>
+<p class="font-mono text-xs font-bold text-slate-400">12% Prob</p>
+</div>
+<div class="p-2 border border-white/10 bg-white/5 rounded-lg opacity-50">
+<p class="text-[8px] text-slate-400 uppercase font-bold">Bearish</p>
+<p class="font-mono text-xs font-bold text-slate-400">6% Prob</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Snapshot Stats -->
+<div class="col-span-12 lg:col-span-8 grid grid-cols-2 md:grid-cols-4 gap-4">
+<div class="glass-panel p-5 rounded-xl">
+<p class="text-xs font-bold text-slate-500 uppercase mb-2">Volatility Index</p>
+<p class="text-2xl font-mono font-bold text-white mb-1">14.28</p>
+<div class="flex items-center gap-1 text-[10px] text-primary font-bold">
+<span class="material-symbols-outlined text-[12px]">south</span>
+                            -2.1% (LOW)
+                        </div>
+</div>
+<div class="glass-panel p-5 rounded-xl border-l-2 border-l-primary">
+<p class="text-xs font-bold text-slate-500 uppercase mb-2">Liquidity Score</p>
+<p class="text-2xl font-mono font-bold text-white mb-1">89.4</p>
+<div class="flex items-center gap-1 text-[10px] text-primary font-bold">
+<span class="material-symbols-outlined text-[12px]">north</span>
+                            +5.2% (OPTIMAL)
+                        </div>
+</div>
+<div class="glass-panel p-5 rounded-xl">
+<p class="text-xs font-bold text-slate-500 uppercase mb-2">Correlations</p>
+<p class="text-2xl font-mono font-bold text-white mb-1">0.12</p>
+<div class="flex items-center gap-1 text-[10px] text-slate-400 font-bold">
+                            DECOUPLED
+                        </div>
+</div>
+<div class="glass-panel p-5 rounded-xl border-l-2 border-l-bearish">
+<p class="text-xs font-bold text-slate-500 uppercase mb-2">Institutional Skew</p>
+<p class="text-2xl font-mono font-bold text-white mb-1">-0.42</p>
+<div class="flex items-center gap-1 text-[10px] text-bearish font-bold">
+<span class="material-symbols-outlined text-[12px]">south</span>
+                            HEDGING ACTIVE
+                        </div>
+</div>
+<!-- Full-width visual chart container placeholder -->
+<div class="col-span-full glass-panel rounded-xl p-6 min-h-[400px] flex flex-col">
+<div class="flex justify-between items-center mb-6">
+<div>
+<h3 class="font-bold text-lg flex items-center gap-2">
+                                    HMM Regime Time-Series
+                                    <span class="px-2 py-0.5 bg-white/5 border border-white/10 rounded text-[10px] font-mono text-slate-400">USD/BTC PAIR</span>
+</h3>
+<p class="text-xs text-slate-500">Multimodal Hidden Markov Model (HMM) Output Shading</p>
+</div>
+<div class="flex gap-2">
+<button class="px-3 py-1 rounded bg-white/5 border border-white/10 text-[10px] font-bold text-slate-300 hover:bg-white/10">1H</button>
+<button class="px-3 py-1 rounded bg-white/5 border border-white/10 text-[10px] font-bold text-slate-300 hover:bg-white/10">4H</button>
+<button class="px-3 py-1 rounded bg-primary/20 border border-primary/30 text-[10px] font-bold text-primary">1D</button>
+<button class="px-3 py-1 rounded bg-white/5 border border-white/10 text-[10px] font-bold text-slate-300 hover:bg-white/10">1W</button>
+</div>
+</div>
+<!-- High Fidelity Chart Area Mockup -->
+<div class="flex-1 relative w-full border border-white/5 rounded-lg bg-black/40 overflow-hidden">
+<!-- Regime Background Shading Layers -->
+<div class="absolute inset-0 flex h-full">
+<div class="w-1/4 h-full regime-gradient-bull border-r border-primary/10"></div>
+<div class="w-1/4 h-full bg-slate-800/20 border-r border-white/5"></div>
+<div class="w-1/4 h-full regime-gradient-bear border-r border-bearish/10"></div>
+<div class="w-1/4 h-full regime-gradient-bull"></div>
+</div>
+<!-- Grid Lines -->
+<div class="absolute inset-0 pointer-events-none opacity-20" style="background-image: linear-gradient(#334155 1px, transparent 1px), linear-gradient(90deg, #334155 1px, transparent 1px); background-size: 40px 40px;"></div>
+<!-- The Chart Line (Mocked with CSS) -->
+<svg class="absolute inset-0 w-full h-full" preserveaspectratio="none">
+<polyline fill="none" points="0,280 100,260 200,300 300,240 400,220 500,260 600,290 700,310 800,280 900,250 1000,200 1100,180 1200,120" stroke="#00f6ff" stroke-width="2.5" style="vector-effect: non-scaling-stroke;"></polyline>
+<!-- Points for visual data-points -->
+<circle class="animate-pulse" cx="400" cy="220" fill="#00f6ff" r="4"></circle>
+<circle class="animate-pulse" cx="1200" cy="120" fill="#00f6ff" r="4"></circle>
+</svg>
+<!-- Legend / Overlays -->
+<div class="absolute top-4 left-4 flex gap-4">
+<div class="flex items-center gap-2">
+<div class="w-3 h-3 rounded-full bg-primary shadow-[0_0_8px_#00f6ff]"></div>
+<span class="text-[10px] font-mono font-bold text-white uppercase tracking-tighter">Bullish Regime</span>
+</div>
+<div class="flex items-center gap-2">
+<div class="w-3 h-3 rounded-full bg-bearish shadow-[0_0_8px_#ff00ff]"></div>
+<span class="text-[10px] font-mono font-bold text-white uppercase tracking-tighter">Bearish Regime</span>
+</div>
+<div class="flex items-center gap-2">
+<div class="w-3 h-3 rounded-full bg-slate-500"></div>
+<span class="text-[10px] font-mono font-bold text-white uppercase tracking-tighter">Transition</span>
+</div>
+</div>
+<!-- Current Value Tag -->
+<div class="absolute right-0 top-[120px] -translate-y-1/2 bg-primary px-2 py-1 rounded-l text-[10px] font-mono font-bold text-background-dark">
+                                $68,412.00
+                            </div>
+</div>
+</div>
+</div>
+</div>
+<!-- Bottom Panel: Detail Insights -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+<div class="glass-panel rounded-xl p-5">
+<h4 class="text-xs font-bold text-primary mb-4 flex items-center gap-2">
+<span class="material-symbols-outlined text-sm">psychology</span>
+                        LATENT FACTOR ANALYSIS
+                    </h4>
+<div class="space-y-4">
+<div class="flex justify-between items-end border-b border-white/5 pb-2">
+<span class="text-[10px] text-slate-500 font-bold">GREEK SKEW</span>
+<span class="font-mono text-sm text-white">0.45</span>
+</div>
+<div class="flex justify-between items-end border-b border-white/5 pb-2">
+<span class="text-[10px] text-slate-500 font-bold">GAMMA EXPOSURE</span>
+<span class="font-mono text-sm text-primary">+2.4B</span>
+</div>
+<div class="flex justify-between items-end border-b border-white/5 pb-2">
+<span class="text-[10px] text-slate-500 font-bold">TAIL RISK PROB</span>
+<span class="font-mono text-sm text-white">2.1%</span>
+</div>
+</div>
+</div>
+<div class="glass-panel rounded-xl p-5">
+<h4 class="text-xs font-bold text-primary mb-4 flex items-center gap-2">
+<span class="material-symbols-outlined text-sm">hub</span>
+                        CROSS-ASSET CONTEXT
+                    </h4>
+<div class="space-y-4">
+<div class="flex items-center gap-3">
+<span class="text-[10px] font-mono text-slate-500 w-8 text-right">DXY</span>
+<div class="flex-1 h-1.5 bg-white/5 rounded-full overflow-hidden">
+<div class="bg-bearish h-full w-[65%]"></div>
+</div>
+<span class="text-[10px] font-mono text-bearish">-0.82</span>
+</div>
+<div class="flex items-center gap-3">
+<span class="text-[10px] font-mono text-slate-500 w-8 text-right">SPX</span>
+<div class="flex-1 h-1.5 bg-white/5 rounded-full overflow-hidden">
+<div class="bg-primary h-full w-[82%]"></div>
+</div>
+<span class="text-[10px] font-mono text-primary">+0.91</span>
+</div>
+<div class="flex items-center gap-3">
+<span class="text-[10px] font-mono text-slate-500 w-8 text-right">GOLD</span>
+<div class="flex-1 h-1.5 bg-white/5 rounded-full overflow-hidden">
+<div class="bg-slate-400 h-full w-[15%]"></div>
+</div>
+<span class="text-[10px] font-mono text-slate-400">+0.12</span>
+</div>
+</div>
+</div>
+<div class="glass-panel rounded-xl p-5">
+<h4 class="text-xs font-bold text-primary mb-4 flex items-center gap-2">
+<span class="material-symbols-outlined text-sm">history_edu</span>
+                        TRANSITION LOG
+                    </h4>
+<div class="space-y-3 font-mono text-[10px]">
+<div class="flex gap-2 text-primary">
+<span>[14:22:10]</span>
+<span>REGIME_0_STABLE: Low Volatility Bullish</span>
+</div>
+<div class="flex gap-2 text-slate-500">
+<span>[12:05:44]</span>
+<span>DETECTED: High Liquidity Absorption</span>
+</div>
+<div class="flex gap-2 text-slate-500">
+<span>[09:30:01]</span>
+<span>HMM_TRANSITION: Regime 2 -&gt; Regime 0 (92% Conf)</span>
+</div>
+<div class="flex gap-2 text-bearish/70">
+<span>[08:15:32]</span>
+<span>VOL_SURGE: IV Increase &gt; 2.0 Sigma</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- Right Drawer (Summary) -->
+<aside class="w-80 border-l border-white/10 bg-white/2 dark:bg-[#0d0d11] p-6 hidden xl:flex flex-col gap-6">
+<div>
+<h3 class="text-xs font-black uppercase tracking-[0.2em] text-slate-500 mb-6">Asset Intelligence</h3>
+<div class="space-y-4">
+<div class="p-4 rounded-xl border border-white/5 bg-white/5">
+<div class="flex justify-between items-center mb-2">
+<span class="text-xs font-bold font-mono">BTC-PERP</span>
+<span class="text-[10px] font-bold text-primary">BULLISH</span>
+</div>
+<div class="h-1 w-full bg-white/5 rounded-full overflow-hidden mb-3">
+<div class="bg-primary h-full w-[88%]"></div>
+</div>
+<p class="text-[10px] text-slate-400 leading-relaxed italic">"Order flow imbalance suggests continued upward momentum. Major delta clusters at $69.5k."</p>
+</div>
+<div class="p-4 rounded-xl border border-white/5 bg-white/5">
+<div class="flex justify-between items-center mb-2">
+<span class="text-xs font-bold font-mono">ETH-PERP</span>
+<span class="text-[10px] font-bold text-slate-400">NEUTRAL</span>
+</div>
+<div class="h-1 w-full bg-white/5 rounded-full overflow-hidden mb-3">
+<div class="bg-slate-400 h-full w-[45%]"></div>
+</div>
+<p class="text-[10px] text-slate-400 leading-relaxed italic">"Sideways consolidation. Funding rates normalized. Institutional flow is indifferent."</p>
+</div>
+</div>
+</div>
+<div class="mt-auto">
+<div class="p-4 rounded-xl bg-primary/10 border border-primary/20">
+<div class="flex items-center gap-2 mb-2">
+<span class="material-symbols-outlined text-primary text-sm">auto_awesome</span>
+<span class="text-[10px] font-bold text-primary uppercase">Fin-OSS Suggestion</span>
+</div>
+<p class="text-xs text-white/80 leading-snug">Macro regime suggests reducing delta hedging costs by moving to out-of-the-money calendar spreads.</p>
+<button class="w-full mt-4 bg-primary text-background-dark py-2 rounded font-black text-[10px] uppercase hover:opacity-90 transition-opacity">Execute Strategy</button>
+</div>
+</div>
+</aside>
+</div>
+</body></html>

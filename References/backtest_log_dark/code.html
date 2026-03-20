@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Hive | Backtest Engine</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400;500;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#00f6ff",
+                        "magenta": "#ff00ff",
+                        "background-light": "#f5f8f8",
+                        "background-dark": "#0a0a0c",
+                        "slate-panel": "#141e1f",
+                    },
+                    fontFamily: {
+                        "display": ["Inter"],
+                        "mono": ["JetBrains Mono"]
+                    },
+                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<style>
+        .font-mono { font-family: 'JetBrains Mono', monospace; }
+        .font-display { font-family: 'Inter', sans-serif; }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 font-display selection:bg-primary/30">
+<div class="flex h-screen overflow-hidden">
+<!-- Side Navigation -->
+<aside class="w-64 flex-shrink-0 border-r border-slate-200 dark:border-white/10 flex flex-col bg-background-light dark:bg-background-dark">
+<div class="p-6 flex items-center gap-3">
+<div class="w-8 h-8 rounded bg-primary flex items-center justify-center text-background-dark">
+<span class="material-symbols-outlined font-bold">hive</span>
+</div>
+<div class="flex flex-col">
+<h1 class="text-lg font-bold tracking-tight text-slate-900 dark:text-slate-100">Hive</h1>
+<span class="text-[10px] uppercase tracking-widest text-primary font-bold">Quant Hedge Fund</span>
+</div>
+</div>
+<nav class="flex-1 px-4 space-y-1">
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-slate-600 dark:text-slate-400 hover:bg-primary/10 hover:text-primary transition-colors" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+<span class="text-sm font-medium">Dashboard</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-slate-600 dark:text-slate-400 hover:bg-primary/10 hover:text-primary transition-colors" href="#">
+<span class="material-symbols-outlined">public</span>
+<span class="text-sm font-medium">Macro Desk</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-slate-600 dark:text-slate-400 hover:bg-primary/10 hover:text-primary transition-colors" href="#">
+<span class="material-symbols-outlined">science</span>
+<span class="text-sm font-medium">Alpha Factory</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-slate-600 dark:text-slate-400 hover:bg-primary/10 hover:text-primary transition-colors" href="#">
+<span class="material-symbols-outlined">shield</span>
+<span class="text-sm font-medium">Risk Desk</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg bg-primary/20 text-primary" href="#">
+<span class="material-symbols-outlined">history</span>
+<span class="text-sm font-medium">Backtest</span>
+</a>
+</nav>
+<div class="p-4 border-t border-slate-200 dark:border-white/10">
+<div class="flex items-center gap-3 p-2">
+<div class="w-8 h-8 rounded-full bg-slate-200 dark:bg-slate-800 overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="User profile avatar silhouette" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAcEEukNvF3TcFvPlAwz9qLt2odvefriw74UvTaSexlqlzoh34_pYUYKB_-TKhSWM-vTOtjtjdqaH8Xvfa3Qx_2mL7QuI4TJQBcmURiQaCPqJZmv7TlL-5ML9Dj5CjVSifWCv8mm_SZdEQ11Lu6kX0omIty3qvxEDehq4ynZQ_dKtE8qenZQNuyf4nVG_cMjxg4cWBJnmoT8uJL5NyXDh2sqUmO0NcGEMDO4_nueXfcLfLBSw8Ko9P2gv1nXga1kSo6rDoRHXXAsow"/>
+</div>
+<div class="flex flex-col">
+<span class="text-xs font-semibold">Senior Quant</span>
+<span class="text-[10px] text-slate-500">Tier III Access</span>
+</div>
+</div>
+</div>
+</aside>
+<!-- Main Content Area -->
+<main class="flex-1 flex flex-col overflow-hidden">
+<!-- Header -->
+<header class="h-16 border-b border-slate-200 dark:border-white/10 flex items-center justify-between px-8 bg-background-light dark:bg-background-dark/50 backdrop-blur">
+<div class="flex flex-col">
+<h2 class="text-xl font-bold tracking-tight">Backtest Engine: Historical Simulation</h2>
+<p class="text-xs text-slate-500">Institutional Grade Strategy Validation <span class="text-primary font-mono ml-2">// Glass-Box-v4.2</span></p>
+</div>
+<div class="flex items-center gap-4">
+<div class="flex items-center bg-slate-100 dark:bg-white/5 rounded-lg px-3 py-1.5 border border-slate-200 dark:border-white/10">
+<span class="material-symbols-outlined text-sm mr-2">calendar_today</span>
+<span class="text-xs font-mono">2023-01-01 / 2023-12-31</span>
+</div>
+<button class="bg-primary hover:bg-primary/80 text-background-dark px-4 py-2 rounded font-bold text-xs uppercase tracking-wider transition-all">
+                        Run New Sim
+                    </button>
+</div>
+</header>
+<!-- Workspace -->
+<div class="flex-1 flex overflow-hidden">
+<!-- Center Section: Table & Chart -->
+<div class="flex-1 flex flex-col overflow-y-auto p-6 space-y-6">
+<!-- Performance Metrics Row -->
+<div class="grid grid-cols-4 gap-4">
+<div class="bg-slate-panel border border-white/5 p-4 rounded-lg">
+<div class="text-[10px] uppercase text-slate-400 font-bold mb-1">Sharpe Ratio</div>
+<div class="text-2xl font-mono text-primary">2.84</div>
+</div>
+<div class="bg-slate-panel border border-white/5 p-4 rounded-lg">
+<div class="text-[10px] uppercase text-slate-400 font-bold mb-1">Max Drawdown</div>
+<div class="text-2xl font-mono text-magenta">-4.12%</div>
+</div>
+<div class="bg-slate-panel border border-white/5 p-4 rounded-lg">
+<div class="text-[10px] uppercase text-slate-400 font-bold mb-1">Win Rate</div>
+<div class="text-2xl font-mono text-primary">64.2%</div>
+</div>
+<div class="bg-slate-panel border border-white/5 p-4 rounded-lg">
+<div class="text-[10px] uppercase text-slate-400 font-bold mb-1">Profit Factor</div>
+<div class="text-2xl font-mono text-primary">1.92</div>
+</div>
+</div>
+<!-- Simulation Log Table -->
+<div class="bg-slate-panel border border-white/5 rounded-lg overflow-hidden flex flex-col">
+<div class="px-4 py-3 border-b border-white/10 bg-white/5 flex items-center justify-between">
+<span class="text-xs font-bold uppercase tracking-widest text-slate-400">Simulation Log</span>
+<span class="text-[10px] font-mono text-primary">LIVE DATA STREAM ENABLED</span>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse">
+<thead class="bg-background-dark text-slate-500 uppercase text-[10px] font-bold">
+<tr>
+<th class="px-4 py-3 border-b border-white/10">Timestamp</th>
+<th class="px-4 py-3 border-b border-white/10">Model Version</th>
+<th class="px-4 py-3 border-b border-white/10">Asset</th>
+<th class="px-4 py-3 border-b border-white/10">Signal</th>
+<th class="px-4 py-3 border-b border-white/10">Entry</th>
+<th class="px-4 py-3 border-b border-white/10">Exit</th>
+<th class="px-4 py-3 border-b border-white/10 text-right">P&amp;L %</th>
+</tr>
+</thead>
+<tbody class="font-mono text-xs">
+<tr class="hover:bg-white/5 border-b border-white/5">
+<td class="px-4 py-3 text-slate-400">2023-11-20 14:30:05</td>
+<td class="px-4 py-3">Alpha-v4.2</td>
+<td class="px-4 py-3 text-white font-bold">BTC-USD</td>
+<td class="px-4 py-3"><span class="px-1.5 py-0.5 rounded bg-primary/20 text-primary text-[10px] font-bold">LONG</span></td>
+<td class="px-4 py-3">37,420.50</td>
+<td class="px-4 py-3">38,110.12</td>
+<td class="px-4 py-3 text-right text-primary font-bold">+1.84%</td>
+</tr>
+<tr class="hover:bg-white/5 border-b border-white/5">
+<td class="px-4 py-3 text-slate-400">2023-11-20 12:15:00</td>
+<td class="px-4 py-3">Alpha-v4.2</td>
+<td class="px-4 py-3 text-white font-bold">ETH-USD</td>
+<td class="px-4 py-3"><span class="px-1.5 py-0.5 rounded bg-magenta/20 text-magenta text-[10px] font-bold">SHORT</span></td>
+<td class="px-4 py-3">2,050.20</td>
+<td class="px-4 py-3">2,065.45</td>
+<td class="px-4 py-3 text-right text-magenta font-bold">-0.74%</td>
+</tr>
+<tr class="hover:bg-white/5 border-b border-white/5">
+<td class="px-4 py-3 text-slate-400">2023-11-19 21:45:12</td>
+<td class="px-4 py-3">Alpha-v4.1</td>
+<td class="px-4 py-3 text-white font-bold">SOL-USD</td>
+<td class="px-4 py-3"><span class="px-1.5 py-0.5 rounded bg-primary/20 text-primary text-[10px] font-bold">LONG</span></td>
+<td class="px-4 py-3">58.15</td>
+<td class="px-4 py-3">64.40</td>
+<td class="px-4 py-3 text-right text-primary font-bold">+10.74%</td>
+</tr>
+<tr class="hover:bg-white/5 border-b border-white/5">
+<td class="px-4 py-3 text-slate-400">2023-11-19 16:20:44</td>
+<td class="px-4 py-3">Alpha-v4.1</td>
+<td class="px-4 py-3 text-white font-bold">AAPL</td>
+<td class="px-4 py-3"><span class="px-1.5 py-0.5 rounded bg-magenta/20 text-magenta text-[10px] font-bold">SHORT</span></td>
+<td class="px-4 py-3">189.10</td>
+<td class="px-4 py-3">188.05</td>
+<td class="px-4 py-3 text-right text-primary font-bold">+0.55%</td>
+</tr>
+<tr class="hover:bg-white/5 border-b border-white/5">
+<td class="px-4 py-3 text-slate-400">2023-11-18 09:30:01</td>
+<td class="px-4 py-3">Alpha-v4.0</td>
+<td class="px-4 py-3 text-white font-bold">TSLA</td>
+<td class="px-4 py-3"><span class="px-1.5 py-0.5 rounded bg-primary/20 text-primary text-[10px] font-bold">LONG</span></td>
+<td class="px-4 py-3">235.50</td>
+<td class="px-4 py-3">230.20</td>
+<td class="px-4 py-3 text-right text-magenta font-bold">-2.25%</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<!-- Equity Curve Chart Placeholder -->
+<div class="bg-slate-panel border border-white/5 rounded-lg overflow-hidden flex flex-col h-64">
+<div class="px-4 py-3 border-b border-white/10 bg-white/5 flex items-center justify-between">
+<span class="text-xs font-bold uppercase tracking-widest text-slate-400">Cumulative Equity Curve</span>
+<div class="flex gap-2">
+<span class="text-[10px] font-mono text-primary flex items-center gap-1">
+<span class="w-2 h-2 bg-primary rounded-full"></span> Strategy
+                                </span>
+<span class="text-[10px] font-mono text-slate-500 flex items-center gap-1">
+<span class="w-2 h-2 bg-slate-500 rounded-full"></span> Benchmark (SPY)
+                                </span>
+</div>
+</div>
+<div class="flex-1 relative flex items-end px-4 pb-4">
+<!-- Simulated Chart visualization using SVG -->
+<svg class="w-full h-full" preserveaspectratio="none" viewbox="0 0 1000 200">
+<defs>
+<lineargradient id="chartGradient" x1="0" x2="0" y1="0" y2="1">
+<stop offset="0%" stop-color="#00f6ff" stop-opacity="0.2"></stop>
+<stop offset="100%" stop-color="#00f6ff" stop-opacity="0"></stop>
+</lineargradient>
+</defs>
+<path d="M0,180 L50,175 L100,160 L150,165 L200,140 L250,150 L300,110 L350,115 L400,90 L450,95 L500,70 L550,85 L600,40 L650,45 L700,20 L750,30 L800,15 L850,25 L900,10 L1000,5" fill="none" stroke="#00f6ff" stroke-width="2" vector-effect="non-scaling-stroke"></path>
+<path d="M0,180 L50,175 L100,160 L150,165 L200,140 L250,150 L300,110 L350,115 L400,90 L450,95 L500,70 L550,85 L600,40 L650,45 L700,20 L750,30 L800,15 L850,25 L900,10 L1000,5 L1000,200 L0,200 Z" fill="url(#chartGradient)"></path>
+<path d="M0,180 L100,175 L200,178 L300,165 L400,160 L500,155 L600,150 L700,140 L800,135 L900,130 L1000,125" fill="none" stroke="#475569" stroke-dasharray="4" stroke-width="1" vector-effect="non-scaling-stroke"></path>
+</svg>
+</div>
+</div>
+</div>
+<!-- Right Side Panel: Extra Analytics -->
+<aside class="w-80 border-l border-white/10 bg-background-dark/50 flex flex-col p-6 space-y-8 overflow-y-auto">
+<div>
+<h3 class="text-[10px] uppercase font-bold text-slate-400 tracking-widest mb-4">Risk Decomposition</h3>
+<div class="space-y-4 font-mono text-xs">
+<div class="flex justify-between items-center">
+<span class="text-slate-500">Vol (Ann.)</span>
+<span class="text-slate-100">14.2%</span>
+</div>
+<div class="w-full bg-white/5 h-1 rounded-full">
+<div class="bg-primary h-full rounded-full w-[45%]"></div>
+</div>
+<div class="flex justify-between items-center">
+<span class="text-slate-500">Skewness</span>
+<span class="text-primary">+0.42</span>
+</div>
+<div class="flex justify-between items-center">
+<span class="text-slate-500">Kurtosis</span>
+<span class="text-slate-100">3.12</span>
+</div>
+<div class="flex justify-between items-center">
+<span class="text-slate-500">Sortino Ratio</span>
+<span class="text-primary">3.15</span>
+</div>
+</div>
+</div>
+<div class="border-t border-white/5 pt-8">
+<h3 class="text-[10px] uppercase font-bold text-slate-400 tracking-widest mb-4">Trade Statistics</h3>
+<div class="space-y-4 font-mono text-xs">
+<div class="flex justify-between items-center">
+<span class="text-slate-500">Avg Win</span>
+<span class="text-primary">$1,245.00</span>
+</div>
+<div class="flex justify-between items-center">
+<span class="text-slate-500">Avg Loss</span>
+<span class="text-magenta">($542.10)</span>
+</div>
+<div class="flex justify-between items-center">
+<span class="text-slate-500">Max Consec. Wins</span>
+<span class="text-slate-100">8</span>
+</div>
+<div class="flex justify-between items-center">
+<span class="text-slate-500">Kelly Criterion</span>
+<span class="text-primary">18.4%</span>
+</div>
+</div>
+</div>
+<div class="border-t border-white/5 pt-8">
+<h3 class="text-[10px] uppercase font-bold text-slate-400 tracking-widest mb-4">Model Parameters</h3>
+<div class="p-3 bg-white/5 rounded border border-white/5 space-y-2 font-mono text-[10px]">
+<div class="flex justify-between">
+<span class="text-slate-600">optimizer</span>
+<span class="text-slate-300">AdamW</span>
+</div>
+<div class="flex justify-between">
+<span class="text-slate-600">learning_rate</span>
+<span class="text-slate-300">1e-4</span>
+</div>
+<div class="flex justify-between">
+<span class="text-slate-600">lookback_period</span>
+<span class="text-slate-300">20d</span>
+</div>
+<div class="flex justify-between">
+<span class="text-slate-600">risk_cap_pp</span>
+<span class="text-slate-300">2.5%</span>
+</div>
+</div>
+</div>
+<div class="mt-auto">
+<div class="flex items-center gap-2 text-primary">
+<span class="material-symbols-outlined text-sm">verified_user</span>
+<span class="text-[10px] font-bold uppercase tracking-wider">Audit Trail Verified</span>
+</div>
+</div>
+</aside>
+</div>
+</main>
+</div>
+</body></html>

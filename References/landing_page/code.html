@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Hive - The Elite Desk (Dark)</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&amp;family=JetBrains+Mono:wght@400;500;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#00f6ff",
+                        "accent-magenta": "#ff00ff",
+                        "background-light": "#f5f8f8",
+                        "background-dark": "#0a0a0b",
+                        "slate-custom": "#1a1a1c",
+                        "border-subtle": "rgba(255,255,255,0.08)"
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"],
+                        "mono": ["JetBrains Mono", "monospace"]
+                    },
+                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<style>
+        .fine-border { border: 0.5px solid rgba(255, 255, 255, 0.08); }
+        .glass-panel { background: rgba(255, 255, 255, 0.02); backdrop-filter: blur(12px); }
+        .data-text { font-family: 'JetBrains Mono', monospace; }
+        ::-webkit-scrollbar { width: 4px; }
+        ::-webkit-scrollbar-track { background: #0a0a0b; }
+        ::-webkit-scrollbar-thumb { background: #1a1a1c; border-radius: 10px; }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 font-display selection:bg-primary/30">
+<div class="relative flex h-auto min-screen w-full flex-col overflow-x-hidden">
+<!-- Navigation -->
+<header class="sticky top-0 z-50 w-full border-b fine-border bg-background-dark/80 backdrop-blur-md px-6 lg:px-20 py-4">
+<div class="max-w-[1440px] mx-auto flex items-center justify-between">
+<div class="flex items-center gap-12">
+<div class="flex items-center gap-3">
+<div class="size-6 flex items-center justify-center bg-primary rounded-sm">
+<span class="material-symbols-outlined text-background-dark text-[18px]">hive</span>
+</div>
+<h2 class="text-white text-lg font-bold tracking-[0.2em] uppercase">Hive</h2>
+</div>
+<nav class="hidden md:flex items-center gap-10">
+<a class="text-slate-400 hover:text-primary text-[11px] font-bold uppercase tracking-[0.15em] transition-colors" href="#">Terminal</a>
+<a class="text-slate-400 hover:text-primary text-[11px] font-bold uppercase tracking-[0.15em] transition-colors" href="#">Quant</a>
+<a class="text-slate-400 hover:text-primary text-[11px] font-bold uppercase tracking-[0.15em] transition-colors" href="#">Liquidity</a>
+<a class="text-slate-400 hover:text-primary text-[11px] font-bold uppercase tracking-[0.15em] transition-colors" href="#">Protocol</a>
+</nav>
+</div>
+<div class="flex items-center gap-6">
+<div class="hidden xl:flex items-center bg-slate-custom fine-border rounded px-3 py-1.5 gap-3">
+<span class="material-symbols-outlined text-slate-500 text-[18px]">search</span>
+<input class="bg-transparent border-none focus:ring-0 text-[12px] text-white placeholder-slate-600 w-48 font-mono" placeholder="RUN SYSTEM_QUERY..."/>
+</div>
+<button class="flex items-center justify-center rounded-sm h-10 px-6 bg-primary text-background-dark text-[11px] font-black uppercase tracking-[0.15em] hover:brightness-110 transition-all">
+                    Access Desk
+                </button>
+<div class="size-8 rounded-full fine-border bg-slate-custom flex items-center justify-center overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="Minimalistic abstract user profile avatar" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB5QCWZ9U6Q2EjYt6Q0ZyjYmnkZkbiJppIoqrfDxkyBpZXIaWwGgC9EFycMbCwZfyVFzxeUcXVnFrmRU1NDyWmPxWlRa_EotAvudlF1sZ9u9AMF2vSSDHcc9-43mopILLAlwlkriNxRbeVA4HQsN7ZSmW1eOCKISw9Cu4yLCZVRDquSTs-wEsvNYy7T5MKNsWgYZXpTtePPjYsuk_0mdjSkC0-FtRRxms1eT27Hk5QkAAT6np1i_hsjGN4KJBQ-Ms5qpJH5XN4y1_E"/>
+</div>
+</div>
+</div>
+</header>
+<main class="max-w-[1440px] mx-auto w-full px-6 lg:px-20">
+<!-- Hero Section -->
+<section class="py-16 lg:py-24 grid lg:grid-cols-2 gap-16 items-center">
+<div class="flex flex-col gap-8">
+<div class="inline-flex items-center gap-2 px-3 py-1 rounded-full fine-border bg-white/5 w-fit">
+<span class="size-1.5 rounded-full bg-primary animate-pulse"></span>
+<span class="text-[10px] font-mono uppercase tracking-widest text-slate-400">Institutional Protocol v4.0.2</span>
+</div>
+<div class="flex flex-col gap-4">
+<h1 class="text-white text-5xl lg:text-7xl font-light leading-[1.1] tracking-tight">
+                        Precision Execution for <span class="text-primary italic font-serif">Sovereign capital</span>.
+                    </h1>
+<p class="text-slate-400 text-lg leading-relaxed max-w-xl font-light">
+                        Institutional-grade liquidity and quantitative execution for the digital asset elite. Engineered for Tier-1 funds and sovereign wealth entities.
+                    </p>
+</div>
+<div class="flex flex-wrap gap-4 pt-4">
+<button class="min-w-[200px] h-14 bg-primary text-background-dark font-bold text-[12px] uppercase tracking-widest hover:scale-[1.02] transition-transform">
+                        Initialize Terminal
+                    </button>
+<button class="min-w-[200px] h-14 fine-border bg-transparent text-white font-bold text-[12px] uppercase tracking-widest hover:bg-white/5 transition-colors">
+                        View Methodology
+                    </button>
+</div>
+</div>
+<div class="relative group">
+<div class="absolute -inset-4 bg-primary/5 blur-3xl rounded-full opacity-50 group-hover:opacity-100 transition-opacity"></div>
+<div class="relative aspect-[4/3] fine-border rounded-xl bg-slate-custom/40 overflow-hidden glass-panel">
+<div class="absolute top-0 left-0 w-full p-4 flex justify-between border-b fine-border bg-white/5">
+<div class="flex gap-1.5">
+<div class="size-2 rounded-full bg-slate-700"></div>
+<div class="size-2 rounded-full bg-slate-700"></div>
+<div class="size-2 rounded-full bg-slate-700"></div>
+</div>
+<span class="text-[9px] font-mono text-slate-500 uppercase tracking-widest">Global Liquidity Heatmap</span>
+</div>
+<div class="w-full h-full flex items-center justify-center p-12">
+<div class="w-full h-full rounded bg-gradient-to-br from-slate-900 to-black relative overflow-hidden fine-border" data-alt="Advanced dark financial data visualization heatmap" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBy01nxhKB0eW7T9kvi2veSyfnFlTGM9Fzt7tsJMI7xoau2lWopcTHgsQZtWnhpE0JH_tbLS1xzE8fM5HGQxaYfMK49eDR-TitHk5U2Ql-kRJBtvgsVN5X4JwmIYRPPG-ih7zLbC6J2Jg1fIj8Gi6vLwtuRUka97erq5X6sDI4ATV0N7FXxag1mMMP_kmQ_ybcXWbfwNZe5sPIbKVD_G7wN1NtAjkJ87Rsyh-g29z8iZRIoo--0FhF_a5H56tzamOZdQ9u0JJgqSVk');">
+<div class="absolute inset-0 bg-primary/10 mix-blend-overlay"></div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Market Pulse Bar -->
+<div class="grid grid-cols-2 md:grid-cols-4 gap-px bg-border-subtle fine-border mb-20 overflow-hidden">
+<div class="bg-background-dark p-8 flex flex-col gap-2">
+<p class="text-slate-500 text-[10px] font-mono uppercase tracking-[0.2em]">24H Aggregate Volume</p>
+<div class="flex items-baseline gap-2">
+<span class="text-white text-3xl font-light tracking-tight data-text">$4.201</span>
+<span class="text-primary text-[12px] font-mono uppercase tracking-widest">BN</span>
+</div>
+<span class="text-emerald-500 text-[11px] font-mono tracking-tighter">▲ +12.4%</span>
+</div>
+<div class="bg-background-dark p-8 flex flex-col gap-2">
+<p class="text-slate-500 text-[10px] font-mono uppercase tracking-[0.2em]">Avg Execution Latency</p>
+<div class="flex items-baseline gap-2">
+<span class="text-white text-3xl font-light tracking-tight data-text">0.038</span>
+<span class="text-slate-600 text-[12px] font-mono uppercase tracking-widest">MS</span>
+</div>
+<span class="text-accent-magenta text-[11px] font-mono tracking-tighter">▼ -2.1%</span>
+</div>
+<div class="bg-background-dark p-8 flex flex-col gap-2">
+<p class="text-slate-500 text-[10px] font-mono uppercase tracking-[0.2em]">Global Nodes</p>
+<div class="flex items-baseline gap-2">
+<span class="text-white text-3xl font-light tracking-tight data-text">1,024</span>
+</div>
+<span class="text-slate-600 text-[11px] font-mono tracking-tighter">OPERATIONAL</span>
+</div>
+<div class="bg-background-dark p-8 flex flex-col gap-2">
+<p class="text-slate-500 text-[10px] font-mono uppercase tracking-[0.2em]">Alpha Index</p>
+<div class="flex items-baseline gap-2">
+<span class="text-white text-3xl font-light tracking-tight data-text">94.2</span>
+</div>
+<span class="text-emerald-500 text-[11px] font-mono tracking-tighter">▲ 2.4% SIGMA</span>
+</div>
+</div>
+<!-- Quantitative Stack -->
+<section class="pb-24">
+<div class="flex justify-between items-end mb-12">
+<div class="flex flex-col gap-2">
+<h2 class="text-white text-3xl font-light tracking-tight uppercase tracking-[0.1em]">The Quantitative Stack</h2>
+<p class="text-slate-500 text-sm font-light">Real-time performance metrics across the Hive ecosystem</p>
+</div>
+<div class="flex gap-4">
+<button class="size-10 flex items-center justify-center rounded-sm fine-border text-slate-500 hover:text-primary transition-colors">
+<span class="material-symbols-outlined">refresh</span>
+</button>
+<button class="size-10 flex items-center justify-center rounded-sm fine-border text-slate-500 hover:text-primary transition-colors">
+<span class="material-symbols-outlined">settings_input_component</span>
+</button>
+</div>
+</div>
+<div class="grid lg:grid-cols-2 gap-8">
+<!-- Chart 1 -->
+<div class="glass-panel fine-border p-8 rounded-lg flex flex-col gap-8">
+<div class="flex justify-between items-start">
+<div class="flex flex-col gap-1">
+<h3 class="text-white text-[11px] font-bold uppercase tracking-widest">Alpha Generation Index</h3>
+<div class="flex items-baseline gap-2">
+<span class="text-white text-4xl font-light data-text">94.2</span>
+<span class="text-emerald-500 text-sm font-mono">+2.4% (30D)</span>
+</div>
+</div>
+<div class="flex gap-2">
+<span class="px-2 py-0.5 rounded-sm bg-primary/10 text-primary text-[9px] font-mono uppercase tracking-widest border border-primary/20">Active</span>
+</div>
+</div>
+<div class="h-[200px] w-full mt-4">
+<svg class="w-full h-full" preserveaspectratio="none" viewbox="0 0 500 150">
+<defs>
+<lineargradient id="chartGradient" x1="0%" x2="0%" y1="0%" y2="100%">
+<stop offset="0%" stop-color="#00f6ff" stop-opacity="0.2"></stop>
+<stop offset="100%" stop-color="#00f6ff" stop-opacity="0"></stop>
+</lineargradient>
+</defs>
+<path d="M0 100 Q 50 80, 100 90 T 200 60 T 300 110 T 400 30 T 500 70 L 500 150 L 0 150 Z" fill="url(#chartGradient)"></path>
+<path d="M0 100 Q 50 80, 100 90 T 200 60 T 300 110 T 400 30 T 500 70" fill="none" stroke="#00f6ff" stroke-linecap="round" stroke-width="1.5"></path>
+</svg>
+<div class="flex justify-between pt-4">
+<span class="text-slate-600 text-[9px] font-mono tracking-widest">00:00 UTC</span>
+<span class="text-slate-600 text-[9px] font-mono tracking-widest">08:00 UTC</span>
+<span class="text-slate-600 text-[9px] font-mono tracking-widest">16:00 UTC</span>
+<span class="text-slate-600 text-[9px] font-mono tracking-widest">23:59 UTC</span>
+</div>
+</div>
+</div>
+<!-- Chart 2 -->
+<div class="glass-panel fine-border p-8 rounded-lg flex flex-col gap-8">
+<div class="flex justify-between items-start">
+<div class="flex flex-col gap-1">
+<h3 class="text-white text-[11px] font-bold uppercase tracking-widest">Execution Efficiency</h3>
+<div class="flex items-baseline gap-2">
+<span class="text-white text-4xl font-light data-text">99.99<span class="text-primary">%</span></span>
+<span class="text-slate-500 text-sm font-mono tracking-tight">Real-time</span>
+</div>
+</div>
+<div class="flex gap-2">
+<span class="px-2 py-0.5 rounded-sm bg-accent-magenta/10 text-accent-magenta text-[9px] font-mono uppercase tracking-widest border border-accent-magenta/20">Live</span>
+</div>
+</div>
+<div class="grid grid-cols-5 gap-4 items-end h-[200px] mt-4 px-4">
+<div class="flex flex-col items-center gap-3">
+<div class="w-full bg-slate-custom fine-border rounded-t-sm h-[50%] relative group">
+<div class="absolute inset-0 bg-primary opacity-20 group-hover:opacity-40 transition-opacity"></div>
+</div>
+<span class="text-slate-500 text-[10px] font-mono">NY</span>
+</div>
+<div class="flex flex-col items-center gap-3">
+<div class="w-full bg-slate-custom fine-border rounded-t-sm h-[90%] relative group">
+<div class="absolute inset-0 bg-primary opacity-20 group-hover:opacity-40 transition-opacity"></div>
+</div>
+<span class="text-slate-500 text-[10px] font-mono">LDN</span>
+</div>
+<div class="flex flex-col items-center gap-3">
+<div class="w-full bg-slate-custom fine-border rounded-t-sm h-[30%] relative group">
+<div class="absolute inset-0 bg-primary opacity-20 group-hover:opacity-40 transition-opacity"></div>
+</div>
+<span class="text-slate-500 text-[10px] font-mono">HKG</span>
+</div>
+<div class="flex flex-col items-center gap-3">
+<div class="w-full bg-slate-custom fine-border rounded-t-sm h-[65%] relative group">
+<div class="absolute inset-0 bg-primary opacity-20 group-hover:opacity-40 transition-opacity"></div>
+</div>
+<span class="text-slate-500 text-[10px] font-mono">SIN</span>
+</div>
+<div class="flex flex-col items-center gap-3">
+<div class="w-full bg-slate-custom fine-border rounded-t-sm h-[80%] relative group">
+<div class="absolute inset-0 bg-primary opacity-20 group-hover:opacity-40 transition-opacity"></div>
+</div>
+<span class="text-slate-500 text-[10px] font-mono">DXB</span>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Trust / Network -->
+<section class="py-24 border-t fine-border">
+<div class="grid md:grid-cols-3 gap-12">
+<div class="flex flex-col gap-6">
+<span class="material-symbols-outlined text-primary text-4xl">security</span>
+<h4 class="text-white text-xl font-light uppercase tracking-widest">Fortress Security</h4>
+<p class="text-slate-500 text-sm leading-relaxed font-light">MPC-based custody and execution environments with air-gapped signing protocols. Audited by top-tier security firms.</p>
+</div>
+<div class="flex flex-col gap-6">
+<span class="material-symbols-outlined text-primary text-4xl">hub</span>
+<h4 class="text-white text-xl font-light uppercase tracking-widest">Ultra Low Latency</h4>
+<p class="text-slate-500 text-sm leading-relaxed font-light">Direct exchange connectivity via our proprietary fiber-optic backplane across global financial hubs.</p>
+</div>
+<div class="flex flex-col gap-6">
+<span class="material-symbols-outlined text-primary text-4xl">monitoring</span>
+<h4 class="text-white text-xl font-light uppercase tracking-widest">Discrete Liquidity</h4>
+<p class="text-slate-500 text-sm leading-relaxed font-light">Non-custodial dark pools and private order books for large block executions with zero market impact.</p>
+</div>
+</div>
+</section>
+</main>
+<!-- Footer -->
+<footer class="mt-auto border-t fine-border py-12 px-6 lg:px-20 bg-slate-custom/30">
+<div class="max-w-[1440px] mx-auto flex flex-col md:flex-row justify-between items-center gap-8">
+<div class="flex flex-col gap-4 items-center md:items-start">
+<div class="flex items-center gap-3 grayscale opacity-60">
+<div class="size-4 flex items-center justify-center bg-white rounded-sm"></div>
+<h2 class="text-white text-sm font-bold tracking-[0.2em] uppercase">Hive Elite</h2>
+</div>
+<p class="text-slate-600 text-[10px] uppercase tracking-widest font-mono">© 2024 Hive Quantitative Institutional Group. All rights reserved.</p>
+</div>
+<div class="flex gap-10">
+<a class="text-slate-400 hover:text-white text-[10px] uppercase tracking-widest font-bold" href="#">Privacy</a>
+<a class="text-slate-400 hover:text-white text-[10px] uppercase tracking-widest font-bold" href="#">Terms</a>
+<a class="text-slate-400 hover:text-white text-[10px] uppercase tracking-widest font-bold" href="#">Regulatory</a>
+<a class="text-slate-400 hover:text-white text-[10px] uppercase tracking-widest font-bold" href="#">Contact</a>
+</div>
+</div>
+</footer>
+</div>
+</body></html>

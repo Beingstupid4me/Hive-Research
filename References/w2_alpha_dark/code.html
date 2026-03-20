@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Hive | The Alpha Factory</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&amp;family=JetBrains+Mono:wght@400;500;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#00f6ff",
+                        "neon-cyan": "#00f6ff",
+                        "deep-magenta": "#ff00ff",
+                        "background-light": "#f5f8f8",
+                        "background-dark": "#0b1212",
+                        "surface-dark": "#121d1e",
+                        "border-dark": "#1f2e2f",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"],
+                        "mono": ["JetBrains Mono", "monospace"]
+                    },
+                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<style>
+        body { font-family: 'Inter', sans-serif; }
+        .mono { font-family: 'JetBrains Mono', monospace; }
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 min-h-screen flex overflow-hidden">
+<!-- SideNavBar -->
+<aside class="w-64 border-r border-border-dark flex flex-col h-screen shrink-0 bg-surface-dark/50">
+<div class="p-6 flex flex-col gap-8 h-full">
+<!-- Branding -->
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 bg-primary rounded-lg flex items-center justify-center text-background-dark">
+<span class="material-symbols-outlined font-bold">hive</span>
+</div>
+<div>
+<h1 class="text-lg font-bold leading-none tracking-tight">Hive</h1>
+<p class="text-xs text-slate-400 uppercase tracking-widest mt-1">Institutional</p>
+</div>
+</div>
+<!-- Navigation Desks -->
+<nav class="flex flex-col gap-1.5">
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-400 hover:bg-white/5 transition-colors" href="#">
+<span class="material-symbols-outlined text-lg">public</span>
+<span class="text-sm font-medium">Macro Desk</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg bg-primary/10 text-primary border border-primary/20" href="#">
+<span class="material-symbols-outlined text-lg">factory</span>
+<span class="text-sm font-medium">Alpha Factory</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-400 hover:bg-white/5 transition-colors" href="#">
+<span class="material-symbols-outlined text-lg">shield</span>
+<span class="text-sm font-medium">Risk Desk</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-400 hover:bg-white/5 transition-colors" href="#">
+<span class="material-symbols-outlined text-lg">terminal</span>
+<span class="text-sm font-medium">Fin-OSS Agent</span>
+</a>
+</nav>
+<div class="mt-auto pt-6 border-t border-border-dark flex flex-col gap-4">
+<div class="flex items-center gap-3 px-3">
+<div class="w-8 h-8 rounded-full bg-slate-800 flex items-center justify-center text-xs font-mono text-primary">OP</div>
+<div class="flex flex-col">
+<span class="text-xs font-semibold">Operator 07</span>
+<span class="text-[10px] text-slate-500 uppercase">System Admin</span>
+</div>
+</div>
+</div>
+</div>
+</aside>
+<!-- Main Content Area -->
+<main class="flex-1 flex flex-col h-screen overflow-hidden">
+<!-- Header -->
+<header class="h-16 border-b border-border-dark flex items-center justify-between px-8 bg-surface-dark/30 backdrop-blur-md">
+<div class="flex items-center gap-4">
+<h2 class="text-xl font-bold tracking-tight">The Alpha Factory</h2>
+<div class="h-4 w-px bg-border-dark"></div>
+<div class="flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-primary animate-pulse"></span>
+<span class="text-[10px] font-mono text-slate-400 uppercase tracking-widest">Real-time Inference Active</span>
+</div>
+</div>
+<div class="flex items-center gap-6">
+<div class="relative w-64">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-slate-500 text-lg">search</span>
+<input class="w-full bg-background-dark/50 border-border-dark rounded-lg pl-10 pr-4 py-1.5 text-sm focus:ring-1 focus:ring-primary focus:border-primary" placeholder="Search Ticker..." type="text"/>
+</div>
+<div class="flex items-center gap-3">
+<button class="w-9 h-9 flex items-center justify-center rounded-lg border border-border-dark hover:bg-white/5 text-slate-400">
+<span class="material-symbols-outlined text-xl">notifications</span>
+</button>
+<button class="w-9 h-9 flex items-center justify-center rounded-lg border border-border-dark hover:bg-white/5 text-slate-400">
+<span class="material-symbols-outlined text-xl">settings</span>
+</button>
+</div>
+</div>
+</header>
+<!-- View Controls & Summary -->
+<section class="p-8 pb-0">
+<div class="flex items-end justify-between mb-8">
+<div>
+<h3 class="text-3xl font-black tracking-tight mb-2 uppercase">Cross-Sectional Ranking</h3>
+<p class="text-slate-400 text-sm flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-base">verified</span>
+                        Powered by LightGBM Ensemble — <span class="text-slate-200">SHAP Interpretability: Active</span>
+</p>
+</div>
+<div class="flex gap-4">
+<div class="bg-surface-dark p-4 rounded-xl border border-border-dark min-w-[140px]">
+<p class="text-[10px] uppercase text-slate-500 font-bold tracking-widest mb-1">Model Confidence</p>
+<p class="font-mono text-2xl font-bold text-primary">88.4%</p>
+</div>
+<div class="bg-surface-dark p-4 rounded-xl border border-border-dark min-w-[140px]">
+<p class="text-[10px] uppercase text-slate-500 font-bold tracking-widest mb-1">Alpha Decay</p>
+<p class="font-mono text-2xl font-bold text-deep-magenta">0.12<span class="text-xs ml-1 opacity-60">bps/hr</span></p>
+</div>
+</div>
+</div>
+<!-- Tabs -->
+<div class="flex border-b border-border-dark gap-8">
+<button class="px-1 pb-3 border-b-2 border-primary text-primary text-sm font-bold tracking-wide uppercase">Ranked Decile Table</button>
+<button class="px-1 pb-3 border-b-2 border-transparent text-slate-500 hover:text-slate-300 text-sm font-bold tracking-wide uppercase transition-colors">Feature Importance</button>
+<button class="px-1 pb-3 border-b-2 border-transparent text-slate-500 hover:text-slate-300 text-sm font-bold tracking-wide uppercase transition-colors">Execution Log</button>
+</div>
+</section>
+<!-- Table Container -->
+<section class="flex-1 overflow-auto p-8 pt-6 no-scrollbar">
+<div class="bg-surface-dark border border-border-dark rounded-xl overflow-hidden shadow-2xl">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="bg-background-dark/50 text-[10px] uppercase text-slate-400 font-bold tracking-widest">
+<th class="px-6 py-4 border-b border-border-dark">Rank</th>
+<th class="px-6 py-4 border-b border-border-dark">Ticker</th>
+<th class="px-6 py-4 border-b border-border-dark">Alpha Score</th>
+<th class="px-6 py-4 border-b border-border-dark">Price (USD)</th>
+<th class="px-6 py-4 border-b border-border-dark">SHAP Feature Attribution (Top 3)</th>
+<th class="px-6 py-4 border-b border-border-dark text-right">Vol (24h)</th>
+</tr>
+</thead>
+<tbody class="mono text-sm">
+<!-- LONG PORTFOLIO (TOP 10%) -->
+<tr class="group hover:bg-primary/5 transition-colors border-b border-border-dark bg-primary/10">
+<td class="px-6 py-4 text-primary font-bold">001</td>
+<td class="px-6 py-4">
+<div class="flex items-center gap-2">
+<span class="font-bold text-slate-100">AAPL.US</span>
+<span class="text-[10px] bg-primary text-background-dark px-1 rounded font-bold">LONG</span>
+</div>
+</td>
+<td class="px-6 py-4 text-primary">+0.984</td>
+<td class="px-6 py-4">$223.44</td>
+<td class="px-6 py-4">
+<div class="flex items-center gap-1 h-6 max-w-[200px]">
+<div class="h-full bg-primary/80 rounded-l-sm transition-all" style="width: 45%" title="Momentum: +45%"></div>
+<div class="h-full bg-primary/50 transition-all" style="width: 30%" title="Volume: +30%"></div>
+<div class="h-full bg-primary/20 rounded-r-sm transition-all" style="width: 25%" title="Volatility: +25%"></div>
+<span class="text-[10px] ml-2 text-slate-400">MOM, VOL, VAR</span>
+</div>
+</td>
+<td class="px-6 py-4 text-right text-slate-400">4.2B</td>
+</tr>
+<tr class="group hover:bg-primary/5 transition-colors border-b border-border-dark bg-primary/5">
+<td class="px-6 py-4 text-primary font-bold">002</td>
+<td class="px-6 py-4">
+<div class="flex items-center gap-2">
+<span class="font-bold text-slate-100">TSLA.US</span>
+<span class="text-[10px] bg-primary/50 text-white px-1 rounded font-bold">LONG</span>
+</div>
+</td>
+<td class="px-6 py-4 text-primary">+0.921</td>
+<td class="px-6 py-4">$241.05</td>
+<td class="px-6 py-4">
+<div class="flex items-center gap-1 h-6 max-w-[200px]">
+<div class="h-full bg-primary/80 rounded-l-sm" style="width: 60%"></div>
+<div class="h-full bg-primary/50" style="width: 20%"></div>
+<div class="h-full bg-primary/20 rounded-r-sm" style="width: 20%"></div>
+</div>
+</td>
+<td class="px-6 py-4 text-right text-slate-400">12.8B</td>
+</tr>
+<!-- NEUTRAL / SLATE GREY -->
+<tr class="group hover:bg-slate-700/20 transition-colors border-b border-border-dark">
+<td class="px-6 py-4 text-slate-500">045</td>
+<td class="px-6 py-4">
+<div class="flex items-center gap-2 text-slate-100 font-bold">MSFT.US</div>
+</td>
+<td class="px-6 py-4 text-slate-400">0.012</td>
+<td class="px-6 py-4">$412.80</td>
+<td class="px-6 py-4">
+<div class="flex items-center gap-1 h-6 max-w-[200px]">
+<div class="h-full bg-slate-500/80 rounded-l-sm" style="width: 33%"></div>
+<div class="h-full bg-slate-500/50" style="width: 33%"></div>
+<div class="h-full bg-slate-500/20 rounded-r-sm" style="width: 34%"></div>
+</div>
+</td>
+<td class="px-6 py-4 text-right text-slate-400">1.9B</td>
+</tr>
+<tr class="group hover:bg-slate-700/20 transition-colors border-b border-border-dark">
+<td class="px-6 py-4 text-slate-500">046</td>
+<td class="px-6 py-4">
+<div class="flex items-center gap-2 text-slate-100 font-bold">GOOGL.US</div>
+</td>
+<td class="px-6 py-4 text-slate-400">-0.005</td>
+<td class="px-6 py-4">$168.42</td>
+<td class="px-6 py-4">
+<div class="flex items-center gap-1 h-6 max-w-[200px]">
+<div class="h-full bg-slate-500/80 rounded-l-sm" style="width: 40%"></div>
+<div class="h-full bg-slate-500/50" style="width: 40%"></div>
+<div class="h-full bg-slate-500/20 rounded-r-sm" style="width: 20%"></div>
+</div>
+</td>
+<td class="px-6 py-4 text-right text-slate-400">2.1B</td>
+</tr>
+<!-- SHORT PORTFOLIO (BOTTOM 10%) -->
+<tr class="group hover:bg-deep-magenta/5 transition-colors border-b border-border-dark bg-deep-magenta/5">
+<td class="px-6 py-4 text-deep-magenta font-bold">499</td>
+<td class="px-6 py-4">
+<div class="flex items-center gap-2">
+<span class="font-bold text-slate-100">PFE.US</span>
+<span class="text-[10px] bg-deep-magenta/50 text-white px-1 rounded font-bold">SHORT</span>
+</div>
+</td>
+<td class="px-6 py-4 text-deep-magenta">-0.892</td>
+<td class="px-6 py-4">$28.14</td>
+<td class="px-6 py-4">
+<div class="flex items-center gap-1 h-6 max-w-[200px]">
+<div class="h-full bg-deep-magenta/80 rounded-l-sm" style="width: 50%"></div>
+<div class="h-full bg-deep-magenta/50" style="width: 30%"></div>
+<div class="h-full bg-deep-magenta/20 rounded-r-sm" style="width: 20%"></div>
+</div>
+</td>
+<td class="px-6 py-4 text-right text-slate-400">840M</td>
+</tr>
+<tr class="group hover:bg-deep-magenta/5 transition-colors border-b border-border-dark bg-deep-magenta/10">
+<td class="px-6 py-4 text-deep-magenta font-bold">500</td>
+<td class="px-6 py-4">
+<div class="flex items-center gap-2">
+<span class="font-bold text-slate-100">WBD.US</span>
+<span class="text-[10px] bg-deep-magenta text-white px-1 rounded font-bold">SHORT</span>
+</div>
+</td>
+<td class="px-6 py-4 text-deep-magenta">-0.954</td>
+<td class="px-6 py-4">$7.65</td>
+<td class="px-6 py-4">
+<div class="flex items-center gap-1 h-6 max-w-[200px]">
+<div class="h-full bg-deep-magenta/80 rounded-l-sm" style="width: 70%"></div>
+<div class="h-full bg-deep-magenta/50" style="width: 20%"></div>
+<div class="h-full bg-deep-magenta/20 rounded-r-sm" style="width: 10%"></div>
+</div>
+</td>
+<td class="px-6 py-4 text-right text-slate-400">1.2B</td>
+</tr>
+</tbody>
+</table>
+<!-- Footer / Status Bar -->
+<div class="bg-background-dark/80 px-6 py-3 border-t border-border-dark flex items-center justify-between">
+<div class="flex gap-6">
+<div class="flex items-center gap-2">
+<span class="text-[10px] text-slate-500 uppercase font-bold tracking-widest">Training Loss:</span>
+<span class="mono text-xs text-primary">0.042</span>
+</div>
+<div class="flex items-center gap-2">
+<span class="text-[10px] text-slate-500 uppercase font-bold tracking-widest">Valid Set Accuracy:</span>
+<span class="mono text-xs text-primary">0.781</span>
+</div>
+</div>
+<div class="flex items-center gap-4 text-slate-500 text-[10px] uppercase font-bold tracking-widest">
+<span>Rows: 500</span>
+<span>Update: 2024-05-24 14:00:00 UTC</span>
+</div>
+</div>
+</div>
+</section>
+<!-- Stats Grid Footer (Optional high-density data) -->
+<section class="px-8 pb-8 flex gap-4 overflow-x-auto no-scrollbar">
+<div class="flex-none w-64 bg-surface-dark border border-border-dark rounded-xl p-4">
+<p class="text-[10px] text-slate-500 uppercase font-bold tracking-widest mb-3">Long Portfolio Performance</p>
+<div class="flex items-baseline gap-2">
+<span class="mono text-2xl font-bold text-primary">+12.4%</span>
+<span class="text-xs text-slate-400">Ex-ante</span>
+</div>
+<div class="w-full bg-slate-800 h-1.5 rounded-full mt-4 overflow-hidden">
+<div class="bg-primary h-full w-4/5"></div>
+</div>
+</div>
+<div class="flex-none w-64 bg-surface-dark border border-border-dark rounded-xl p-4">
+<p class="text-[10px] text-slate-500 uppercase font-bold tracking-widest mb-3">Short Portfolio Performance</p>
+<div class="flex items-baseline gap-2">
+<span class="mono text-2xl font-bold text-deep-magenta">-8.1%</span>
+<span class="text-xs text-slate-400">Ex-ante</span>
+</div>
+<div class="w-full bg-slate-800 h-1.5 rounded-full mt-4 overflow-hidden">
+<div class="bg-deep-magenta h-full w-3/4"></div>
+</div>
+</div>
+<div class="flex-none w-64 bg-surface-dark border border-border-dark rounded-xl p-4">
+<p class="text-[10px] text-slate-500 uppercase font-bold tracking-widest mb-3">Information Ratio</p>
+<div class="flex items-baseline gap-2">
+<span class="mono text-2xl font-bold text-slate-100">1.84</span>
+<span class="text-xs text-primary font-bold">▲ 0.12</span>
+</div>
+<div class="w-full bg-slate-800 h-1.5 rounded-full mt-4 overflow-hidden">
+<div class="bg-slate-500 h-full w-2/3"></div>
+</div>
+</div>
+<div class="flex-none w-64 bg-surface-dark border border-border-dark rounded-xl p-4 border-primary/30">
+<p class="text-[10px] text-primary uppercase font-bold tracking-widest mb-3">System Health</p>
+<div class="flex items-center gap-3">
+<div class="flex gap-1">
+<div class="w-1.5 h-6 bg-primary rounded-full"></div>
+<div class="w-1.5 h-6 bg-primary rounded-full"></div>
+<div class="w-1.5 h-6 bg-primary rounded-full"></div>
+<div class="w-1.5 h-6 bg-primary/20 rounded-full"></div>
+</div>
+<span class="mono text-xs font-bold uppercase">Processing Batch: #9421</span>
+</div>
+</div>
+</section>
+</main>
+</body></html>

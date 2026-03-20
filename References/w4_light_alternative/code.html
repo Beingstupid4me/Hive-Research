@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Fin-OSS | Architectural Intelligence</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;family=JetBrains+Mono:wght@400;500&amp;family=Public+Sans:wght@400;700;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@300,FILL@0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#ec5b13",
+                        "background-light": "#f8f6f6",
+                        "background-dark": "#221610",
+                        "neon-cyan": "#00f2ff",
+                        "deep-magenta": "#ff00ff",
+                        "slate-paper": "#e2e8f0",
+                    },
+                    fontFamily: {
+                        "display": ["Public Sans", "Inter", "sans-serif"],
+                        "mono": ["JetBrains Mono", "monospace"],
+                    },
+                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<style>body {
+    font-family: "Inter", sans-serif
+    }
+.mono-text {
+    font-family: "JetBrains Mono", monospace
+    }
+.paper-texture {
+    background-image: url(https://lh3.googleusercontent.com/aida-public/AB6AXuD99kFzyS77mGDEnNIoKsDcOkQjUMeXF4xG7-5PyuVlr_4mCAWmkjV7oWNR5N5OcW5vdHf5qftPbWdWSy5RcDUyMvQCwItW1AQkiEeH81npyWSJeVv2iXtajrCXvDFcJb_iX5UUyp4rRCyt8mZoDlHyWcVC-uG0xoH70RJTyph75dIN5YuYlzahUFlrp7JnD8e6Krs7xRv1KIL1QLzQmXOE1CdWvvxALak7Aj5dllRPmnrr3V83SterZYY6617D5xSqStQEbgJL7WM)
+    }
+.technical-border {
+    border-image: linear-gradient(to right, #00f2ff, #f0f) 1
+    }</style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 min-h-screen">
+<div class="layout-container flex flex-col min-h-screen">
+<header class="sticky top-0 z-50 bg-white/80 dark:bg-background-dark/80 backdrop-blur-md border-b border-slate-200 dark:border-slate-800 px-6 lg:px-12 py-3 flex items-center justify-between">
+<div class="flex items-center gap-8">
+<div class="flex items-center gap-3">
+<div class="size-8 bg-slate-900 dark:bg-slate-100 flex items-center justify-center rounded">
+<span class="material-symbols-outlined text-white dark:text-slate-900 text-xl">architecture</span>
+</div>
+<div class="flex flex-col">
+<h2 class="text-slate-900 dark:text-white text-sm font-black uppercase tracking-widest font-display leading-tight">Fin-OSS Agent</h2>
+<span class="text-[10px] font-mono uppercase tracking-tighter text-primary">Quantitative Intelligence Unit</span>
+</div>
+</div>
+<nav class="hidden md:flex items-center gap-6">
+<a class="text-xs font-bold uppercase tracking-widest border-b-2 border-primary text-slate-900 dark:text-white pb-1" href="#">Intelligence</a>
+<a class="text-xs font-bold uppercase tracking-widest text-slate-400 dark:text-slate-500 hover:text-slate-900 dark:hover:text-white transition-colors pb-1" href="#">Execution</a>
+<a class="text-xs font-bold uppercase tracking-widest text-slate-400 dark:text-slate-500 hover:text-slate-900 dark:hover:text-white transition-colors pb-1" href="#">Synthesis</a>
+<a class="text-xs font-bold uppercase tracking-widest text-slate-400 dark:text-slate-500 hover:text-slate-900 dark:hover:text-white transition-colors pb-1" href="#">Archives</a>
+</nav>
+</div>
+<div class="flex items-center gap-4">
+<div class="relative hidden sm:block">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-sm">search</span>
+<input class="bg-slate-100 dark:bg-slate-800 border-none rounded text-[10px] font-mono w-48 focus:ring-1 focus:ring-primary pl-9" placeholder="CMD+K TO SEARCH" type="text"/>
+</div>
+<button class="p-2 hover:bg-slate-100 dark:hover:bg-slate-800 rounded transition-colors">
+<span class="material-symbols-outlined text-slate-600 dark:text-slate-400">settings</span>
+</button>
+<div class="w-8 h-8 rounded-full bg-slate-200 border border-slate-300 dark:border-slate-700 overflow-hidden" data-alt="User avatar placeholder">
+<img alt="User Profile" class="w-full h-full object-cover" data-alt="Minimalist geometric user profile avatar" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBKNUv9iah_qTfuzOdozXoRC-O-4WYFEdEUN8MPMVwnd6y2jdvCgzhuYQAtZEFlYLJXmVgGLXqw3-906Fckm2A8X8mURmOTH1c0VD8zjB3MNaUC8AQMKz0uNma8xwpPsqQzAp9mtzXpmEyOkMvjxTYrBEbOVap3wg6cYFbdYR_4IrGmhHs8B4wgVUu855R4bE9RHtnq_LR7RATmjw-SocIa96xnGOGYfil3ipxHbW_Nf6icXIkeZuSB_6R5crCaA_z85RkDYhdNxxE"/>
+</div>
+</div>
+</header>
+<main class="flex-1 flex flex-col lg:flex-row overflow-hidden h-[calc(100vh-64px)]">
+<aside class="w-full lg:w-72 border-r border-slate-200 dark:border-slate-800 flex flex-col bg-white dark:bg-background-dark">
+<div class="p-6 border-b border-slate-100 dark:border-slate-800">
+<div class="flex items-center gap-3 mb-6">
+<div class="size-10 rounded-lg bg-primary/10 flex items-center justify-center text-primary">
+<span class="material-symbols-outlined">analytics</span>
+</div>
+<div>
+<h3 class="text-sm font-bold text-slate-900 dark:text-white">Elite Expertise</h3>
+<p class="text-[10px] font-mono text-slate-400 uppercase">Operational Status: Active</p>
+</div>
+</div>
+<nav class="space-y-1">
+<a class="flex items-center gap-3 px-3 py-2 rounded bg-slate-100 dark:bg-slate-800 text-slate-900 dark:text-white text-sm font-medium" href="#">
+<span class="material-symbols-outlined text-lg">dashboard</span>
+<span>Dashboard</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 rounded text-slate-500 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800/50 text-sm font-medium" href="#">
+<span class="material-symbols-outlined text-lg">memory</span>
+<span>Execution Engine</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 rounded text-slate-500 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800/50 text-sm font-medium" href="#">
+<span class="material-symbols-outlined text-lg">mediation</span>
+<span>Logic Flow</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 rounded text-slate-500 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800/50 text-sm font-medium" href="#">
+<span class="material-symbols-outlined text-lg">library_books</span>
+<span>Research Hub</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 rounded text-slate-500 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800/50 text-sm font-medium" href="#">
+<span class="material-symbols-outlined text-lg">terminal</span>
+<span>Raw Terminal</span>
+</a>
+</nav>
+</div>
+<div class="p-6 flex-1 overflow-y-auto">
+<p class="text-[10px] font-mono text-slate-400 uppercase mb-4 tracking-widest">System Health</p>
+<div class="space-y-4">
+<div class="flex flex-col gap-1">
+<div class="flex justify-between text-[10px] font-mono">
+<span>COMPUTE</span>
+<span class="text-neon-cyan">42%</span>
+</div>
+<div class="h-1 bg-slate-100 dark:bg-slate-800 rounded-full overflow-hidden">
+<div class="h-full bg-neon-cyan w-[42%]"></div>
+</div>
+</div>
+<div class="flex flex-col gap-1">
+<div class="flex justify-between text-[10px] font-mono">
+<span>LATENCY</span>
+<span class="text-deep-magenta">12ms</span>
+</div>
+<div class="h-1 bg-slate-100 dark:bg-slate-800 rounded-full overflow-hidden">
+<div class="h-full bg-deep-magenta w-[15%]"></div>
+</div>
+</div>
+</div>
+</div>
+</aside>
+<section class="flex-1 flex flex-col bg-background-light dark:bg-background-dark paper-texture overflow-y-auto">
+<div class="p-8 lg:p-12 max-w-5xl mx-auto w-full">
+<div class="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12">
+<div class="space-y-2">
+<div class="flex items-center gap-2 text-primary font-mono text-[10px] uppercase tracking-[0.2em]">
+<span class="w-8 h-[1px] bg-primary"></span>
+                                Architectural Intel
+                            </div>
+<h1 class="text-4xl lg:text-5xl font-black text-slate-900 dark:text-white font-display tracking-tight">Architectural Intelligence Feed</h1>
+<p class="text-slate-500 dark:text-slate-400 text-lg font-light">Real-time quantitative synthesis &amp; cross-desk logic</p>
+</div>
+<button class="bg-slate-900 dark:bg-white text-white dark:text-slate-900 px-6 py-2.5 rounded font-bold text-xs uppercase tracking-widest hover:opacity-90 transition-opacity">
+                            Export Report
+                        </button>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+<div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-8 rounded-xl shadow-sm relative overflow-hidden">
+<div class="absolute top-0 right-0 p-4 opacity-10">
+<span class="material-symbols-outlined text-6xl">query_stats</span>
+</div>
+<div class="flex items-center gap-2 mb-6">
+<span class="size-2 rounded-full bg-neon-cyan animate-pulse"></span>
+<span class="font-mono text-[10px] text-slate-400 uppercase tracking-widest">Market Synthesis #091</span>
+</div>
+<h3 class="text-xl font-bold mb-4 text-slate-900 dark:text-white">Equity-Bond Correlation Alpha</h3>
+<p class="text-slate-600 dark:text-slate-400 text-sm leading-relaxed mb-6">
+                                Cross-desk synthesis indicates a decoupling of 10Y yields from tech equity volatility. Signal strength: <span class="text-neon-cyan font-mono">0.84</span>. Recommended execution path via Delta-Neutral Straddle.
+                            </p>
+<div class="flex items-center gap-4 border-t border-slate-100 dark:border-slate-800 pt-6">
+<div class="flex flex-col">
+<span class="text-[10px] font-mono text-slate-400 uppercase">Confidence</span>
+<span class="text-sm font-bold text-slate-900 dark:text-white">92.4%</span>
+</div>
+<div class="flex flex-col">
+<span class="text-[10px] font-mono text-slate-400 uppercase">Risk Param</span>
+<span class="text-sm font-bold text-slate-900 dark:text-white">Low-Med</span>
+</div>
+</div>
+</div>
+<div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-8 rounded-xl shadow-sm relative overflow-hidden">
+<div class="absolute top-0 right-0 p-4 opacity-10">
+<span class="material-symbols-outlined text-6xl">account_tree</span>
+</div>
+<div class="flex items-center gap-2 mb-6">
+<span class="size-2 rounded-full bg-deep-magenta"></span>
+<span class="font-mono text-[10px] text-slate-400 uppercase tracking-widest">Logic Synthesis #044</span>
+</div>
+<h3 class="text-xl font-bold mb-4 text-slate-900 dark:text-white">Macro-Liquidity Cascade</h3>
+<p class="text-slate-600 dark:text-slate-400 text-sm leading-relaxed mb-6">
+                                Global liquidity indices showing a localized surge in Euro-zone credit markets. Synthesis suggests structural rotation from USD and Yen. Monitoring execution nodes for slippage.
+                            </p>
+<div class="flex items-center gap-4 border-t border-slate-100 dark:border-slate-800 pt-6">
+<div class="flex flex-col">
+<span class="text-[10px] font-mono text-slate-400 uppercase">Source</span>
+<span class="text-sm font-bold text-slate-900 dark:text-white">Bloomberg + proprietary</span>
+</div>
+<div class="flex flex-col">
+<span class="text-[10px] font-mono text-slate-400 uppercase">Last Logic Run</span>
+<span class="text-sm font-bold text-slate-900 dark:text-white">2m ago</span>
+</div>
+</div>
+</div>
+<div class="md:col-span-2 bg-slate-900 dark:bg-white text-white dark:text-slate-900 p-8 rounded-xl overflow-hidden relative">
+<div class="flex flex-col md:flex-row gap-8 items-center">
+<div class="flex-1 space-y-4">
+<h4 class="text-2xl font-black font-display tracking-tight uppercase">Quant-Engine Directive</h4>
+<p class="text-slate-400 dark:text-slate-500 font-mono text-xs uppercase tracking-widest">Strategic Overview Node</p>
+<div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
+<div class="border-l border-primary/40 pl-3">
+<p class="text-[9px] font-mono opacity-50">ALPHA GEN</p>
+<p class="text-xl font-bold">14.2%</p>
+</div>
+<div class="border-l border-neon-cyan/40 pl-3">
+<p class="text-[9px] font-mono opacity-50">SHARPE</p>
+<p class="text-xl font-bold">3.12</p>
+</div>
+<div class="border-l border-deep-magenta/40 pl-3">
+<p class="text-[9px] font-mono opacity-50">EXPOSURE</p>
+<p class="text-xl font-bold">4.2M</p>
+</div>
+<div class="border-l border-slate-500/40 pl-3">
+<p class="text-[9px] font-mono opacity-50">VOL</p>
+<p class="text-xl font-bold">0.8%</p>
+</div>
+</div>
+</div>
+<div class="w-full md:w-64 h-32 bg-slate-800 dark:bg-slate-100 rounded flex items-center justify-center border border-white/10 dark:border-slate-200">
+<span class="font-mono text-[10px] text-slate-500">REALTIME_GRAPH_RENDERER</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="mt-auto p-4 border-t border-slate-200 dark:border-slate-800 bg-white dark:bg-background-dark/50 backdrop-blur">
+<div class="max-w-4xl mx-auto relative">
+<span class="absolute left-4 top-1/2 -translate-y-1/2 font-mono text-primary text-sm font-bold">&gt;</span>
+<input class="w-full bg-transparent border-none focus:ring-0 font-mono text-xs pl-10 text-slate-700 dark:text-slate-300" placeholder="QUERY SYSTEM LOGIC OR INITIATE ARCHITECTURAL SYNTHESIS..." type="text"/>
+<div class="absolute right-4 top-1/2 -translate-y-1/2 flex gap-2">
+<kbd class="px-1.5 py-0.5 rounded bg-slate-100 dark:bg-slate-800 text-[10px] font-mono text-slate-400">ENTER</kbd>
+</div>
+</div>
+</div>
+</section>
+<aside class="w-full lg:w-96 border-l border-slate-200 dark:border-slate-800 flex flex-col bg-white dark:bg-background-dark">
+<div class="p-4 border-b border-slate-200 dark:border-slate-800 flex justify-between items-center">
+<h3 class="text-[10px] font-mono font-bold uppercase tracking-widest text-slate-900 dark:text-white">Technical Execution Log</h3>
+<div class="flex items-center gap-2">
+<span class="size-2 rounded-full bg-green-500"></span>
+<span class="text-[9px] font-mono text-slate-400">LIVE</span>
+</div>
+</div>
+<div class="flex-1 overflow-y-auto p-4 mono-text bg-slate-50 dark:bg-slate-900/50">
+<div class="space-y-3 text-[11px] leading-relaxed">
+<div class="text-slate-400">
+<span class="text-primary font-bold">14:02:11</span> [INIT] Core logic sequence engaged...
+                        </div>
+<div class="text-slate-600 dark:text-slate-400">
+<span class="text-primary font-bold">14:02:12</span> [DATA] Connecting to WebSocket (L1_FEED_NYC)...
+                        </div>
+<div class="text-neon-cyan">
+<span class="text-primary font-bold">14:02:13</span> [SYNC] Packet synchronization successful. Offset: 1.2ms.
+                        </div>
+<div class="text-slate-600 dark:text-slate-400">
+<span class="text-primary font-bold">14:02:15</span> [ANALYSIS] Scanning volatility surfaces for XAU/USD...
+                        </div>
+<div class="text-slate-600 dark:text-slate-400 border-l-2 border-slate-200 dark:border-slate-800 pl-3 my-4 italic">
+                            Running DeepSynthesis_Module v4.2.1...<br/>
+                            &gt; Calculating gamma exposure...<br/>
+                            &gt; Mapping liquidity nodes...
+                        </div>
+<div class="text-deep-magenta font-medium">
+<span class="text-primary font-bold">14:03:01</span> [SIGNAL] Skew anomaly detected in Near-Month Puts.
+                        </div>
+<div class="text-slate-400">
+<span class="text-primary font-bold">14:03:02</span> [EXEC] Staging delta-neutral order block [34-A].
+                        </div>
+<div class="text-slate-600 dark:text-slate-400">
+<span class="text-primary font-bold">14:03:10</span> [LOG] Awaiting manual architectural confirmation...
+                        </div>
+<div class="pt-4 border-t border-slate-200 dark:border-slate-800">
+<span class="animate-pulse inline-block w-2 h-4 bg-slate-400 dark:bg-slate-600 align-middle"></span>
+</div>
+</div>
+</div>
+<div class="p-6 bg-slate-100 dark:bg-slate-800">
+<div class="p-4 rounded border border-dashed border-slate-300 dark:border-slate-600 text-center">
+<p class="text-[10px] font-mono text-slate-500 uppercase mb-3">System Snapshot</p>
+<div class="size-24 mx-auto mb-3 bg-white dark:bg-slate-900 flex items-center justify-center rounded shadow-inner" data-alt="System architecture diagram placeholder">
+<span class="material-symbols-outlined text-3xl text-slate-300">qr_code_2</span>
+</div>
+<p class="text-[9px] font-mono text-slate-400">Verification Hash: <span class="text-slate-900 dark:text-white">0x88b...2f1</span></p>
+</div>
+</div>
+</aside>
+</main>
+</div>
+</body></html>

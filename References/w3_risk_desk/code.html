@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Hive - The Risk Desk</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&amp;family=JetBrains+Mono:wght@400;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#00f6ff",
+                        "negative": "#ff00ff",
+                        "background-light": "#f5f8f8",
+                        "background-dark": "#0f2223",
+                        "slate-custom": "#2a3f40",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"],
+                        "mono": ["JetBrains Mono", "monospace"]
+                    },
+                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #0f2223;
+        }
+        .mono-text {
+            font-family: 'JetBrains Mono', monospace;
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 min-h-screen">
+<div class="flex h-screen overflow-hidden">
+<!-- Sidebar Navigation -->
+<aside class="w-64 flex-shrink-0 bg-background-light dark:bg-background-dark border-r border-slate-custom flex flex-col justify-between p-4">
+<div class="flex flex-col gap-8">
+<div class="flex items-center gap-3 px-2">
+<div class="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
+<span class="material-symbols-outlined text-background-dark">hive</span>
+</div>
+<div>
+<h1 class="text-lg font-bold tracking-tight">Hive</h1>
+<p class="text-xs text-slate-400 uppercase tracking-widest">Institutional Risk</p>
+</div>
+</div>
+<nav class="flex flex-col gap-2">
+<div class="flex items-center gap-3 px-3 py-2 rounded-lg bg-primary/10 text-primary border border-primary/20 cursor-pointer">
+<span class="material-symbols-outlined">analytics</span>
+<span class="text-sm font-semibold">Risk Desk</span>
+</div>
+<div class="flex items-center gap-3 px-3 py-2 text-slate-400 hover:text-slate-100 hover:bg-slate-custom/30 rounded-lg cursor-pointer transition-colors">
+<span class="material-symbols-outlined">account_balance_wallet</span>
+<span class="text-sm font-medium">Portfolio</span>
+</div>
+<div class="flex items-center gap-3 px-3 py-2 text-slate-400 hover:text-slate-100 hover:bg-slate-custom/30 rounded-lg cursor-pointer transition-colors">
+<span class="material-symbols-outlined">bubble_chart</span>
+<span class="text-sm font-medium">Clustering</span>
+</div>
+<div class="flex items-center gap-3 px-3 py-2 text-slate-400 hover:text-slate-100 hover:bg-slate-custom/30 rounded-lg cursor-pointer transition-colors">
+<span class="material-symbols-outlined">sensors</span>
+<span class="text-sm font-medium">Signals</span>
+<span class="ml-auto w-2 h-2 rounded-full bg-primary animate-pulse"></span>
+</div>
+<div class="flex items-center gap-3 px-3 py-2 text-slate-400 hover:text-slate-100 hover:bg-slate-custom/30 rounded-lg cursor-pointer transition-colors">
+<span class="material-symbols-outlined">settings</span>
+<span class="text-sm font-medium">Settings</span>
+</div>
+</nav>
+</div>
+<div class="flex flex-col gap-4">
+<div class="p-3 bg-slate-custom/20 rounded-xl border border-slate-custom/50">
+<div class="flex items-center gap-3 mb-3">
+<div class="w-10 h-10 rounded-full border border-primary p-0.5">
+<img alt="User avatar" class="rounded-full bg-slate-800" data-alt="Cyberpunk style robot avatar for Operator 07" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC8QSG-euoy-3VKFTMtN8TwG6krghxzMaRccryJygPaJOkM77yh9HKQR1mJhNJCY2fAB_e7tCfPe5ctbATv9nylbX4eGyK-Sznjt9kgjZEG9CpbBrCEO_luT1Frc5D8B6_wDU6jfezYr90vN3yTfuZvQT9tVdh7dIEegM3LbjKeExiYMV40aXCypGYo_w5lc8XyQ-QR0MNfeigzbLMKWuh2qsomR_3OWibCVMJFSRYy_BGVQmkS12UvJGPS8Ob8ZTRvXSnztzko-8E"/>
+</div>
+<div class="flex flex-col">
+<span class="text-sm font-bold text-slate-100">Operator 07</span>
+<span class="text-[10px] mono-text text-primary">LVL 4 CLEARANCE</span>
+</div>
+</div>
+<div class="flex items-center justify-between px-1">
+<div class="flex items-center gap-1.5">
+<span class="w-2 h-2 rounded-full bg-primary"></span>
+<span class="text-[10px] mono-text text-slate-400">STABLE</span>
+</div>
+<span class="text-[10px] mono-text text-slate-400">LATENCY: 14MS</span>
+</div>
+</div>
+<button class="w-full py-3 bg-primary text-background-dark font-bold rounded-lg hover:brightness-110 transition-all flex items-center justify-center gap-2">
+<span class="material-symbols-outlined text-lg">bolt</span>
+                    Deploy Capital
+                </button>
+</div>
+</aside>
+<!-- Main Content -->
+<main class="flex-1 flex flex-col overflow-y-auto">
+<!-- Top Header -->
+<header class="h-16 border-b border-slate-custom flex items-center justify-between px-8 bg-background-light/50 dark:bg-background-dark/50 backdrop-blur-md sticky top-0 z-10">
+<div class="flex items-center gap-6">
+<h2 class="text-xl font-bold tracking-tight">The Risk Desk</h2>
+<div class="h-4 w-px bg-slate-custom"></div>
+<div class="flex gap-4">
+<span class="text-xs font-bold text-primary uppercase tracking-widest border-b-2 border-primary pb-1 px-1">HRP Visualization</span>
+<span class="text-xs font-bold text-slate-500 uppercase tracking-widest hover:text-slate-300 cursor-pointer pb-1 px-1">Correlations</span>
+<span class="text-xs font-bold text-slate-500 uppercase tracking-widest hover:text-slate-300 cursor-pointer pb-1 px-1">Risk Weights</span>
+</div>
+</div>
+<div class="flex items-center gap-6">
+<div class="flex items-center gap-2 px-3 py-1.5 bg-slate-custom/30 rounded-full border border-slate-custom/50">
+<span class="material-symbols-outlined text-sm text-slate-400">search</span>
+<input class="bg-transparent border-none text-xs mono-text focus:ring-0 w-32 placeholder-slate-500" placeholder="Search Tickers..." type="text"/>
+</div>
+<div class="flex items-center gap-4">
+<button class="relative text-slate-400 hover:text-slate-100">
+<span class="material-symbols-outlined">notifications</span>
+<span class="absolute top-0 right-0 w-2 h-2 bg-negative rounded-full"></span>
+</button>
+<button class="text-slate-400 hover:text-slate-100">
+<span class="material-symbols-outlined">terminal</span>
+</button>
+</div>
+</div>
+</header>
+<!-- Dashboard Content -->
+<div class="p-8 flex flex-col gap-8">
+<!-- Stats Row -->
+<div class="grid grid-cols-4 gap-4">
+<div class="bg-slate-custom/10 border border-slate-custom/50 p-5 rounded-xl">
+<p class="text-xs text-slate-400 uppercase font-bold tracking-widest mb-2">Total Exposure</p>
+<div class="flex items-end justify-between">
+<h3 class="mono-text text-3xl font-bold">$420,691,200</h3>
+<span class="mono-text text-primary text-sm font-bold mb-1">+2.4%</span>
+</div>
+</div>
+<div class="bg-slate-custom/10 border border-slate-custom/50 p-5 rounded-xl">
+<p class="text-xs text-slate-400 uppercase font-bold tracking-widest mb-2">Diversification Ratio</p>
+<div class="flex items-end justify-between">
+<h3 class="mono-text text-3xl font-bold">1.84</h3>
+<span class="mono-text text-primary text-sm font-bold mb-1">+0.15</span>
+</div>
+</div>
+<div class="bg-slate-custom/10 border border-slate-custom/50 p-5 rounded-xl">
+<p class="text-xs text-slate-400 uppercase font-bold tracking-widest mb-2">Cluster Count</p>
+<div class="flex items-end justify-between">
+<h3 class="mono-text text-3xl font-bold">12</h3>
+<span class="mono-text text-slate-500 text-sm font-bold mb-1">OPT-2.0</span>
+</div>
+</div>
+<div class="bg-slate-custom/10 border border-slate-custom/50 p-5 rounded-xl">
+<p class="text-xs text-slate-400 uppercase font-bold tracking-widest mb-2">System Status</p>
+<div class="flex items-center gap-3 h-9">
+<div class="h-2 flex-1 bg-slate-custom rounded-full overflow-hidden">
+<div class="h-full bg-primary w-4/5"></div>
+</div>
+<span class="mono-text text-xs text-primary font-bold">STABLE</span>
+</div>
+</div>
+</div>
+<!-- Weight Allocation Bar -->
+<div class="flex flex-col gap-3">
+<div class="flex justify-between items-end px-1">
+<h4 class="text-sm font-bold uppercase tracking-widest text-slate-400">Risk Allocation Clusters</h4>
+<span class="mono-text text-xs text-slate-500">Target: Equal Risk Contribution</span>
+</div>
+<div class="h-10 w-full flex rounded-lg overflow-hidden border border-slate-custom/30">
+<div class="bg-primary/90 h-full flex items-center justify-center border-r border-background-dark/30 group relative cursor-help" style="width: 20%">
+<span class="mono-text text-[10px] font-bold text-background-dark">C-01: 20.2%</span>
+</div>
+<div class="bg-primary/70 h-full flex items-center justify-center border-r border-background-dark/30" style="width: 15%">
+<span class="mono-text text-[10px] font-bold text-background-dark">C-02: 15.1%</span>
+</div>
+<div class="bg-primary/50 h-full flex items-center justify-center border-r border-background-dark/30" style="width: 12%">
+<span class="mono-text text-[10px] font-bold text-background-dark">C-03: 12.5%</span>
+</div>
+<div class="bg-primary/40 h-full flex items-center justify-center border-r border-background-dark/30" style="width: 18%">
+<span class="mono-text text-[10px] font-bold text-background-dark">C-04: 18.0%</span>
+</div>
+<div class="bg-primary/30 h-full flex items-center justify-center border-r border-background-dark/30" style="width: 10%">
+<span class="mono-text text-[10px] font-bold text-background-dark">C-05: 9.8%</span>
+</div>
+<div class="bg-primary/20 h-full flex items-center justify-center border-r border-background-dark/30" style="width: 15%">
+<span class="mono-text text-[10px] font-bold text-slate-300">C-06: 14.5%</span>
+</div>
+<div class="bg-slate-custom/40 h-full flex items-center justify-center" style="width: 10%">
+<span class="mono-text text-[10px] font-bold text-slate-500">RESERVE</span>
+</div>
+</div>
+</div>
+<!-- Dendrogram Visualization -->
+<div class="bg-slate-custom/5 border border-slate-custom/30 rounded-2xl p-8 relative overflow-hidden min-h-[500px]">
+<div class="absolute top-8 left-8">
+<h4 class="text-lg font-bold">HRP Cluster Tree</h4>
+<p class="text-sm text-slate-500 font-medium">Correlation-based Hierarchical Clustering | S&amp;P 500 Subsets</p>
+</div>
+<div class="mt-16 relative w-full h-full flex justify-center items-center">
+<!-- SVG Tree Representation -->
+<svg class="w-full h-auto" fill="none" height="400" viewbox="0 0 800 400" width="800" xmlns="http://www.w3.org/2000/svg">
+<!-- Paths -->
+<path d="M400 20 V100" stroke="#2a3f40" stroke-width="2"></path>
+<path d="M400 100 H150 V200" stroke="#2a3f40" stroke-width="2"></path>
+<path d="M400 100 H650 V180" stroke="#00f6ff" stroke-width="3"></path>
+<!-- Active Path -->
+<path d="M650 180 H550 V280" stroke="#00f6ff" stroke-width="3"></path>
+<path d="M650 180 H750 V280" stroke="#00f6ff" stroke-width="3"></path>
+<!-- Normal Paths -->
+<path d="M150 200 H80 V300" stroke="#2a3f40" stroke-width="2"></path>
+<path d="M150 200 H220 V300" stroke="#2a3f40" stroke-width="2"></path>
+<!-- Active Nodes (Leaf Clusters) -->
+<circle cx="550" cy="280" fill="#00f6ff" r="6"></circle>
+<circle cx="750" cy="280" fill="#00f6ff" r="6"></circle>
+<!-- Inactive Nodes -->
+<circle cx="80" cy="300" fill="#2a3f40" r="4"></circle>
+<circle cx="220" cy="300" fill="#2a3f40" r="4"></circle>
+<circle cx="400" cy="20" fill="#2a3f40" r="4"></circle>
+<!-- Labels -->
+<text fill="#00f6ff" font-family="JetBrains Mono" font-size="10" text-anchor="middle" x="550" y="310">TECH-GROWTH</text>
+<text fill="#00f6ff" font-family="JetBrains Mono" font-size="10" text-anchor="middle" x="750" y="310">SEMICON</text>
+<text fill="#64748b" font-family="JetBrains Mono" font-size="10" text-anchor="middle" x="80" y="330">UTILITIES</text>
+<text fill="#64748b" font-family="JetBrains Mono" font-size="10" text-anchor="middle" x="220" y="330">STAPLES</text>
+<!-- Detail Lines for Tech Clusters -->
+<line stroke="#00f6ff" stroke-dasharray="4 2" stroke-width="1" x1="550" x2="550" y1="315" y2="350"></line>
+<line stroke="#00f6ff" stroke-dasharray="4 2" stroke-width="1" x1="750" x2="750" y1="315" y2="350"></line>
+</svg>
+<!-- Dynamic Tooltip -->
+<div class="absolute top-[60%] right-[10%] bg-background-dark border border-primary p-4 rounded-lg shadow-2xl shadow-primary/20 z-20">
+<div class="flex items-center gap-2 mb-2">
+<span class="w-2 h-2 rounded-full bg-primary"></span>
+<span class="mono-text text-xs font-bold text-slate-100 uppercase">CLUSTER ACTIVE: C-01</span>
+</div>
+<div class="space-y-1">
+<div class="flex justify-between gap-8">
+<span class="text-[10px] text-slate-500 uppercase font-bold">Risk Contribution</span>
+<span class="mono-text text-[10px] text-primary">0.0825</span>
+</div>
+<div class="flex justify-between gap-8">
+<span class="text-[10px] text-slate-500 uppercase font-bold">Correlation Mean</span>
+<span class="mono-text text-[10px] text-slate-100">0.84</span>
+</div>
+<div class="flex justify-between gap-8 border-t border-slate-custom/30 pt-1 mt-1">
+<span class="text-[10px] text-slate-100 font-bold">NVDA</span>
+<span class="mono-text text-[10px] text-primary">LONG 12.4%</span>
+</div>
+<div class="flex justify-between gap-8">
+<span class="text-[10px] text-slate-100 font-bold">AMD</span>
+<span class="mono-text text-[10px] text-primary">LONG 8.1%</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Background Grid -->
+<div class="absolute inset-0 pointer-events-none" style="background-image: radial-gradient(circle, #2a3f40 1px, transparent 1px); background-size: 40px 40px; opacity: 0.1;"></div>
+</div>
+<!-- Table/Ticker Feed -->
+<div class="grid grid-cols-2 gap-8">
+<div class="bg-slate-custom/10 border border-slate-custom/30 rounded-xl p-6">
+<div class="flex items-center justify-between mb-6">
+<h4 class="text-sm font-bold uppercase tracking-widest">Active Orders</h4>
+<span class="mono-text text-[10px] text-primary bg-primary/10 px-2 py-0.5 rounded border border-primary/20">EXECUTING</span>
+</div>
+<div class="space-y-4">
+<div class="flex items-center justify-between py-2 border-b border-slate-custom/20">
+<div class="flex items-center gap-3">
+<span class="mono-text text-sm font-bold text-slate-100">AAPL</span>
+<span class="text-[10px] font-bold text-primary px-1.5 py-0.5 bg-primary/10 rounded">B</span>
+</div>
+<div class="flex gap-6 items-center">
+<span class="mono-text text-xs text-slate-400">12,400 SHRS</span>
+<span class="mono-text text-xs text-slate-100">$224.12</span>
+<span class="mono-text text-xs text-primary font-bold">PENDING</span>
+</div>
+</div>
+<div class="flex items-center justify-between py-2 border-b border-slate-custom/20">
+<div class="flex items-center gap-3">
+<span class="mono-text text-sm font-bold text-slate-100">TSLA</span>
+<span class="text-[10px] font-bold text-negative px-1.5 py-0.5 bg-negative/10 rounded">S</span>
+</div>
+<div class="flex gap-6 items-center">
+<span class="mono-text text-xs text-slate-400">8,100 SHRS</span>
+<span class="mono-text text-xs text-slate-100">$185.40</span>
+<span class="mono-text text-xs text-primary font-bold">FILL 84%</span>
+</div>
+</div>
+<div class="flex items-center justify-between py-2">
+<div class="flex items-center gap-3">
+<span class="mono-text text-sm font-bold text-slate-100">GOOGL</span>
+<span class="text-[10px] font-bold text-primary px-1.5 py-0.5 bg-primary/10 rounded">B</span>
+</div>
+<div class="flex gap-6 items-center">
+<span class="mono-text text-xs text-slate-400">3,200 SHRS</span>
+<span class="mono-text text-xs text-slate-100">$168.15</span>
+<span class="mono-text text-xs text-slate-500 font-bold">QUEUE</span>
+</div>
+</div>
+</div>
+</div>
+<div class="bg-slate-custom/10 border border-slate-custom/30 rounded-xl p-6">
+<div class="flex items-center justify-between mb-6">
+<h4 class="text-sm font-bold uppercase tracking-widest">HRP Weights (Top)</h4>
+<span class="material-symbols-outlined text-slate-500 cursor-pointer">filter_list</span>
+</div>
+<div class="space-y-4">
+<div class="flex flex-col gap-2">
+<div class="flex justify-between mono-text text-[10px]">
+<span class="text-slate-100">C-01 (TECH)</span>
+<span class="text-primary font-bold">20.2%</span>
+</div>
+<div class="h-1.5 w-full bg-slate-custom/40 rounded-full overflow-hidden">
+<div class="h-full bg-primary" style="width: 20.2%"></div>
+</div>
+</div>
+<div class="flex flex-col gap-2">
+<div class="flex justify-between mono-text text-[10px]">
+<span class="text-slate-100">C-04 (FINANCIALS)</span>
+<span class="text-primary font-bold">18.0%</span>
+</div>
+<div class="h-1.5 w-full bg-slate-custom/40 rounded-full overflow-hidden">
+<div class="h-full bg-primary/80" style="width: 18.0%"></div>
+</div>
+</div>
+<div class="flex flex-col gap-2">
+<div class="flex justify-between mono-text text-[10px]">
+<span class="text-slate-100">C-02 (ENERGY)</span>
+<span class="text-primary font-bold">15.1%</span>
+</div>
+<div class="h-1.5 w-full bg-slate-custom/40 rounded-full overflow-hidden">
+<div class="h-full bg-primary/60" style="width: 15.1%"></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- Right Terminal Sidebar -->
+<aside class="w-16 border-l border-slate-custom flex flex-col items-center py-6 gap-6 bg-background-light dark:bg-background-dark">
+<div class="p-2 rounded-lg bg-primary/10 text-primary border border-primary/20">
+<span class="material-symbols-outlined">data_thresholding</span>
+</div>
+<div class="p-2 rounded-lg text-slate-500 hover:text-slate-300 cursor-pointer">
+<span class="material-symbols-outlined">layers</span>
+</div>
+<div class="p-2 rounded-lg text-slate-500 hover:text-slate-300 cursor-pointer">
+<span class="material-symbols-outlined">history</span>
+</div>
+<div class="mt-auto p-2 rounded-lg text-slate-500 hover:text-slate-300 cursor-pointer">
+<span class="material-symbols-outlined">help</span>
+</div>
+<div class="p-2 rounded-lg text-negative/70 hover:text-negative cursor-pointer">
+<span class="material-symbols-outlined">power_settings_new</span>
+</div>
+</aside>
+</div>
+</body></html>

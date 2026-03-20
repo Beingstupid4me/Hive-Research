@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;family=JetBrains+Mono:wght@400;500&amp;family=Public+Sans:wght@400;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#ec5b13",
+                        "background-light": "#f8f6f6",
+                        "background-dark": "#221610",
+                        "neon-cyan": "#00f2ff",
+                        "deep-magenta": "#ff00ff",
+                        "architectural-grey": "#e2e8f0",
+                        "slate-neutral": "#64748b"
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"],
+                        "mono": ["JetBrains Mono", "monospace"]
+                    },
+                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<style>
+        body { font-family: 'Inter', sans-serif; }
+        .data-font { font-family: 'JetBrains Mono', monospace; }
+        .order-book-gradient-bid { background: linear-gradient(to left, rgba(0, 242, 255, 0.15) var(--percent), transparent var(--percent)); }
+        .order-book-gradient-ask { background: linear-gradient(to left, rgba(255, 0, 255, 0.15) var(--percent), transparent var(--percent)); }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 min-h-screen">
+<div class="relative flex h-auto min-h-screen w-full flex-col">
+<!-- Top Navigation -->
+<header class="flex items-center justify-between border-b border-architectural-grey dark:border-slate-800 bg-white dark:bg-slate-900 px-6 py-3 sticky top-0 z-50">
+<div class="flex items-center gap-8">
+<div class="flex items-center gap-2 text-primary">
+<span class="material-symbols-outlined text-3xl font-bold">hive</span>
+<h2 class="text-slate-900 dark:text-white text-xl font-bold tracking-tight">HIVE<span class="font-light text-slate-400">QUANT</span></h2>
+</div>
+<nav class="hidden md:flex items-center gap-6">
+<a class="text-slate-900 dark:text-slate-100 text-sm font-semibold border-b-2 border-primary pb-1" href="#">Terminal</a>
+<a class="text-slate-500 dark:text-slate-400 text-sm font-medium hover:text-primary transition-colors" href="#">Analytics</a>
+<a class="text-slate-500 dark:text-slate-400 text-sm font-medium hover:text-primary transition-colors" href="#">Portfolio</a>
+<a class="text-slate-500 dark:text-slate-400 text-sm font-medium hover:text-primary transition-colors" href="#">Risk Admin</a>
+</nav>
+</div>
+<div class="flex items-center gap-4">
+<div class="flex items-center gap-2 px-3 py-1.5 bg-architectural-grey/50 dark:bg-slate-800 rounded-lg">
+<span class="size-2 rounded-full bg-green-500 animate-pulse"></span>
+<span class="text-[10px] font-mono font-bold text-slate-600 dark:text-slate-400 tracking-widest uppercase">Connectivity: Low Latency</span>
+</div>
+<button class="p-2 text-slate-500 hover:bg-architectural-grey rounded-lg transition-colors">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<button class="p-2 text-slate-500 hover:bg-architectural-grey rounded-lg transition-colors">
+<span class="material-symbols-outlined">settings</span>
+</button>
+<div class="h-8 w-[1px] bg-architectural-grey dark:bg-slate-700 mx-2"></div>
+<div class="flex items-center gap-3">
+<div class="text-right hidden sm:block">
+<p class="text-xs font-bold text-slate-900 dark:text-white">QUANT_ALPHA_01</p>
+<p class="text-[10px] font-mono text-slate-500 uppercase">Master Suite</p>
+</div>
+<div class="size-9 rounded-full bg-primary flex items-center justify-center text-white font-bold text-sm" data-alt="User avatar placeholder">HQ</div>
+</div>
+</div>
+</header>
+<main class="flex flex-1 overflow-hidden p-4 gap-4">
+<!-- Sidebar: Order Entry -->
+<aside class="w-80 flex flex-col gap-4">
+<section class="bg-white dark:bg-slate-900 rounded-xl border border-architectural-grey dark:border-slate-800 p-4 shadow-sm">
+<h3 class="text-xs font-bold uppercase tracking-widest text-slate-400 mb-4 flex items-center gap-2">
+<span class="material-symbols-outlined text-sm">bolt</span> Order Entry
+                    </h3>
+<div class="grid grid-cols-4 gap-1 p-1 bg-architectural-grey/30 dark:bg-slate-800 rounded-lg mb-4">
+<button class="text-[10px] font-bold py-2 rounded-md bg-white dark:bg-slate-700 shadow-sm text-slate-900 dark:text-white">LIMIT</button>
+<button class="text-[10px] font-bold py-2 rounded-md text-slate-500 hover:bg-white/50 dark:hover:bg-slate-600">TWAP</button>
+<button class="text-[10px] font-bold py-2 rounded-md text-slate-500 hover:bg-white/50 dark:hover:bg-slate-600">VWAP</button>
+<button class="text-[10px] font-bold py-2 rounded-md text-slate-500 hover:bg-white/50 dark:hover:bg-slate-600">ICEBERG</button>
+</div>
+<div class="space-y-4">
+<div>
+<label class="text-[10px] font-bold uppercase text-slate-500 mb-1 block">Instrument</label>
+<div class="relative">
+<input class="w-full bg-background-light dark:bg-slate-800 border-none rounded-lg font-mono text-sm focus:ring-1 focus:ring-primary py-3" type="text" value="BTC/USDT.P"/>
+<span class="absolute right-3 top-3 material-symbols-outlined text-slate-400 text-sm">search</span>
+</div>
+</div>
+<div class="flex gap-3">
+<div class="flex-1">
+<label class="text-[10px] font-bold uppercase text-slate-500 mb-1 block">Price</label>
+<input class="w-full bg-background-light dark:bg-slate-800 border-none rounded-lg font-mono text-sm focus:ring-1 focus:ring-primary py-3" placeholder="64,231.50" type="text"/>
+</div>
+<div class="flex-1">
+<label class="text-[10px] font-bold uppercase text-slate-500 mb-1 block">Size (Lots)</label>
+<input class="w-full bg-background-light dark:bg-slate-800 border-none rounded-lg font-mono text-sm focus:ring-1 focus:ring-primary py-3" placeholder="1.250" type="text"/>
+</div>
+</div>
+<div class="pt-2">
+<div class="flex justify-between text-[10px] font-mono text-slate-400 mb-2">
+<span>Margin: 2.5x</span>
+<span>Max: 14.22 BTC</span>
+</div>
+<div class="flex gap-3">
+<button class="flex-1 bg-neon-cyan hover:opacity-90 text-slate-900 font-bold py-4 rounded-xl transition-all shadow-lg shadow-neon-cyan/20 uppercase tracking-wider text-sm">Buy / Long</button>
+<button class="flex-1 bg-deep-magenta hover:opacity-90 text-white font-bold py-4 rounded-xl transition-all shadow-lg shadow-deep-magenta/20 uppercase tracking-wider text-sm">Sell / Short</button>
+</div>
+</div>
+</div>
+</section>
+<!-- Order Book (Level 2) -->
+<section class="flex-1 bg-white dark:bg-slate-900 rounded-xl border border-architectural-grey dark:border-slate-800 flex flex-col overflow-hidden shadow-sm">
+<div class="p-3 border-b border-architectural-grey dark:border-slate-800 flex justify-between items-center">
+<h3 class="text-[10px] font-bold uppercase tracking-widest text-slate-400">Order Book L2</h3>
+<span class="text-[10px] font-mono text-slate-400">Spread: 0.50</span>
+</div>
+<div class="flex-1 overflow-y-auto data-font text-[11px]">
+<!-- Asks -->
+<div class="flex flex-col-reverse">
+<div class="relative flex justify-between px-3 py-0.5 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors">
+<div class="absolute right-0 top-0 bottom-0 order-book-gradient-ask opacity-20" style="--percent: 45%; width: 100%;"></div>
+<span class="text-deep-magenta z-10">64,245.50</span>
+<span class="text-slate-600 dark:text-slate-400 z-10">1.402</span>
+</div>
+<div class="relative flex justify-between px-3 py-0.5 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors">
+<div class="absolute right-0 top-0 bottom-0 order-book-gradient-ask opacity-20" style="--percent: 78%; width: 100%;"></div>
+<span class="text-deep-magenta z-10">64,244.00</span>
+<span class="text-slate-600 dark:text-slate-400 z-10">4.110</span>
+</div>
+<div class="relative flex justify-between px-3 py-0.5 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors">
+<div class="absolute right-0 top-0 bottom-0 order-book-gradient-ask opacity-20" style="--percent: 12%; width: 100%;"></div>
+<span class="text-deep-magenta z-10">64,243.50</span>
+<span class="text-slate-600 dark:text-slate-400 z-10">0.250</span>
+</div>
+</div>
+<!-- Spread/Mid -->
+<div class="bg-architectural-grey/20 dark:bg-slate-800/50 py-2 px-3 flex justify-between items-center border-y border-architectural-grey dark:border-slate-800">
+<span class="text-sm font-bold text-slate-900 dark:text-white">64,242.00</span>
+<span class="material-symbols-outlined text-sm text-neon-cyan">trending_up</span>
+</div>
+<!-- Bids -->
+<div class="flex flex-col">
+<div class="relative flex justify-between px-3 py-0.5 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors">
+<div class="absolute right-0 top-0 bottom-0 order-book-gradient-bid opacity-20" style="--percent: 30%; width: 100%;"></div>
+<span class="text-neon-cyan z-10">64,241.50</span>
+<span class="text-slate-600 dark:text-slate-400 z-10">0.890</span>
+</div>
+<div class="relative flex justify-between px-3 py-0.5 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors">
+<div class="absolute right-0 top-0 bottom-0 order-book-gradient-bid opacity-20" style="--percent: 65%; width: 100%;"></div>
+<span class="text-neon-cyan z-10">64,240.00</span>
+<span class="text-slate-600 dark:text-slate-400 z-10">2.441</span>
+</div>
+<div class="relative flex justify-between px-3 py-0.5 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors">
+<div class="absolute right-0 top-0 bottom-0 order-book-gradient-bid opacity-20" style="--percent: 92%; width: 100%;"></div>
+<span class="text-neon-cyan z-10">64,239.50</span>
+<span class="text-slate-600 dark:text-slate-400 z-10">8.902</span>
+</div>
+</div>
+</div>
+</section>
+</aside>
+<!-- Main Content Area -->
+<div class="flex-1 flex flex-col gap-4">
+<!-- Real-time Chart -->
+<section class="flex-1 bg-white dark:bg-slate-900 rounded-xl border border-architectural-grey dark:border-slate-800 p-4 shadow-sm relative overflow-hidden flex flex-col">
+<div class="flex justify-between items-center mb-4">
+<div class="flex items-center gap-4">
+<h3 class="text-sm font-bold text-slate-900 dark:text-white">BTC/USDT.P <span class="font-mono font-normal text-neon-cyan ml-2">+2.45%</span></h3>
+<div class="flex gap-2">
+<button class="px-2 py-1 text-[10px] font-bold bg-architectural-grey/50 rounded">1M</button>
+<button class="px-2 py-1 text-[10px] font-bold bg-primary text-white rounded shadow-sm">5M</button>
+<button class="px-2 py-1 text-[10px] font-bold bg-architectural-grey/50 rounded">15M</button>
+<button class="px-2 py-1 text-[10px] font-bold bg-architectural-grey/50 rounded">1H</button>
+</div>
+</div>
+<div class="flex gap-2 text-slate-400">
+<span class="material-symbols-outlined text-lg cursor-pointer hover:text-primary">draw</span>
+<span class="material-symbols-outlined text-lg cursor-pointer hover:text-primary">analytics</span>
+<span class="material-symbols-outlined text-lg cursor-pointer hover:text-primary">fullscreen</span>
+</div>
+</div>
+<div class="flex-1 w-full bg-slate-50 dark:bg-slate-950/50 rounded-lg relative overflow-hidden border border-architectural-grey/50 dark:border-slate-800">
+<!-- Abstract Chart Visualization Placeholder -->
+<div class="absolute inset-0 opacity-40 dark:opacity-20 pointer-events-none" data-alt="Financial candlestick chart pattern background">
+<svg class="w-full h-full" preserveaspectratio="none" viewbox="0 0 1000 400">
+<path d="M0 300 L50 280 L100 290 L150 240 L200 250 L250 200 L300 210 L350 150 L400 160 L450 120 L500 130 L550 100 L600 110 L650 80 L700 90 L750 40 L800 50 L850 20 L900 30 L950 10 L1000 20" fill="none" stroke="#00f2ff" stroke-width="2"></path>
+<path d="M0 350 L1000 350" stroke="#64748b" stroke-dasharray="4" stroke-opacity="0.2"></path>
+<rect fill="#00f2ff" height="30" rx="1" width="8" x="50" y="270"></rect>
+<rect fill="#ff00ff" height="20" rx="1" width="8" x="100" y="280"></rect>
+<rect fill="#00f2ff" height="50" rx="1" width="8" x="150" y="230"></rect>
+<rect fill="#ff00ff" height="20" rx="1" width="8" x="200" y="240"></rect>
+<rect fill="#00f2ff" height="60" rx="1" width="8" x="250" y="190"></rect>
+<rect fill="#ff00ff" height="30" rx="1" width="8" x="300" y="200"></rect>
+<rect fill="#00f2ff" height="70" rx="1" width="8" x="350" y="140"></rect>
+</svg>
+</div>
+<!-- UI Overlay on chart -->
+<div class="absolute top-4 left-4 bg-white/80 dark:bg-slate-900/80 backdrop-blur p-2 rounded border border-architectural-grey dark:border-slate-700 text-[10px] font-mono shadow-sm">
+<p><span class="text-slate-400">O:</span> 64,231.20</p>
+<p><span class="text-slate-400">H:</span> 64,255.00</p>
+<p><span class="text-slate-400">L:</span> 64,220.50</p>
+<p><span class="text-slate-400">C:</span> 64,242.00</p>
+</div>
+</div>
+</section>
+<!-- Active Positions & Margin -->
+<section class="h-64 bg-white dark:bg-slate-900 rounded-xl border border-architectural-grey dark:border-slate-800 flex flex-col shadow-sm">
+<div class="p-3 border-b border-architectural-grey dark:border-slate-800 flex justify-between items-center bg-slate-50/50 dark:bg-slate-800/20">
+<h3 class="text-[10px] font-bold uppercase tracking-widest text-slate-400">Active Positions</h3>
+<div class="flex gap-4 items-center">
+<span class="text-[10px] font-mono text-slate-500">Margin Used: <span class="text-slate-900 dark:text-white">42.5%</span></span>
+<span class="text-[10px] font-mono text-slate-500">Total P&amp;L: <span class="text-neon-cyan">+$1,452.20</span></span>
+</div>
+</div>
+<div class="flex-1 overflow-x-auto">
+<table class="w-full text-left text-[11px] data-font">
+<thead class="text-slate-400 border-b border-architectural-grey dark:border-slate-800 bg-slate-50/30 dark:bg-slate-900">
+<tr>
+<th class="px-4 py-2 font-medium uppercase tracking-tighter">Instrument</th>
+<th class="px-4 py-2 font-medium uppercase tracking-tighter">Side</th>
+<th class="px-4 py-2 font-medium uppercase tracking-tighter">Size</th>
+<th class="px-4 py-2 font-medium uppercase tracking-tighter">Entry</th>
+<th class="px-4 py-2 font-medium uppercase tracking-tighter">Mark Price</th>
+<th class="px-4 py-2 font-medium uppercase tracking-tighter">Unrealized P&amp;L</th>
+<th class="px-4 py-2 font-medium uppercase tracking-tighter text-right">Action</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-architectural-grey dark:divide-slate-800">
+<tr class="hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors">
+<td class="px-4 py-3 font-bold text-slate-900 dark:text-white">BTC/USDT.P</td>
+<td class="px-4 py-3"><span class="px-2 py-0.5 rounded bg-neon-cyan/10 text-neon-cyan text-[10px] font-bold">LONG</span></td>
+<td class="px-4 py-3">2.450 BTC</td>
+<td class="px-4 py-3">63,890.00</td>
+<td class="px-4 py-3">64,242.00</td>
+<td class="px-4 py-3 text-neon-cyan font-bold">+$862.40</td>
+<td class="px-4 py-3 text-right">
+<button class="text-deep-magenta hover:underline text-[10px] font-bold">CLOSE</button>
+</td>
+</tr>
+<tr class="hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors">
+<td class="px-4 py-3 font-bold text-slate-900 dark:text-white">ETH/USDT.P</td>
+<td class="px-4 py-3"><span class="px-2 py-0.5 rounded bg-deep-magenta/10 text-deep-magenta text-[10px] font-bold">SHORT</span></td>
+<td class="px-4 py-3">15.000 ETH</td>
+<td class="px-4 py-3">3,450.50</td>
+<td class="px-4 py-3">3,422.10</td>
+<td class="px-4 py-3 text-neon-cyan font-bold">+$426.00</td>
+<td class="px-4 py-3 text-right">
+<button class="text-deep-magenta hover:underline text-[10px] font-bold">CLOSE</button>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+</div>
+<!-- Execution Log -->
+<aside class="w-72 bg-white dark:bg-slate-900 rounded-xl border border-architectural-grey dark:border-slate-800 flex flex-col shadow-sm overflow-hidden">
+<div class="p-3 border-b border-architectural-grey dark:border-slate-800 flex justify-between items-center">
+<h3 class="text-[10px] font-bold uppercase tracking-widest text-slate-400">Live Execution Log</h3>
+<div class="flex gap-2">
+<span class="material-symbols-outlined text-sm text-slate-300">download</span>
+<span class="material-symbols-outlined text-sm text-slate-300">filter_list</span>
+</div>
+</div>
+<div class="flex-1 overflow-y-auto p-3 space-y-3 font-mono text-[10px]">
+<div class="border-l-2 border-neon-cyan pl-3 py-1 bg-neon-cyan/5">
+<div class="flex justify-between mb-1">
+<span class="text-slate-400">14:22:01.452</span>
+<span class="text-neon-cyan font-bold">FILL</span>
+</div>
+<p class="text-slate-900 dark:text-white">BTC/USDT.P @ 64,242.00</p>
+<p class="text-slate-500">Route: BINANCE_DIRECT | Qty: 0.15</p>
+</div>
+<div class="border-l-2 border-slate-neutral pl-3 py-1">
+<div class="flex justify-between mb-1">
+<span class="text-slate-400">14:21:58.891</span>
+<span class="text-slate-500 font-bold">ACK</span>
+</div>
+<p class="text-slate-900 dark:text-white">ETH/USDT.P LIMIT_BUY</p>
+<p class="text-slate-500">Route: BYBIT_ALG | Qty: 5.00</p>
+</div>
+<div class="border-l-2 border-deep-magenta pl-3 py-1 bg-deep-magenta/5">
+<div class="flex justify-between mb-1">
+<span class="text-slate-400">14:21:45.102</span>
+<span class="text-deep-magenta font-bold">CANCEL</span>
+</div>
+<p class="text-slate-900 dark:text-white">SOL/USDT.P ID: 99x28</p>
+<p class="text-slate-500">Reason: USER_CANCEL | Route: OKX</p>
+</div>
+<div class="border-l-2 border-neon-cyan pl-3 py-1 bg-neon-cyan/5">
+<div class="flex justify-between mb-1">
+<span class="text-slate-400">14:21:12.339</span>
+<span class="text-neon-cyan font-bold">FILL</span>
+</div>
+<p class="text-slate-900 dark:text-white">BTC/USDT.P @ 64,240.50</p>
+<p class="text-slate-500">Route: BINANCE_DIRECT | Qty: 0.82</p>
+</div>
+<div class="border-l-2 border-slate-neutral pl-3 py-1">
+<div class="flex justify-between mb-1">
+<span class="text-slate-400">14:20:55.001</span>
+<span class="text-slate-500 font-bold">NEW</span>
+</div>
+<p class="text-slate-900 dark:text-white">BTC/USDT.P TWAP_START</p>
+<p class="text-slate-500">Duration: 60M | Target: 12.0 BTC</p>
+</div>
+<div class="border-l-2 border-slate-neutral pl-3 py-1">
+<div class="flex justify-between mb-1">
+<span class="text-slate-400">14:20:42.115</span>
+<span class="text-slate-500 font-bold">ACK</span>
+</div>
+<p class="text-slate-900 dark:text-white">BNB/USDT.P LIMIT_SELL</p>
+<p class="text-slate-500">Route: KUCOIN | Qty: 100.0</p>
+</div>
+</div>
+<div class="p-2 border-t border-architectural-grey dark:border-slate-800 bg-slate-50 dark:bg-slate-900/50">
+<div class="flex justify-between items-center text-[9px] font-mono text-slate-400">
+<span>LATENCY: 12ms</span>
+<span>MESSAGES: 4,112/s</span>
+</div>
+</div>
+</aside>
+</main>
+<!-- Status Bar -->
+<footer class="bg-white dark:bg-slate-900 border-t border-architectural-grey dark:border-slate-800 px-6 py-2 flex justify-between items-center text-[10px] text-slate-500 font-mono">
+<div class="flex gap-6">
+<span class="flex items-center gap-1"><span class="size-1.5 rounded-full bg-green-500"></span> ENGINE: ONLINE</span>
+<span class="flex items-center gap-1"><span class="size-1.5 rounded-full bg-green-500"></span> FEED: 242ms</span>
+<span>API: PROD-ALPHA-01</span>
+</div>
+<div class="flex gap-6">
+<span>EST: 14:22:15</span>
+<span>UTC: 19:22:15</span>
+<span class="text-primary font-bold tracking-tighter">HIVE TERMINAL v4.2.0-LTS</span>
+</div>
+</footer>
+</div>
+</body></html>

@@ -1,0 +1,5 @@
+Method,KL_Divergence,Variance_Ratio,LjungBox_PValue,Entropy_Ratio,Trend_MSE_LinReg,Residual_MSE_LinReg,Trend_MSE_LSTM,Residual_MSE_LSTM
+Classical,19.3557,0.0002,8203.4876,390.8138,0.0,0.0002,,
+STL_Long,19.2414,0.0003,19523.5686,553.037,0.0,0.0002,,
+STL_Short,20.1881,0.0001,6274.5955,415.0003,0.0,0.0001,,
+Wavelet,19.8683,0.0001,4650.4523,261.6171,0.0,0.0001,,

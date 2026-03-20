@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Fin-OSS Agent - Light Mode</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400;700&amp;family=Public+Sans:wght@400;500;600;700;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#ec5b13",
+                        "background-light": "#f8f6f6",
+                        "background-dark": "#221610",
+                        "mint": "#4ade80",
+                        "coral": "#f87171",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"],
+                        "mono": ["JetBrains Mono", "monospace"],
+                        "ui": ["Inter", "sans-serif"]
+                    },
+                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<style>
+        body { font-family: 'Inter', sans-serif; }
+        .mono { font-family: 'JetBrains Mono', monospace; }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 font-ui">
+<div class="relative flex h-screen w-full flex-col overflow-hidden">
+<!-- Header -->
+<header class="flex items-center justify-between border-b border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 px-8 py-3 z-10">
+<div class="flex items-center gap-8">
+<div class="flex items-center gap-3 text-primary">
+<div class="size-8 flex items-center justify-center rounded-lg bg-primary/10">
+<span class="material-symbols-outlined">analytics</span>
+</div>
+<h2 class="text-slate-900 dark:text-white text-lg font-bold tracking-tight">Fin-OSS Agent</h2>
+</div>
+<nav class="flex items-center gap-6">
+<a class="text-slate-600 dark:text-slate-400 text-sm font-medium hover:text-primary transition-colors" href="#">Macro</a>
+<a class="text-slate-600 dark:text-slate-400 text-sm font-medium hover:text-primary transition-colors" href="#">Alpha</a>
+<a class="text-slate-600 dark:text-slate-400 text-sm font-medium hover:text-primary transition-colors" href="#">Risk</a>
+<a class="text-slate-600 dark:text-slate-400 text-sm font-medium hover:text-primary transition-colors" href="#">Portfolio</a>
+</nav>
+</div>
+<div class="flex flex-1 justify-end gap-4 items-center">
+<label class="relative flex min-w-40 max-w-64">
+<span class="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 material-symbols-outlined text-xl">search</span>
+<input class="w-full h-10 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 pl-10 pr-4 text-sm focus:ring-2 focus:ring-primary/20 focus:border-primary outline-none" placeholder="Search markets..."/>
+</label>
+<button class="flex size-10 items-center justify-center rounded-xl border border-slate-200 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-800">
+<span class="material-symbols-outlined text-slate-600 dark:text-slate-400">notifications</span>
+</button>
+<button class="flex size-10 items-center justify-center rounded-xl border border-slate-200 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-800">
+<span class="material-symbols-outlined text-slate-600 dark:text-slate-400">settings</span>
+</button>
+<div class="size-10 rounded-full bg-slate-200 overflow-hidden border border-slate-200" data-alt="User profile avatar">
+<img alt="Avatar" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC5kky6wAe7L_hLHZligNNg5pPd0PpMckdJqQ37IpYwhtOrN5NdEWKPisv5UAaZlxMCjHBBxnXSlL34I_TDubTmfH8m23wkbYYynuuLhWXF2xUKYXq_CeWFEGtBtB2P44DxDDjifvH151EprYHmlyoXH6qxZBXKpUiOKtgKiybCLyRZrRX2lZWG0Bj2f_VyZ2GaYprW6K1OBa-dt3kSPx7-wFrmd1xHyMTfy_WBx0-zI6IG1_0JKgL8lWqjcrtIDeu_A0fpwTc_Yyw"/>
+</div>
+</div>
+</header>
+<div class="flex flex-1 overflow-hidden">
+<!-- Sidebar Navigation -->
+<aside class="w-64 border-r border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 flex flex-col p-4 gap-2">
+<div class="mb-4 px-2">
+<p class="text-[10px] font-bold uppercase tracking-widest text-slate-400">Institutional Console</p>
+</div>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-xl bg-primary/10 text-primary" href="#">
+<span class="material-symbols-outlined text-[22px]">dashboard</span>
+<span class="text-sm font-semibold">Dashboard</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-xl text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors" href="#">
+<span class="material-symbols-outlined text-[22px]">language</span>
+<span class="text-sm font-medium">Market Desk</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-xl text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors" href="#">
+<span class="material-symbols-outlined text-[22px]">auto_graph</span>
+<span class="text-sm font-medium">Alpha Factory</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-xl text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors" href="#">
+<span class="material-symbols-outlined text-[22px]">security</span>
+<span class="text-sm font-medium">Risk Desk</span>
+</a>
+<div class="mt-auto pt-4 border-t border-slate-100 dark:border-slate-800">
+<button class="w-full flex items-center justify-center gap-2 py-3 bg-primary text-white rounded-xl font-bold text-sm shadow-lg shadow-primary/20 hover:bg-primary/90 transition-all">
+<span class="material-symbols-outlined text-lg">add</span>
+                    New Analysis
+                </button>
+</div>
+</aside>
+<!-- Main Content -->
+<main class="flex-1 overflow-y-auto bg-background-light dark:bg-background-dark p-8">
+<div class="max-w-5xl mx-auto space-y-8">
+<!-- Header Stats -->
+<div class="flex flex-wrap items-end justify-between gap-4">
+<div>
+<h1 class="text-3xl font-black text-slate-900 dark:text-white tracking-tight">Daily Quantitative Brief</h1>
+<p class="text-slate-500 dark:text-slate-400 mt-1">Synthesized insights from Macro, Alpha, and Risk desks for <span class="mono text-primary font-bold">2023-10-24</span></p>
+</div>
+<button class="flex items-center gap-2 px-4 py-2 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl text-sm font-bold shadow-sm hover:bg-slate-50 transition-colors">
+<span class="material-symbols-outlined text-lg">download</span>
+                        Export Report
+                    </button>
+</div>
+<!-- Score Cards -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+<div class="bg-white dark:bg-slate-900 p-6 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm">
+<p class="text-slate-500 text-sm font-medium">S&amp;P 500 Index</p>
+<div class="flex items-baseline gap-2 mt-2">
+<span class="mono text-2xl font-bold tracking-tight text-slate-900 dark:text-white">4,520.12</span>
+<span class="text-mint text-sm font-bold">+1.24%</span>
+</div>
+<div class="mt-4 h-1 w-full bg-slate-100 dark:bg-slate-800 rounded-full overflow-hidden">
+<div class="h-full bg-mint w-[72%]"></div>
+</div>
+</div>
+<div class="bg-white dark:bg-slate-900 p-6 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm">
+<p class="text-slate-500 text-sm font-medium">Alpha Score (Model V4)</p>
+<div class="flex items-baseline gap-2 mt-2">
+<span class="mono text-2xl font-bold tracking-tight text-slate-900 dark:text-white">8.42</span>
+<span class="text-coral text-sm font-bold">-0.31%</span>
+</div>
+<div class="mt-4 h-1 w-full bg-slate-100 dark:bg-slate-800 rounded-full overflow-hidden">
+<div class="h-full bg-primary w-[84%]"></div>
+</div>
+</div>
+<div class="bg-white dark:bg-slate-900 p-6 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm">
+<p class="text-slate-500 text-sm font-medium">Risk Exposure</p>
+<div class="flex items-baseline gap-2 mt-2">
+<span class="mono text-2xl font-bold tracking-tight text-slate-900 dark:text-white">Low-Mid</span>
+<span class="text-coral text-sm font-bold">-2.10%</span>
+</div>
+<div class="mt-4 h-1 w-full bg-slate-100 dark:bg-slate-800 rounded-full overflow-hidden">
+<div class="h-full bg-slate-400 w-[35%]"></div>
+</div>
+</div>
+</div>
+<!-- Analysis Content -->
+<div class="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 overflow-hidden shadow-sm">
+<div class="border-b border-slate-100 dark:border-slate-800 px-8 py-5 flex justify-between items-center bg-slate-50/50 dark:bg-slate-800/50">
+<h2 class="text-slate-900 dark:text-white font-bold flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">auto_awesome</span>
+                            AI Model Insights
+                        </h2>
+<span class="mono text-[10px] font-bold px-2 py-1 bg-slate-200 dark:bg-slate-700 rounded uppercase tracking-wider">Model: LightGBM-Alpha-V4</span>
+</div>
+<div class="p-8 space-y-6 text-slate-700 dark:text-slate-300 leading-relaxed">
+<div class="space-y-4">
+<p class="text-lg leading-relaxed">
+                                Our <span class="mono font-bold text-primary">LightGBM Alpha</span> model has identified <span class="mono font-bold px-1.5 py-0.5 bg-mint/10 text-green-700 dark:text-green-400 rounded">JNJ</span> as a top long candidate for the upcoming session. The signal is driven by a convergence of mean-reversion factors and a significant reduction in tail-risk metrics from the <span class="font-semibold text-slate-900 dark:text-white">Risk Desk</span>.
+                            </p>
+<p>
+                                Market transitions indicate a shift from defensive positioning towards selective growth. Macro indicators suggest that the current interest rate plateau is being priced in, allowing the <span class="font-semibold italic">Alpha Factory</span> to capture idiosyncratic returns in the healthcare and utilities sectors.
+                            </p>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-8 pt-4">
+<div class="space-y-3">
+<h3 class="text-xs font-bold uppercase tracking-widest text-slate-400">Portfolio Adjustments</h3>
+<ul class="space-y-2">
+<li class="flex items-start gap-3">
+<span class="material-symbols-outlined text-mint mt-0.5">add_circle</span>
+<span class="text-sm">Increase weight in <span class="mono font-bold">XLV</span> by 45bps</span>
+</li>
+<li class="flex items-start gap-3">
+<span class="material-symbols-outlined text-coral mt-0.5">remove_circle</span>
+<span class="text-sm">Reduce exposure to <span class="mono font-bold">XLY</span> due to rising volatility</span>
+</li>
+<li class="flex items-start gap-3">
+<span class="material-symbols-outlined text-slate-400 mt-0.5">sync_alt</span>
+<span class="text-sm">Rebalance Delta-neutral hedges in <span class="mono font-bold">SPY</span></span>
+</li>
+</ul>
+</div>
+<div class="bg-slate-50 dark:bg-slate-800/50 p-4 rounded-xl border border-slate-100 dark:border-slate-800">
+<h3 class="text-xs font-bold uppercase tracking-widest text-slate-400 mb-3">Model Confidence</h3>
+<div class="flex items-center gap-4">
+<div class="flex-1">
+<div class="flex justify-between text-[10px] font-bold mb-1">
+<span>PRECISION</span>
+<span class="mono">0.89</span>
+</div>
+<div class="h-1.5 w-full bg-slate-200 dark:bg-slate-700 rounded-full overflow-hidden">
+<div class="h-full bg-primary w-[89%]"></div>
+</div>
+</div>
+<div class="flex-1">
+<div class="flex justify-between text-[10px] font-bold mb-1">
+<span>RECALL</span>
+<span class="mono">0.74</span>
+</div>
+<div class="h-1.5 w-full bg-slate-200 dark:bg-slate-700 rounded-full overflow-hidden">
+<div class="h-full bg-primary w-[74%]"></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Market Data Table (Minimal/Mono) -->
+<div class="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 overflow-hidden shadow-sm">
+<table class="w-full text-left">
+<thead class="bg-slate-50 dark:bg-slate-800/50 border-b border-slate-100 dark:border-slate-800">
+<tr>
+<th class="px-6 py-4 text-[10px] font-bold text-slate-400 uppercase tracking-widest">Ticker</th>
+<th class="px-6 py-4 text-[10px] font-bold text-slate-400 uppercase tracking-widest">Price</th>
+<th class="px-6 py-4 text-[10px] font-bold text-slate-400 uppercase tracking-widest">Alpha Sig</th>
+<th class="px-6 py-4 text-[10px] font-bold text-slate-400 uppercase tracking-widest">Risk Vol</th>
+<th class="px-6 py-4 text-right text-[10px] font-bold text-slate-400 uppercase tracking-widest">Status</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-slate-100 dark:divide-slate-800">
+<tr class="hover:bg-slate-50 dark:hover:bg-slate-800/30">
+<td class="px-6 py-4 font-bold mono text-sm">JNJ</td>
+<td class="px-6 py-4 mono text-sm">152.44</td>
+<td class="px-6 py-4 mono text-sm text-mint">+0.82</td>
+<td class="px-6 py-4 mono text-sm">12.4%</td>
+<td class="px-6 py-4 text-right"><span class="px-2 py-1 bg-mint/10 text-mint text-[10px] font-bold rounded">BULLISH</span></td>
+</tr>
+<tr class="hover:bg-slate-50 dark:hover:bg-slate-800/30">
+<td class="px-6 py-4 font-bold mono text-sm">MSFT</td>
+<td class="px-6 py-4 mono text-sm">329.10</td>
+<td class="px-6 py-4 mono text-sm text-slate-400">+0.12</td>
+<td class="px-6 py-4 mono text-sm">24.8%</td>
+<td class="px-6 py-4 text-right"><span class="px-2 py-1 bg-slate-100 dark:bg-slate-800 text-slate-400 text-[10px] font-bold rounded">NEUTRAL</span></td>
+</tr>
+<tr class="hover:bg-slate-50 dark:hover:bg-slate-800/30">
+<td class="px-6 py-4 font-bold mono text-sm">TSLA</td>
+<td class="px-6 py-4 mono text-sm">212.08</td>
+<td class="px-6 py-4 mono text-sm text-coral">-1.45</td>
+<td class="px-6 py-4 mono text-sm">48.2%</td>
+<td class="px-6 py-4 text-right"><span class="px-2 py-1 bg-coral/10 text-coral text-[10px] font-bold rounded">BEARISH</span></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</main>
+<!-- Chat Side Panel -->
+<aside class="w-80 border-l border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 flex flex-col">
+<div class="p-4 border-b border-slate-100 dark:border-slate-800 flex items-center justify-between">
+<div class="flex items-center gap-2">
+<span class="size-2 bg-mint rounded-full animate-pulse"></span>
+<span class="text-xs font-bold uppercase tracking-widest text-slate-900 dark:text-white">Fin-OSS Chat</span>
+</div>
+<button class="text-slate-400 hover:text-slate-600"><span class="material-symbols-outlined text-xl">close</span></button>
+</div>
+<div class="flex-1 overflow-y-auto p-4 space-y-4">
+<div class="flex flex-col gap-1 items-start">
+<div class="bg-slate-100 dark:bg-slate-800 rounded-2xl rounded-tl-none p-3 max-w-[90%]">
+<p class="text-xs text-slate-700 dark:text-slate-300">Ready to adjust parameters for the JNJ position. Should I include the volatility filter?</p>
+</div>
+<span class="text-[10px] text-slate-400 mono ml-1">10:24 AM</span>
+</div>
+<div class="flex flex-col gap-1 items-end">
+<div class="bg-primary text-white rounded-2xl rounded-tr-none p-3 max-w-[90%] shadow-md shadow-primary/10">
+<p class="text-xs">Yes, please apply the 2.0x sigma filter and rerun the backtest.</p>
+</div>
+<span class="text-[10px] text-slate-400 mono mr-1">10:25 AM</span>
+</div>
+<div class="flex flex-col gap-1 items-start">
+<div class="bg-slate-100 dark:bg-slate-800 rounded-2xl rounded-tl-none p-3 max-w-[90%]">
+<p class="text-xs text-slate-700 dark:text-slate-300">Recalculating... Alpha Score adjusted to 8.42. Sharpe ratio improved by 0.12. Backtest report is ready for export.</p>
+</div>
+<span class="text-[10px] text-slate-400 mono ml-1">10:25 AM</span>
+</div>
+</div>
+<div class="p-4 border-t border-slate-100 dark:border-slate-800">
+<div class="relative">
+<textarea class="w-full bg-slate-50 dark:bg-slate-800 border-none rounded-xl py-3 pl-4 pr-12 text-xs resize-none focus:ring-1 focus:ring-primary/40 outline-none" placeholder="Ask Fin-OSS..." rows="1"></textarea>
+<button class="absolute right-2 top-1/2 -translate-y-1/2 size-8 bg-primary text-white rounded-lg flex items-center justify-center">
+<span class="material-symbols-outlined text-lg">arrow_upward</span>
+</button>
+</div>
+</div>
+</aside>
+</div>
+</div>
+</body></html>

@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@300;400;500;600;700&amp;family=Inter:wght@300;400;500;600;700&amp;family=JetBrains+Mono:wght@400;500;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#ec5b13",
+                        "neon-cyan": "#00f2ff",
+                        "deep-magenta": "#ff00ff",
+                        "background-light": "#f8f6f6",
+                        "background-dark": "#221610",
+                        "slate-neutral": "#64748b",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"],
+                        "mono": ["JetBrains Mono", "monospace"]
+                    },
+                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<style>
+        body { font-family: 'Inter', sans-serif; }
+        .mono-nums { font-family: 'JetBrains Mono', monospace; }
+        .institutional-border { border-color: rgba(100, 116, 139, 0.1); }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 min-h-screen">
+<div class="flex h-screen overflow-hidden">
+<!-- Sidebar -->
+<aside class="w-64 border-r institutional-border bg-white dark:bg-background-dark flex flex-col">
+<div class="p-6 border-b institutional-border">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 bg-primary rounded flex items-center justify-center text-white">
+<span class="material-symbols-outlined">hive</span>
+</div>
+<h1 class="font-display font-bold text-lg tracking-tight">HIVE</h1>
+</div>
+<p class="text-[10px] uppercase tracking-widest text-slate-neutral mt-2 font-semibold">Institutional Terminal</p>
+</div>
+<nav class="flex-1 p-4 space-y-2">
+<a class="flex items-center gap-3 px-3 py-2 text-slate-neutral hover:bg-slate-100 dark:hover:bg-slate-800 rounded transition-colors" href="#">
+<span class="material-symbols-outlined text-xl">public</span>
+<span class="text-sm font-medium">Macro Desk</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 bg-primary/10 text-primary rounded border-l-4 border-primary transition-colors" href="#">
+<span class="material-symbols-outlined text-xl">factory</span>
+<span class="text-sm font-bold">Alpha Factory</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 text-slate-neutral hover:bg-slate-100 dark:hover:bg-slate-800 rounded transition-colors" href="#">
+<span class="material-symbols-outlined text-xl">shield</span>
+<span class="text-sm font-medium">Risk Desk</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 text-slate-neutral hover:bg-slate-100 dark:hover:bg-slate-800 rounded transition-colors" href="#">
+<span class="material-symbols-outlined text-xl">smart_toy</span>
+<span class="text-sm font-medium">Fin-OSS Agent</span>
+</a>
+</nav>
+<div class="p-4 border-t institutional-border bg-slate-50 dark:bg-slate-900/50">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-full bg-slate-200 dark:bg-slate-700 overflow-hidden">
+<img alt="Avatar" data-alt="User avatar for institutional trader" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD5diwn9-Wepf0kdjc6VDZ1mN2pqKs5clHBrHaAGX_GGocdlhyTh23wpH7BjsbhWFvRWqgCbiRbzngDHsESzTLyRYXEwLX8J9h7qHwfWzH0e-uHMxthEvFPATdflh2DVdlgMIcTGHkPepiOCUVcWWoEhFBwopKli_8GKkF2javCMrOM2Z61t_CECV1oV5Df9NI06iVNYnMYSrp1DSSLVk9cLBQqp7L9M07TIlCcjWljuCCmkfjiiTXzpQ8ED4G9xatH44F44Nk_5f8"/>
+</div>
+<div class="flex-1 overflow-hidden">
+<p class="text-xs font-bold truncate">A. Sterling</p>
+<p class="text-[10px] text-slate-neutral">Senior Portfolio Manager</p>
+</div>
+<span class="material-symbols-outlined text-sm text-slate-neutral">settings</span>
+</div>
+</div>
+</aside>
+<!-- Main Content -->
+<main class="flex-1 flex flex-col overflow-hidden">
+<!-- Top Navigation -->
+<header class="h-16 border-b institutional-border bg-white dark:bg-background-dark px-8 flex items-center justify-between">
+<div class="flex items-center gap-8">
+<div class="relative w-64">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-slate-neutral text-lg">search</span>
+<input class="w-full bg-slate-100 dark:bg-slate-800 border-none rounded-lg pl-10 text-xs focus:ring-1 focus:ring-primary" placeholder="Search instrument, factor, or model..." type="text"/>
+</div>
+<div class="flex items-center gap-4 text-xs font-mono">
+<span class="text-slate-neutral">MSCI WORLD UNIVERSE</span>
+<span class="flex items-center gap-1 text-emerald-600 font-bold"><span class="w-2 h-2 rounded-full bg-emerald-500"></span> LIVE</span>
+<span class="text-slate-neutral">09:41:22 UTC</span>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<button class="w-10 h-10 flex items-center justify-center text-slate-neutral hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<div class="h-8 w-px bg-slate-200 dark:bg-slate-700"></div>
+<button class="bg-primary text-white px-4 py-2 rounded-lg text-xs font-bold flex items-center gap-2">
+<span class="material-symbols-outlined text-sm">rocket_launch</span>
+                    RE-DEPLOY MODEL
+                </button>
+</div>
+</header>
+<!-- Dashboard Content -->
+<div class="flex-1 overflow-y-auto p-8 bg-background-light dark:bg-background-dark">
+<!-- Header Section -->
+<div class="flex flex-wrap justify-between items-end mb-8 gap-6">
+<div>
+<h2 class="text-3xl font-display font-bold tracking-tight">Cross-Sectional Ranking</h2>
+<p class="text-slate-neutral font-display mt-1">LightGBM v4.2 Alpha Model • 2,450 Assets</p>
+</div>
+<div class="flex gap-4">
+<div class="bg-white dark:bg-slate-900 p-4 border institutional-border rounded-xl shadow-sm min-w-[160px]">
+<p class="text-[10px] text-slate-neutral font-bold uppercase mb-1">Alpha Spread</p>
+<div class="flex items-end justify-between">
+<span class="mono-nums text-2xl font-bold">+482<span class="text-sm font-normal">bps</span></span>
+<span class="text-emerald-500 text-xs font-bold flex items-center">+12<span class="material-symbols-outlined text-xs">arrow_drop_up</span></span>
+</div>
+</div>
+<div class="bg-white dark:bg-slate-900 p-4 border institutional-border rounded-xl shadow-sm min-w-[160px]">
+<p class="text-[10px] text-slate-neutral font-bold uppercase mb-1">Model IC</p>
+<div class="flex items-end justify-between">
+<span class="mono-nums text-2xl font-bold">0.084</span>
+<span class="text-emerald-500 text-xs font-bold flex items-center">+0.002<span class="material-symbols-outlined text-xs">arrow_drop_up</span></span>
+</div>
+</div>
+</div>
+</div>
+<!-- Tabs -->
+<div class="flex border-b institutional-border mb-6">
+<button class="px-6 py-3 border-b-2 border-primary text-primary text-sm font-bold">Ranked Deciles</button>
+<button class="px-6 py-3 border-b-2 border-transparent text-slate-neutral hover:text-slate-900 dark:hover:text-white text-sm font-medium">Factor Importance</button>
+<button class="px-6 py-3 border-b-2 border-transparent text-slate-neutral hover:text-slate-900 dark:hover:text-white text-sm font-medium">Model Backtest</button>
+</div>
+<!-- Table Container -->
+<div class="bg-white dark:bg-slate-900 border institutional-border rounded-xl overflow-hidden shadow-sm">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="bg-slate-50 dark:bg-slate-800/50 border-b institutional-border">
+<th class="px-6 py-4 text-[10px] font-bold text-slate-neutral uppercase tracking-wider">Rank</th>
+<th class="px-6 py-4 text-[10px] font-bold text-slate-neutral uppercase tracking-wider">Asset</th>
+<th class="px-6 py-4 text-[10px] font-bold text-slate-neutral uppercase tracking-wider">Alpha Score</th>
+<th class="px-6 py-4 text-[10px] font-bold text-slate-neutral uppercase tracking-wider">Volatility (30d)</th>
+<th class="px-6 py-4 text-[10px] font-bold text-slate-neutral uppercase tracking-wider">SHAP Feature Attribution (Top 3)</th>
+<th class="px-6 py-4 text-[10px] font-bold text-slate-neutral uppercase tracking-wider">Action</th>
+</tr>
+</thead>
+<tbody class="mono-nums">
+<!-- LONG PORTFOLIO (Top 10%) -->
+<tr class="border-b institutional-border bg-neon-cyan/5 hover:bg-neon-cyan/10 transition-colors">
+<td class="px-6 py-4 font-bold text-neon-cyan">0001</td>
+<td class="px-6 py-4">
+<div class="flex flex-col">
+<span class="font-bold text-slate-900 dark:text-white font-display">NVDA.OQ</span>
+<span class="text-[10px] text-slate-neutral font-display">Nvidia Corp</span>
+</div>
+</td>
+<td class="px-6 py-4 font-bold">+2.482</td>
+<td class="px-6 py-4 text-slate-neutral">24.2%</td>
+<td class="px-6 py-4">
+<div class="flex items-center gap-2">
+<div class="h-5 flex gap-0.5 items-end">
+<div class="w-3 bg-neon-cyan h-full" title="Momentum: 0.8"></div>
+<div class="w-3 bg-neon-cyan/60 h-3/4" title="Growth: 0.6"></div>
+<div class="w-3 bg-neon-cyan/30 h-1/2" title="Sentiment: 0.4"></div>
+</div>
+<span class="text-[10px] text-slate-neutral font-display italic">Mom, Grwth, Sent</span>
+</div>
+</td>
+<td class="px-6 py-4">
+<span class="px-2 py-1 bg-neon-cyan text-slate-900 text-[10px] font-bold rounded">TOP LONG</span>
+</td>
+</tr>
+<tr class="border-b institutional-border bg-neon-cyan/5 hover:bg-neon-cyan/10 transition-colors">
+<td class="px-6 py-4 font-bold text-neon-cyan">0002</td>
+<td class="px-6 py-4">
+<div class="flex flex-col">
+<span class="font-bold text-slate-900 dark:text-white font-display">ASML.AS</span>
+<span class="text-[10px] text-slate-neutral font-display">ASML Holding</span>
+</div>
+</td>
+<td class="px-6 py-4 font-bold">+2.155</td>
+<td class="px-6 py-4 text-slate-neutral">18.5%</td>
+<td class="px-6 py-4">
+<div class="flex items-center gap-2">
+<div class="h-5 flex gap-0.5 items-end">
+<div class="w-3 bg-neon-cyan h-4/5"></div>
+<div class="w-3 bg-neon-cyan/60 h-2/3"></div>
+<div class="w-3 bg-neon-cyan/30 h-1/3"></div>
+</div>
+<span class="text-[10px] text-slate-neutral font-display italic">Quality, Vol, Mom</span>
+</div>
+</td>
+<td class="px-6 py-4">
+<span class="px-2 py-1 bg-neon-cyan text-slate-900 text-[10px] font-bold rounded">TOP LONG</span>
+</td>
+</tr>
+<!-- NEUTRAL / MID -->
+<tr class="border-b institutional-border hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors">
+<td class="px-6 py-4 text-slate-neutral">1225</td>
+<td class="px-6 py-4">
+<div class="flex flex-col">
+<span class="font-bold text-slate-900 dark:text-white font-display">JNJ.N</span>
+<span class="text-[10px] text-slate-neutral font-display">Johnson &amp; Johnson</span>
+</div>
+</td>
+<td class="px-6 py-4">+0.012</td>
+<td class="px-6 py-4 text-slate-neutral">12.1%</td>
+<td class="px-6 py-4">
+<div class="flex items-center gap-2">
+<div class="h-5 flex gap-0.5 items-end">
+<div class="w-3 bg-slate-400 h-1/4"></div>
+<div class="w-3 bg-slate-400/60 h-1/5"></div>
+<div class="w-3 bg-slate-400/30 h-[10%]"></div>
+</div>
+<span class="text-[10px] text-slate-neutral font-display italic">Low Vol, Yield</span>
+</div>
+</td>
+<td class="px-6 py-4">
+<span class="px-2 py-1 border border-slate-200 dark:border-slate-700 text-slate-neutral text-[10px] font-bold rounded">NEUTRAL</span>
+</td>
+</tr>
+<!-- SHORT PORTFOLIO (Bottom 10%) -->
+<tr class="border-b institutional-border bg-deep-magenta/5 hover:bg-deep-magenta/10 transition-colors">
+<td class="px-6 py-4 font-bold text-deep-magenta">2449</td>
+<td class="px-6 py-4">
+<div class="flex flex-col">
+<span class="font-bold text-slate-900 dark:text-white font-display">WBA.OQ</span>
+<span class="text-[10px] text-slate-neutral font-display">Walgreens Boots</span>
+</div>
+</td>
+<td class="px-6 py-4 font-bold text-deep-magenta">-1.944</td>
+<td class="px-6 py-4 text-slate-neutral">31.2%</td>
+<td class="px-6 py-4">
+<div class="flex items-center gap-2">
+<div class="h-5 flex gap-0.5 items-end">
+<div class="w-3 bg-deep-magenta h-full"></div>
+<div class="w-3 bg-deep-magenta/60 h-4/5"></div>
+<div class="w-3 bg-deep-magenta/30 h-1/2"></div>
+</div>
+<span class="text-[10px] text-slate-neutral font-display italic">Leverage, Rev, Val</span>
+</div>
+</td>
+<td class="px-6 py-4">
+<span class="px-2 py-1 bg-deep-magenta text-white text-[10px] font-bold rounded">TOP SHORT</span>
+</td>
+</tr>
+<tr class="border-b institutional-border bg-deep-magenta/5 hover:bg-deep-magenta/10 transition-colors">
+<td class="px-6 py-4 font-bold text-deep-magenta">2450</td>
+<td class="px-6 py-4">
+<div class="flex flex-col">
+<span class="font-bold text-slate-900 dark:text-white font-display">INTC.OQ</span>
+<span class="text-[10px] text-slate-neutral font-display">Intel Corp</span>
+</div>
+</td>
+<td class="px-6 py-4 font-bold text-deep-magenta">-2.210</td>
+<td class="px-6 py-4 text-slate-neutral">28.4%</td>
+<td class="px-6 py-4">
+<div class="flex items-center gap-2">
+<div class="h-5 flex gap-0.5 items-end">
+<div class="w-3 bg-deep-magenta h-full"></div>
+<div class="w-3 bg-deep-magenta/60 h-2/3"></div>
+<div class="w-3 bg-deep-magenta/30 h-1/3"></div>
+</div>
+<span class="text-[10px] text-slate-neutral font-display italic">Earnings, Tech, Vol</span>
+</div>
+</td>
+<td class="px-6 py-4">
+<span class="px-2 py-1 bg-deep-magenta text-white text-[10px] font-bold rounded">TOP SHORT</span>
+</td>
+</tr>
+</tbody>
+</table>
+<!-- Pagination / Footer -->
+<div class="px-6 py-4 bg-slate-50 dark:bg-slate-800/50 flex items-center justify-between border-t institutional-border">
+<span class="text-xs text-slate-neutral font-medium">Showing 1 to 5 of 2,450 entries</span>
+<div class="flex gap-2">
+<button class="px-3 py-1 border institutional-border rounded text-xs hover:bg-white dark:hover:bg-slate-700">Previous</button>
+<button class="px-3 py-1 bg-white dark:bg-slate-700 border institutional-border rounded text-xs font-bold">1</button>
+<button class="px-3 py-1 border institutional-border rounded text-xs hover:bg-white dark:hover:bg-slate-700">2</button>
+<button class="px-3 py-1 border institutional-border rounded text-xs hover:bg-white dark:hover:bg-slate-700">3</button>
+<span class="px-2">...</span>
+<button class="px-3 py-1 border institutional-border rounded text-xs hover:bg-white dark:hover:bg-slate-700">Next</button>
+</div>
+</div>
+</div>
+<!-- Bottom Insights Grid -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-8">
+<div class="bg-white dark:bg-slate-900 border institutional-border p-6 rounded-xl">
+<h3 class="text-xs font-bold text-slate-neutral uppercase tracking-widest mb-4">Top Drivers (Long)</h3>
+<ul class="space-y-3">
+<li class="flex items-center justify-between text-sm">
+<span class="flex items-center gap-2"><span class="w-2 h-2 rounded-full bg-neon-cyan"></span> 12M Price Momentum</span>
+<span class="mono-nums font-bold text-emerald-500">24.2%</span>
+</li>
+<li class="flex items-center justify-between text-sm">
+<span class="flex items-center gap-2"><span class="w-2 h-2 rounded-full bg-neon-cyan/60"></span> EPS Growth Forecast</span>
+<span class="mono-nums font-bold text-emerald-500">18.5%</span>
+</li>
+<li class="flex items-center justify-between text-sm">
+<span class="flex items-center gap-2"><span class="w-2 h-2 rounded-full bg-neon-cyan/30"></span> LLM News Sentiment</span>
+<span class="mono-nums font-bold text-emerald-500">12.1%</span>
+</li>
+</ul>
+</div>
+<div class="bg-white dark:bg-slate-900 border institutional-border p-6 rounded-xl">
+<h3 class="text-xs font-bold text-slate-neutral uppercase tracking-widest mb-4">Top Drivers (Short)</h3>
+<ul class="space-y-3">
+<li class="flex items-center justify-between text-sm">
+<span class="flex items-center gap-2"><span class="w-2 h-2 rounded-full bg-deep-magenta"></span> Debt to Equity</span>
+<span class="mono-nums font-bold text-rose-500">31.2%</span>
+</li>
+<li class="flex items-center justify-between text-sm">
+<span class="flex items-center gap-2"><span class="w-2 h-2 rounded-full bg-deep-magenta/60"></span> 1M Price Reversal</span>
+<span class="mono-nums font-bold text-rose-500">22.8%</span>
+</li>
+<li class="flex items-center justify-between text-sm">
+<span class="flex items-center gap-2"><span class="w-2 h-2 rounded-full bg-deep-magenta/30"></span> Analyst Downgrades</span>
+<span class="mono-nums font-bold text-rose-500">15.4%</span>
+</li>
+</ul>
+</div>
+<div class="bg-slate-900 text-white p-6 rounded-xl relative overflow-hidden group">
+<div class="relative z-10">
+<h3 class="text-xs font-bold text-slate-400 uppercase tracking-widest mb-4">Agent Insights</h3>
+<p class="text-sm font-display leading-relaxed">
+                            "Model v4.2 shows a significant rotation towards <span class="text-neon-cyan font-bold underline">Quality Tech</span> as macro volatility spikes. Recommend hedging short exposure with 10Y Treasuries."
+                        </p>
+<button class="mt-4 text-xs font-bold text-primary flex items-center gap-1 hover:underline">
+                            Ask Alpha Agent <span class="material-symbols-outlined text-sm">arrow_forward</span>
+</button>
+</div>
+<!-- Abstract Background Pattern -->
+<div class="absolute top-0 right-0 w-32 h-32 bg-primary/20 rounded-full blur-3xl -mr-16 -mt-16"></div>
+<div class="absolute bottom-0 left-0 w-24 h-24 bg-neon-cyan/10 rounded-full blur-2xl -ml-12 -mb-12"></div>
+</div>
+</div>
+</div>
+</main>
+</div>
+</body></html>

@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Fin-OSS Agent - Dark Mode</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&amp;family=JetBrains+Mono:wght@400;500;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              colors: {
+                "primary": "#00f6ff",
+                "bullish": "#00f6ff",
+                "bearish": "#ff00ff",
+                "background-light": "#f5f8f8",
+                "background-dark": "#0b1212",
+                "surface-dark": "#162222",
+                "border-dark": "#27393a",
+              },
+              fontFamily: {
+                "display": ["Inter", "sans-serif"],
+                "mono": ["JetBrains Mono", "monospace"]
+              },
+              borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+            },
+          },
+        }
+    </script>
+<style>
+        body { font-family: 'Inter', sans-serif; }
+        .mono { font-family: 'JetBrains Mono', monospace; }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 antialiased">
+<div class="relative flex h-screen w-full flex-col overflow-hidden">
+<!-- Top Navigation -->
+<header class="flex h-16 items-center justify-between border-b border-border-dark px-6 bg-surface-dark/50 backdrop-blur-md shrink-0">
+<div class="flex items-center gap-8">
+<div class="flex items-center gap-3 text-primary">
+<div class="size-8 flex items-center justify-center bg-primary/10 rounded-lg">
+<span class="material-symbols-outlined text-primary">terminal</span>
+</div>
+<h2 class="text-slate-100 text-lg font-extrabold leading-tight tracking-tight uppercase italic">Fin-OSS <span class="text-primary/70 font-light">Agent</span></h2>
+</div>
+<nav class="hidden md:flex items-center gap-6">
+<a class="text-slate-100 text-sm font-semibold border-b-2 border-primary pb-5 mt-5" href="#">Intelligence</a>
+<a class="text-slate-400 hover:text-white text-sm font-medium transition-colors" href="#">Alpha Engine</a>
+<a class="text-slate-400 hover:text-white text-sm font-medium transition-colors" href="#">Risk Lab</a>
+<a class="text-slate-400 hover:text-white text-sm font-medium transition-colors" href="#">Execution</a>
+</nav>
+</div>
+<div class="flex items-center gap-4">
+<div class="relative hidden sm:block">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-sm">search</span>
+<input class="w-64 bg-background-dark border border-border-dark rounded-lg py-1.5 pl-10 pr-4 text-sm focus:ring-1 focus:ring-primary focus:border-primary outline-none text-slate-100" placeholder="Search signals, tickers, logs..." type="text"/>
+</div>
+<button class="p-2 text-slate-400 hover:text-white transition-colors relative">
+<span class="material-symbols-outlined">notifications</span>
+<span class="absolute top-2 right-2 size-2 bg-primary rounded-full"></span>
+</button>
+<div class="h-8 w-8 rounded-full bg-gradient-to-br from-primary to-bearish overflow-hidden border border-border-dark" data-alt="User profile avatar abstract gradient"></div>
+</div>
+</header>
+<div class="flex flex-1 overflow-hidden">
+<!-- Sidebar -->
+<aside class="w-64 border-r border-border-dark bg-background-dark hidden lg:flex flex-col p-4 gap-6">
+<div class="space-y-1">
+<p class="px-3 text-[10px] font-bold text-slate-500 uppercase tracking-widest mb-2">Workspace</p>
+<div class="flex items-center gap-3 px-3 py-2 rounded-lg bg-primary/10 text-primary group cursor-pointer transition-all">
+<span class="material-symbols-outlined text-xl">dashboard</span>
+<p class="text-sm font-semibold">Live Briefing</p>
+</div>
+<div class="flex items-center gap-3 px-3 py-2 rounded-lg text-slate-400 hover:bg-surface-dark hover:text-white group cursor-pointer transition-all">
+<span class="material-symbols-outlined text-xl">query_stats</span>
+<p class="text-sm font-medium">HMM Regimes</p>
+</div>
+<div class="flex items-center gap-3 px-3 py-2 rounded-lg text-slate-400 hover:bg-surface-dark hover:text-white group cursor-pointer transition-all">
+<span class="material-symbols-outlined text-xl">sort</span>
+<p class="text-sm font-medium">Alpha Sorter</p>
+</div>
+<div class="flex items-center gap-3 px-3 py-2 rounded-lg text-slate-400 hover:bg-surface-dark hover:text-white group cursor-pointer transition-all">
+<span class="material-symbols-outlined text-xl">autorenew</span>
+<p class="text-sm font-medium">Rotation Strategy</p>
+</div>
+</div>
+<div class="mt-auto p-4 bg-surface-dark rounded-xl border border-border-dark">
+<div class="flex items-center gap-2 mb-2">
+<span class="size-2 bg-primary rounded-full animate-pulse"></span>
+<p class="text-[10px] font-bold text-slate-400 uppercase tracking-tighter">System Health</p>
+</div>
+<div class="space-y-2">
+<div class="flex justify-between text-[10px] mono">
+<span class="text-slate-500">Latency</span>
+<span class="text-primary">12ms</span>
+</div>
+<div class="w-full bg-background-dark h-1 rounded-full overflow-hidden">
+<div class="bg-primary h-full w-[85%]"></div>
+</div>
+</div>
+</div>
+</aside>
+<!-- Main Content Area -->
+<main class="flex-1 overflow-y-auto p-6 lg:p-10 space-y-8">
+<!-- Header Section -->
+<div class="flex flex-col md:flex-row md:items-end justify-between gap-4">
+<div class="space-y-1">
+<div class="flex items-center gap-2 text-primary text-xs font-bold tracking-widest uppercase">
+<span class="material-symbols-outlined text-sm">auto_awesome</span>
+                        AI Generated Analysis
+                    </div>
+<h1 class="text-3xl font-black text-white tracking-tight">Daily Quantitative Brief</h1>
+<p class="text-slate-400 flex items-center gap-2">
+                        Institutional Grade Terminal • <span class="mono text-xs">08:30:00 EST</span>
+</p>
+</div>
+<div class="flex gap-3">
+<button class="px-4 py-2 bg-surface-dark border border-border-dark rounded-lg text-white text-sm font-bold flex items-center gap-2 hover:bg-border-dark transition-colors">
+<span class="material-symbols-outlined text-lg">download</span>
+                        Export PDF
+                    </button>
+<button class="px-4 py-2 bg-primary text-background-dark rounded-lg text-sm font-bold flex items-center gap-2 hover:brightness-110 transition-all">
+<span class="material-symbols-outlined text-lg">bolt</span>
+                        Execute Trades
+                    </button>
+</div>
+</div>
+<!-- Dashboard Stats Grid -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+<div class="bg-surface-dark border border-border-dark p-6 rounded-xl hover:border-primary/50 transition-colors">
+<p class="text-slate-400 text-xs font-bold uppercase tracking-wider mb-2">Current Regime (HMM)</p>
+<div class="flex items-baseline justify-between">
+<h3 class="text-2xl font-black text-white italic tracking-tighter">High Volatility</h3>
+<span class="mono text-primary text-sm font-bold">+15.2% σ</span>
+</div>
+<div class="mt-4 h-1 w-full bg-background-dark rounded-full overflow-hidden">
+<div class="bg-primary h-full w-3/4"></div>
+</div>
+</div>
+<div class="bg-surface-dark border border-border-dark p-6 rounded-xl hover:border-primary/50 transition-colors">
+<p class="text-slate-400 text-xs font-bold uppercase tracking-wider mb-2">Alpha Signal Strength</p>
+<div class="flex items-baseline justify-between">
+<h3 class="text-2xl font-black text-white mono">0.842</h3>
+<span class="mono text-bearish text-sm font-bold">-2.1%</span>
+</div>
+<div class="mt-4 flex gap-1">
+<div class="h-1 flex-1 bg-primary"></div>
+<div class="h-1 flex-1 bg-primary"></div>
+<div class="h-1 flex-1 bg-primary"></div>
+<div class="h-1 flex-1 bg-primary/20"></div>
+<div class="h-1 flex-1 bg-primary/20"></div>
+</div>
+</div>
+<div class="bg-surface-dark border border-border-dark p-6 rounded-xl hover:border-primary/50 transition-colors">
+<p class="text-slate-400 text-xs font-bold uppercase tracking-wider mb-2">Rotation Index</p>
+<div class="flex items-baseline justify-between">
+<h3 class="text-2xl font-black text-white">Aggressive</h3>
+<span class="mono text-primary text-sm font-bold">12.5% p/d</span>
+</div>
+<div class="mt-4 h-1 w-full bg-background-dark rounded-full overflow-hidden">
+<div class="bg-primary h-full w-1/3"></div>
+</div>
+</div>
+</div>
+<!-- AI Insight Card -->
+<div class="bg-surface-dark/40 border-l-4 border-primary p-8 rounded-xl relative overflow-hidden">
+<div class="absolute top-0 right-0 p-4 opacity-10">
+<span class="material-symbols-outlined text-9xl">forum</span>
+</div>
+<div class="relative z-10">
+<h2 class="text-xl font-bold text-white mb-6 flex items-center gap-3">
+<span class="material-symbols-outlined text-primary">psychology</span>
+                        Agent Synthesis
+                    </h2>
+<div class="space-y-6 text-slate-300 leading-relaxed max-w-4xl">
+<p class="text-lg italic font-light">
+                            "Good morning. The <span class="text-primary font-mono font-bold">Hidden Markov Model (HMM)</span> detects a transition into a <span class="text-primary font-bold">High Volatility regime</span>. Cross-asset correlations are tightening, suggesting a macro-driven de-risking event. 
+                        </p>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-8 mt-4">
+<div class="space-y-3">
+<h4 class="text-xs font-bold text-slate-500 uppercase tracking-widest">Alpha Rankings</h4>
+<ul class="space-y-2 mono text-sm">
+<li class="flex justify-between border-b border-border-dark pb-2">
+<span class="text-primary font-bold">#1 TECH.MOM</span>
+<span class="text-slate-100">0.92 Score</span>
+</li>
+<li class="flex justify-between border-b border-border-dark pb-2">
+<span class="text-primary font-bold">#2 ENRG.VAL</span>
+<span class="text-slate-100">0.88 Score</span>
+</li>
+<li class="flex justify-between border-b border-border-dark pb-2">
+<span class="text-bearish font-bold">#12 CONS.STP</span>
+<span class="text-slate-400">0.12 Score</span>
+</li>
+</ul>
+</div>
+<div class="space-y-3">
+<h4 class="text-xs font-bold text-slate-500 uppercase tracking-widest">Portfolio Rotation</h4>
+<p class="text-sm">Agent suggests a <span class="text-primary">12.5% rotation</span> from defensives into energy. Momentum signals in Tech remain robust despite volatility spikes. Risk parity weightings should be adjusted to <span class="mono">0.65x</span> leverage.</p>
+<div class="p-3 bg-background-dark rounded border border-border-dark mono text-[11px] text-primary/80">
+                                    EXEC: rebalance_portfolio(target="aggressive_v4", hedge=True)
+                                </div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Detailed Logs / Feed -->
+<div class="grid grid-cols-1 xl:grid-cols-2 gap-8">
+<section class="space-y-4">
+<h3 class="text-sm font-bold text-slate-400 uppercase tracking-widest flex items-center justify-between px-2">
+                        Regime Heatmap
+                        <span class="material-symbols-outlined text-xs">fullscreen</span>
+</h3>
+<div class="h-64 bg-surface-dark border border-border-dark rounded-xl relative flex items-center justify-center group overflow-hidden" data-alt="Abstract colorful heatmap visualization of market regimes">
+<div class="absolute inset-0 bg-gradient-to-tr from-primary/5 via-transparent to-bearish/5"></div>
+<div class="mono text-[10px] text-slate-500 grid grid-cols-12 grid-rows-6 w-full h-full p-2 gap-1 opacity-40">
+<!-- Simulated Heatmap Grid -->
+<div class="bg-primary/40 rounded-sm"></div><div class="bg-primary/20 rounded-sm"></div><div class="bg-primary/10 rounded-sm"></div><div class="bg-background-dark rounded-sm"></div><div class="bg-bearish/10 rounded-sm"></div><div class="bg-bearish/30 rounded-sm"></div><div class="bg-bearish/50 rounded-sm"></div><div class="bg-bearish/80 rounded-sm"></div><div class="bg-bearish/90 rounded-sm"></div><div class="bg-bearish/100 rounded-sm"></div><div class="bg-bearish/100 rounded-sm"></div><div class="bg-bearish/100 rounded-sm"></div>
+<div class="bg-primary/60 rounded-sm"></div><div class="bg-primary/40 rounded-sm"></div><div class="bg-primary/20 rounded-sm"></div><div class="bg-primary/10 rounded-sm"></div><div class="bg-background-dark rounded-sm"></div><div class="bg-bearish/10 rounded-sm"></div><div class="bg-bearish/30 rounded-sm"></div><div class="bg-bearish/50 rounded-sm"></div><div class="bg-bearish/80 rounded-sm"></div><div class="bg-bearish/90 rounded-sm"></div><div class="bg-bearish/100 rounded-sm"></div><div class="bg-bearish/100 rounded-sm"></div>
+<div class="bg-primary/80 rounded-sm"></div><div class="bg-primary/60 rounded-sm"></div><div class="bg-primary/40 rounded-sm"></div><div class="bg-primary/20 rounded-sm"></div><div class="bg-primary/10 rounded-sm"></div><div class="bg-background-dark rounded-sm"></div><div class="bg-bearish/10 rounded-sm"></div><div class="bg-bearish/30 rounded-sm"></div><div class="bg-bearish/50 rounded-sm"></div><div class="bg-bearish/80 rounded-sm"></div><div class="bg-bearish/90 rounded-sm"></div><div class="bg-bearish/100 rounded-sm"></div>
+<div class="bg-primary/100 rounded-sm"></div><div class="bg-primary/80 rounded-sm"></div><div class="bg-primary/60 rounded-sm"></div><div class="bg-primary/40 rounded-sm"></div><div class="bg-primary/20 rounded-sm"></div><div class="bg-primary/10 rounded-sm"></div><div class="bg-background-dark rounded-sm"></div><div class="bg-bearish/10 rounded-sm"></div><div class="bg-bearish/30 rounded-sm"></div><div class="bg-bearish/50 rounded-sm"></div><div class="bg-bearish/80 rounded-sm"></div><div class="bg-bearish/90 rounded-sm"></div>
+<div class="bg-primary/100 rounded-sm"></div><div class="bg-primary/100 rounded-sm"></div><div class="bg-primary/80 rounded-sm"></div><div class="bg-primary/60 rounded-sm"></div><div class="bg-primary/40 rounded-sm"></div><div class="bg-primary/20 rounded-sm"></div><div class="bg-primary/10 rounded-sm"></div><div class="bg-background-dark rounded-sm"></div><div class="bg-bearish/10 rounded-sm"></div><div class="bg-bearish/30 rounded-sm"></div><div class="bg-bearish/50 rounded-sm"></div><div class="bg-bearish/80 rounded-sm"></div>
+</div>
+<div class="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity bg-background-dark/80">
+<button class="px-4 py-2 bg-primary text-background-dark text-xs font-bold rounded">Explore Multi-Variate Analysis</button>
+</div>
+</div>
+</section>
+<section class="space-y-4">
+<h3 class="text-sm font-bold text-slate-400 uppercase tracking-widest flex items-center justify-between px-2">
+                        Tool Worker Stream
+                        <span class="material-symbols-outlined text-xs">terminal</span>
+</h3>
+<div class="bg-background-dark border border-border-dark rounded-xl h-64 overflow-hidden flex flex-col">
+<div class="flex-1 overflow-y-auto p-4 space-y-3 mono text-[11px]">
+<div class="flex gap-3 text-slate-500">
+<span>[08:29:45]</span>
+<span class="text-primary">INFO</span>
+<span>Worker initialized. Sector correlation matrix computed.</span>
+</div>
+<div class="flex gap-3 text-slate-500">
+<span>[08:29:50]</span>
+<span class="text-primary">INFO</span>
+<span>Analyzing SPX Put/Call skew...</span>
+</div>
+<div class="flex gap-3 text-slate-500">
+<span>[08:29:52]</span>
+<span class="text-bearish">WARN</span>
+<span>VIX front-month futures backwardation detected.</span>
+</div>
+<div class="flex gap-3 text-slate-500">
+<span>[08:30:00]</span>
+<span class="text-primary font-bold">SUCCESS</span>
+<span class="text-slate-100">Daily briefing generated for User: 0x8922</span>
+</div>
+<div class="animate-pulse flex gap-3 text-primary">
+<span>[08:30:05]</span>
+<span>AWAITING</span>
+<span>User input required for trade execution...</span>
+</div>
+</div>
+<div class="p-3 border-t border-border-dark bg-surface-dark flex gap-2">
+<input class="flex-1 bg-background-dark border-none focus:ring-1 focus:ring-primary rounded px-3 text-xs mono text-slate-100" placeholder="Command Agent..." type="text"/>
+<button class="size-8 bg-primary text-background-dark flex items-center justify-center rounded">
+<span class="material-symbols-outlined text-sm">send</span>
+</button>
+</div>
+</div>
+</section>
+</div>
+</main>
+<!-- Right Side Panel: Agent Chat -->
+<aside class="w-80 border-l border-border-dark bg-surface-dark hidden 2xl:flex flex-col">
+<div class="p-6 border-b border-border-dark">
+<h3 class="text-white font-bold flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">smart_toy</span>
+                    Tool Worker Agent
+                </h3>
+<p class="text-[10px] text-slate-500 uppercase tracking-widest mt-1">Direct Interaction Interface</p>
+</div>
+<div class="flex-1 overflow-y-auto p-4 space-y-4">
+<div class="bg-background-dark/50 p-4 rounded-lg border border-border-dark">
+<p class="text-xs text-slate-400 mb-2 font-bold uppercase tracking-tighter">Query</p>
+<p class="text-sm text-slate-100 italic">"Explain the variance swap signal in the Energy sector."</p>
+</div>
+<div class="p-3">
+<p class="text-xs text-primary mb-3 font-mono font-bold">Agent Response:</p>
+<p class="text-xs text-slate-300 leading-relaxed">
+                        The current signal is derived from the 30-day realized vs. implied variance gap. In the Energy sector, we are seeing a <span class="text-primary">92nd percentile</span> spike in the risk premium. This suggests that option sellers are pricing in extreme tail risk, creating a value opportunity for long-vol exposure or hedged equity entry.
+                    </p>
+</div>
+<div class="bg-background-dark/30 p-4 rounded-xl space-y-3">
+<p class="text-[10px] text-slate-500 font-bold uppercase">Available Tools</p>
+<div class="grid grid-cols-2 gap-2">
+<button class="bg-surface-dark border border-border-dark py-2 px-1 rounded text-[10px] text-slate-400 hover:text-white transition-colors">RiskParity(v1)</button>
+<button class="bg-surface-dark border border-border-dark py-2 px-1 rounded text-[10px] text-slate-400 hover:text-white transition-colors">AlphaScanner</button>
+<button class="bg-surface-dark border border-border-dark py-2 px-1 rounded text-[10px] text-slate-400 hover:text-white transition-colors">VolSurface</button>
+<button class="bg-surface-dark border border-border-dark py-2 px-1 rounded text-[10px] text-slate-400 hover:text-white transition-colors">Backtester</button>
+</div>
+</div>
+</div>
+<div class="p-4 bg-background-dark">
+<div class="relative">
+<textarea class="w-full bg-surface-dark border border-border-dark rounded-lg p-3 text-xs text-slate-100 focus:ring-1 focus:ring-primary outline-none resize-none" placeholder="Type a message or command..." rows="3"></textarea>
+<button class="absolute bottom-3 right-3 text-primary">
+<span class="material-symbols-outlined">send</span>
+</button>
+</div>
+</div>
+</aside>
+</div>
+</div>
+</body></html>
