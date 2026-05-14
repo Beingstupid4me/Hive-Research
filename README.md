@@ -1,37 +1,71 @@
 # Hive
 
-Hive is a two-service quantitative research and execution platform:
+Hive is a contract-first quantitative research and simulated execution platform with two deployable services:
 
-- `frontend/`: Next.js terminal + marketing experience
-- `AI-backend/`: FastAPI meta-quant API (regime, alpha, risk, execution, optimizer, agent)
+- `frontend/`: Next.js 16 terminal + marketing UI
+- `AI-backend/`: FastAPI meta-quant API (macro, alpha, risk, execution, optimizer, agent)
 
-The current implementation is intentionally environment-driven and contract-first. Frontend surfaces read backend payloads through a local proxy (`/api/hive/*`) so backend host changes do not require code edits.
+The platform is environment-driven and fallback-safe:
 
-## 1. System Overview
+- HTTP traffic from frontend goes through a local proxy (`/api/hive/*`)
+- Real-time channels use WebSockets directly to backend (`/api/system/ping`, `/api/agent/stream/ws`)
+- UI continues rendering from typed fallback payloads when backend is temporarily unavailable
 
-### Architecture
+## 1. Current System Capabilities
+
+### 1.1 Intelligence Layer (Quant Core)
+
+- Macro regime desk with state probabilities, transition matrix, latent factors, and transition log
+- Alpha desk with cross-sectional ranking, decile visibility, feature importance, and execution log
+- Risk desk with exposure, diversification, cluster allocations, and HRP dendrogram visualization
+- Backtest desk with equity curve, trade log, and strategy diagnostics
+- Optimizer desk with constrained solve, frontier, optimal point, and rebalance deltas
+
+### 1.2 Execution and Friction Engine
+
+- Local simulated ledger:
+  - `cash`
+  - `holdings`
+  - `history`
+- Transaction cost model at `5 bps` per trade
+- Volume-aware market impact model:
+  - Participation = order notional / ADV notional
+  - Slippage penalty scales with participation
+- Capital scalability analysis:
+  - UI slider from `$10,000` to `$100,000,000`
+  - Projected return and Sharpe degrade as friction rises
+
+### 1.3 Real-Time and Transparency
+
+- Live system latency indicator in terminal header via WebSocket ping/pong
+- Token-by-token Fin-OSS agent streaming via WebSocket (ChatGPT-style progressive rendering)
+- Dynamic SHAP-style attribution modal for selected alpha tickers
+- Rolling 30-day Rank IC monitoring with model decay warning when threshold is breached
+
+## 2. Architecture
 
 ```text
 Browser
-  -> Next.js Frontend (frontend, default :3000)
-    -> Next Proxy Route (/api/hive/*)
-      -> FastAPI Backend (AI-backend, default :8000)
-        -> Services / Providers / Repositories
-          -> Local model artifacts (BTP/models_p3_metaquant)
-          -> Local market history (BTP/sp500)
-          -> Optional live APIs (Yahoo Finance + CoinGecko)
+  -> Next.js Frontend (default :3000)
+      -> HTTP Proxy Route (/api/hive/*)
+          -> FastAPI Backend (/api/*, default :8000)
+      -> Direct WebSocket Channels
+          -> ws://<backend>/api/system/ping
+          -> ws://<backend>/api/agent/stream/ws
+
+FastAPI Backend
+  -> Services (macro, alpha, risk, execution, optimizer, agent, metrics)
+  -> Providers (historical/live data with fallback)
+  -> Repositories (model artifacts + price history)
+  -> In-memory app state (ledger, optimizer jobs, worker streams)
+
+Data Dependencies
+  -> BTP/models_p3_metaquant (artifacts, registries, diagnostics)
+  -> BTP/sp500 (historical OHLCV CSV universe)
+  -> BTP/extra_data (ticker metadata)
 ```
 
-### Key Design Principles
-
-- Configurable by env vars, not hardcoded URLs
-- Frontend and backend connected by explicit response contracts
-- Fallback-safe rendering (frontend continues working if backend is temporarily unavailable)
-- Dual backend data mode:
-  - `HISTORICAL_DATA=true`: deterministic local data
-  - `HISTORICAL_DATA=false`: live data with historical fallback
-
-## 2. Repository Layout
+## 3. Repository Layout
 
 ```text
 Hive/
@@ -62,222 +96,199 @@ Hive/
     extra_data/
 ```
 
-## 3. Backend (AI-backend) Deep Dive
+## 4. Backend Deep Dive (AI-backend)
 
-## 3.1 Runtime Entry
+### 4.1 Runtime
 
-- App entrypoint: `AI-backend/app/main.py`
-- FastAPI app initialization includes:
-  - CORS middleware (from `ALLOW_ORIGINS`)
-  - API router mounted at `/api`
-  - root metadata endpoint at `/`
+- Entrypoint: `AI-backend/app/main.py`
+- API root prefix: `/api`
+- CORS configured from `ALLOW_ORIGINS`
 
-## 3.2 Core Configuration
+### 4.2 Key Services
 
-- Settings model: `AI-backend/app/core/config.py`
-- Important behavior:
-  - Loads from `.env`
-  - Resolves relative dataset/artifact paths against repo root
-  - Exposes parsed CORS origins list
+- `system_service.py`: shell status, clock, latency baseline, alerts, user badge
+- `macro_service.py`: regime state machine, history, transitions, market context
+- `alpha_service.py`: rankings, rolling IC, SHAP detail payloads, diagnostics/logs
+- `risk_service.py`: exposure/diversification, clusters, dendrogram, active orders
+- `execution_service.py`: order book/candles/orders/positions, ledger updates, friction/capacity
+- `ledger_service.py`: local execution ledger state and fill accounting
+- `agent_service.py`: briefing, worker stream, query reasoning, token stream helper
+- `optimizer_service.py`: portfolio solve + in-memory job lifecycle
+- `metrics_service.py`: merged snapshot payload for terminal agent view
 
-### Important backend env vars
+### 4.3 API Surface
 
-- `APP_ENV`: environment label (default `dev`)
-- `HOST`: bind host (default `0.0.0.0`)
-- `PORT`: bind port (default `8000`)
-- `HISTORICAL_DATA`: `true`/`false`
-- `SP500_DATA_DIR`: optional path to price CSV universe
-- `MODEL_DATA_DIR`: optional path to model artifact folder
-- `TICKER_MAPPING_FILE`: optional ticker metadata path
-- `ALLOW_ORIGINS`: comma-separated frontend origins
-- `MAX_UNIVERSE_SIZE`: alpha/risk universe cap
-- `DEFAULT_USER_INITIALS`: shell user badge value
-- `BASE_NOTIONAL_USD`: portfolio/risk notional baseline
+#### Health
 
-## 3.3 API Surface
+- `GET /api/health`
 
-Router registration: `AI-backend/app/api/router.py`
+#### System
 
-### Route groups
+- `GET /api/system/status`
+- `WS /api/system/ping`
 
-- Health:
-  - `GET /api/health`
-- System:
-  - `GET /api/system/status`
-- Landing:
-  - `GET /api/landing/overview`
-- Marketing/public:
-  - `GET /api/about`
-  - `GET /api/methodology`
-  - `GET /api/contact`
-  - `POST /api/contact`
-  - `GET /api/execute`
-- Macro:
-  - `GET /api/macro/regime`
-  - `GET /api/macro/history`
-  - `GET /api/macro/latent-factors`
-  - `GET /api/macro/cross-asset`
-  - `GET /api/macro/transitions`
-  - `GET /api/macro/all`
-- Alpha:
-  - `GET /api/alpha/summary`
-  - `GET /api/alpha/rankings`
-  - `GET /api/alpha/features`
-  - `GET /api/alpha/logs`
-  - `GET /api/alpha/all`
-- Risk:
-  - `GET /api/risk/summary`
-  - `GET /api/risk/clusters`
-  - `GET /api/risk/orders`
-  - `GET /api/risk/all`
-- Agent:
-  - `GET /api/agent/brief`
-  - `GET /api/agent/stream`
-  - `POST /api/agent/query`
-- Backtest:
-  - `GET /api/backtest/{run_id}`
-- Execution:
-  - `GET /api/execution/book`
-  - `GET /api/execution/candles`
-  - `GET /api/execution/positions`
-  - `GET /api/execution/orders`
-  - `POST /api/execution/order`
-  - `GET /api/execution/all`
-- Optimizer:
-  - `POST /api/optimizer/solve`
-  - `GET /api/optimizer/current`
-  - `GET /api/optimizer/{job_id}`
-- Snapshot:
-  - `GET /api/metrics/snapshot`
+#### Landing / Public
 
-## 3.4 Service Layer
+- `GET /api/landing/overview`
+- `GET /api/about`
+- `GET /api/methodology`
+- `GET /api/contact`
+- `POST /api/contact`
+- `GET /api/execute`
 
-Services live in `AI-backend/app/services/` and aggregate into API payload contracts.
+#### Macro
 
-- `system_service.py`: shell metrics (latency, EST clock, status, unread alerts, user initials)
-- `landing_service.py`: homepage protocol/hero/market tape/onboarding blocks
-- `marketing_service.py`: about/methodology/contact/execute content + contact submit handler
-- `macro_service.py`: regime state/probabilities/history/transitions/cross-asset context
-- `alpha_service.py`: ranking table, feature importance, model confidence/decay and logs
-- `risk_service.py`: exposure/diversification/clusters/active orders
-- `backtest_service.py`: KPIs, equity curve, trade log, decomposition stats, model params
-- `execution_service.py`: L2 book, candles, positions, order log, order placement
-- `optimizer_service.py`: constrained solve, frontier, optimal point, rebalance table, job state
-- `agent_service.py`: daily brief, heatmap, tools, worker stream, query answers
-- `metrics_service.py`: deep merge snapshot of all desks/pages into one payload
+- `GET /api/macro/regime`
+- `GET /api/macro/history`
+- `GET /api/macro/latent-factors`
+- `GET /api/macro/cross-asset`
+- `GET /api/macro/transitions`
+- `GET /api/macro/all`
 
-## 3.5 Data Providers and Repositories
+#### Alpha
 
-### Providers (`AI-backend/app/providers`)
+- `GET /api/alpha/summary`
+- `GET /api/alpha/rankings`
+- `GET /api/alpha/features`
+- `GET /api/alpha/rolling-ic`
+- `GET /api/alpha/shap/{ticker}`
+- `GET /api/alpha/logs`
+- `GET /api/alpha/all`
 
-- `historical.py`: loads quotes/candles/volume from local datasets
-- `live.py`: live quote/candle/volume calls with fallback to historical provider
+#### Risk
 
-### Repositories (`AI-backend/app/repositories`)
+- `GET /api/risk/summary`
+- `GET /api/risk/clusters`
+- `GET /api/risk/dendrogram`
+- `GET /api/risk/orders`
+- `GET /api/risk/all`
 
-- `sp500.py`: ticker list, historical series, close matrix helpers
-- `artifacts.py`: model/performance/feature registries from `BTP/models_p3_metaquant`
+#### Agent
 
-## 4. Frontend (Next.js) Deep Dive
+- `GET /api/agent/brief`
+- `GET /api/agent/stream`
+- `POST /api/agent/query`
+- `WS /api/agent/stream/ws`
 
-## 4.1 Runtime and Routing
+#### Backtest
 
-- App router root: `frontend/src/app/`
-- Main page groups:
-  - Marketing/public: `/`, `/about`, `/methodology`, `/contact`, `/execute`
-  - Terminal desks: `/terminal/*`
+- `GET /api/backtest/{run_id}`
 
-## 4.2 Layout Structure
+#### Execution
 
-- Marketing shell:
-  - `frontend/src/components/layout/MarketingHeader.tsx`
-  - `frontend/src/components/layout/MarketingFooter.tsx`
-- Terminal shell:
-  - `frontend/src/components/layout/TerminalLayout.tsx`
-  - `frontend/src/components/layout/Header.tsx`
-  - `frontend/src/components/layout/Sidebar.tsx`
+- `GET /api/execution/book`
+- `GET /api/execution/candles`
+- `GET /api/execution/positions`
+- `GET /api/execution/orders`
+- `POST /api/execution/order`
+- `GET /api/execution/ledger`
+- `GET /api/execution/capacity`
+- `POST /api/execution/capacity`
+- `GET /api/execution/all`
 
-Terminal header/sidebar show live shell metrics from `/api/system/status`.
+#### Optimizer
 
-## 4.3 Frontend API Integration Layer
+- `POST /api/optimizer/solve`
+- `GET /api/optimizer/current`
+- `GET /api/optimizer/{job_id}`
 
-### Proxy route
+#### Snapshot
 
-- File: `frontend/src/app/api/hive/[...path]/route.ts`
-- Behavior:
-  - Receives frontend calls at `/api/hive/*`
-  - Forwards to `${HIVE_BACKEND_URL}/api/*`
-  - Preserves query strings and selected headers
+- `GET /api/metrics/snapshot`
 
-### API utilities
+### 4.4 WebSocket Event Contracts
 
-- `frontend/src/lib/api/http.ts`
-  - Client-side `apiGet`, `apiPost`, query builder, typed API errors
-- `frontend/src/lib/api/server.ts`
-  - Server-side `serverGet`, `serverPost` for SSR routes
-- `frontend/src/lib/api/types.ts`
-  - Typed response/request contracts
-- `frontend/src/lib/api/fallbacks.ts`
-  - Safe fallback payloads for offline/degraded mode
-- `frontend/src/lib/hooks/useApiResource.ts`
-  - Client polling hook with refresh interval + error + fallback handling
+#### `/api/system/ping`
 
-## 4.4 Page-to-Endpoint Mapping
+Client -> Server:
 
-### Marketing/public pages
+```json
+{ "client_ts": 1710000000000 }
+```
 
-- `/` -> `GET /api/landing/overview`
-- `/about` -> `GET /api/about`
-- `/methodology` -> `GET /api/methodology`
-- `/contact` -> `GET /api/contact` + `POST /api/contact`
-- `/execute` -> `GET /api/execute`
+Server -> Client:
 
-### Terminal desks
+```json
+{ "type": "pong", "client_ts": 1710000000000, "server_ts": 1710000000012 }
+```
 
-- `/terminal/macro-desk` -> `GET /api/macro/all`
-- `/terminal/alpha-factory` -> `GET /api/alpha/all`
-- `/terminal/risk-desk` -> `GET /api/risk/all`
-- `/terminal/backtest` -> `GET /api/backtest/latest`
-- `/terminal/execution` -> `GET /api/execution/all` + `POST /api/execution/order`
-- `/terminal/portfolio` -> `GET /api/optimizer/current` + `POST /api/optimizer/solve`
-- `/terminal/agent` -> `GET /api/metrics/snapshot` + `POST /api/agent/query`
+#### `/api/agent/stream/ws`
 
-## 4.5 Frontend env vars
+Server emits:
 
-- `HIVE_BACKEND_URL`: backend base URL for proxy target
-- `NEXT_PUBLIC_HIVE_PROXY_PREFIX`: frontend proxy prefix (default `/api/hive`)
+- `{ "type": "start", "channel": "brief" | "query" }`
+- `{ "type": "token", "channel": "brief" | "query", "token": "..." }`
+- `{ "type": "done", "channel": "brief" | "query", "suggested_command": "..." }`
+- `{ "type": "error", "channel": "query", "message": "..." }`
 
-File template: `frontend/.env.example`
+Client query message:
 
-## 5. How Frontend and Backend Are Connected
+```json
+{ "query": "What is the current risk posture?" }
+```
 
-## 5.1 Read flow
+## 5. Frontend Deep Dive (Next.js)
 
-1. A page or component requests data from `/api/hive/<group>/<route>`
-2. Next proxy route forwards to `${HIVE_BACKEND_URL}/api/<group>/<route>`
-3. FastAPI route calls the service container and returns payload
-4. Frontend renders typed payload; on failure, uses fallback contract data
+### 5.1 App Structure
 
-## 5.2 Action flow
+- Marketing pages: `/`, `/about`, `/methodology`, `/contact`, `/execute`
+- Terminal pages: `/terminal/*`
+- Shell components:
+  - `TerminalLayout`
+  - `Header`
+  - `Sidebar`
 
-Example: order submission
+### 5.2 Data Integration
 
-1. UI collects order form values in `/terminal/execution`
-2. Client posts to `/api/hive/execution/order`
-3. Backend validates `OrderRequest`, simulates route/acceptance
-4. UI displays order feedback and refreshes execution payload
+- HTTP client layer:
+  - `apiGet`, `apiPost`, server equivalents, typed contracts, fallback payloads
+- Polling hook:
+  - `useApiResource` for periodic sync and graceful degradation
+- WebSocket hook:
+  - `useWebSocket` for latency pings and token stream rendering
 
-## 5.3 Contract alignment
+### 5.3 Frontend Page to Backend Mapping
 
-The main contract source for frontend display requirements is:
+- `/` -> `/api/landing/overview`
+- `/about` -> `/api/about`
+- `/methodology` -> `/api/methodology`
+- `/contact` -> `/api/contact` (+ POST)
+- `/execute` -> `/api/execute`
+- `/terminal/macro-desk` -> `/api/macro/all`
+- `/terminal/alpha-factory` -> `/api/alpha/all`, `/api/alpha/shap/{ticker}`
+- `/terminal/risk-desk` -> `/api/risk/all`, `/api/risk/dendrogram`
+- `/terminal/backtest` -> `/api/backtest/latest`
+- `/terminal/execution` -> `/api/execution/all`, `/api/execution/order`, `/api/execution/capacity`
+- `/terminal/portfolio` -> `/api/optimizer/current`, `/api/optimizer/solve`
+- `/terminal/agent` -> `/api/metrics/snapshot`, `/api/agent/query`, `/api/agent/stream/ws`
 
-- `frontend/metrics.md`
+## 6. Environment Configuration
 
-Backend route groups and payloads are aligned to that contract.
+### 6.1 Backend env vars (`AI-backend/.env`)
 
-## 6. Local Development
+- `APP_ENV` (default `dev`)
+- `HOST` (default `0.0.0.0`)
+- `PORT` (default `8000`)
+- `HISTORICAL_DATA` (`true`/`false`)
+- `SP500_DATA_DIR` (optional)
+- `MODEL_DATA_DIR` (optional)
+- `TICKER_MAPPING_FILE` (optional)
+- `ALLOW_ORIGINS` (comma-separated origins)
+- `MAX_UNIVERSE_SIZE`
+- `DEFAULT_USER_INITIALS`
+- `BASE_NOTIONAL_USD`
 
-## 6.1 Start backend
+### 6.2 Frontend env vars (`frontend/.env.local`)
+
+- `HIVE_BACKEND_URL` (proxy target base URL)
+- `NEXT_PUBLIC_HIVE_PROXY_PREFIX` (default `/api/hive`)
+- `NEXT_PUBLIC_HIVE_WS_BASE` (optional explicit ws/wss base, example `ws://localhost:8000`)
+
+If `NEXT_PUBLIC_HIVE_WS_BASE` is not set, frontend derives WS base from backend URL.
+
+## 7. Local Development
+
+### 7.1 Start backend
 
 ```powershell
 cd AI-backend
@@ -287,7 +298,7 @@ pip install -r requirements.txt
 uvicorn app.main:app --reload --host 0.0.0.0 --port 8000
 ```
 
-## 6.2 Start frontend
+### 7.2 Start frontend
 
 ```powershell
 cd frontend
@@ -295,16 +306,17 @@ npm install
 npm run dev
 ```
 
-## 6.3 Verify
+### 7.3 Verify
 
-- Frontend: `http://localhost:3000`
+- Frontend app: `http://localhost:3000`
 - Backend docs: `http://localhost:8000/docs`
 - Backend health: `http://localhost:8000/api/health`
-- Snapshot: `http://localhost:8000/api/metrics/snapshot`
+- System status through proxy: `http://localhost:3000/api/hive/system/status`
+- Unified snapshot: `http://localhost:8000/api/metrics/snapshot`
 
-## 7. Build and Quality Checks
+## 8. Quality Checks
 
-Frontend:
+### 8.1 Frontend
 
 ```powershell
 cd frontend
@@ -312,33 +324,73 @@ npm run lint
 npm run build
 ```
 
-Backend (manual smoke):
+### 8.2 Backend
 
-- Open `/docs`
-- Call `/api/health`
-- Call `/api/metrics/snapshot`
+```powershell
+cd AI-backend
+python -m compileall app
+python -c "from app.main import app; print(bool(app))"
+```
 
-## 8. Known Behaviors and Troubleshooting
+Optional endpoint smoke checks can be run from `/docs` or with a script using FastAPI `TestClient`.
 
-- If backend is down, frontend still renders using fallback payloads.
-- Execution chart requires valid candle OHLC values; no-data state is handled in `PriceChart`.
-- If live mode external APIs fail, backend providers automatically fall back to historical data where possible.
+## 9. Data Assets and Dependencies
 
-## 9. Historical Research Assets
+`BTP/` is the local research/artifact dependency used by backend services.
 
-`BTP/` contains research notebooks and model artifacts used by backend services.
+- `BTP/sp500`: historical ticker OHLCV CSVs
+- `BTP/models_p3_metaquant`: model metadata, diagnostics, performance, weights logs
+- `BTP/extra_data`: ticker/company mapping
 
-Important folders:
+Live mode (`HISTORICAL_DATA=false`) uses:
 
-- `BTP/sp500/`: ticker CSV histories
-- `BTP/models_p3_metaquant/`: model registry/performance/features/weights
-- `BTP/extra_data/`: ticker/company mapping files
+- Yahoo Finance via `yfinance` (quotes/candles)
+- CoinGecko public API (aggregate 24h volume)
 
-These are operational dependencies for deterministic historical-mode backend responses.
+Backend automatically falls back to historical sources when live requests fail.
 
-## 10. Notes
+## 10. State and Persistence Notes
 
-- This repository previously documented a different multi-service stack at root level. The root README now reflects the current implemented architecture (`frontend` + `AI-backend`).
-- For service-specific setup details, also see:
-  - `frontend/README.md`
-  - `AI-backend/README.md`
+- Ledger state is process-local and in-memory (resets on backend restart)
+- Optimizer jobs are in-memory (resets on backend restart)
+- Agent worker stream is in-memory and bounded
+
+For persistent production execution, move ledger and job state into durable storage.
+
+## 11. Troubleshooting
+
+### 11.1 `502` from `/api/hive/*`
+
+Usually means frontend proxy cannot reach backend.
+
+Checklist:
+
+1. Confirm backend server is running on `HIVE_BACKEND_URL`
+2. Check backend health endpoint directly
+3. Verify `.env.local` values and restart frontend dev server
+
+### 11.2 WebSocket not connecting
+
+Checklist:
+
+1. Confirm backend is reachable at ws/wss URL
+2. Set `NEXT_PUBLIC_HIVE_WS_BASE` explicitly if reverse proxying
+3. Verify CORS/network rules for backend host
+
+### 11.3 Maximum update depth exceeded (frontend)
+
+If seen after pulling updates:
+
+1. Stop dev servers
+2. Restart backend + frontend
+3. Hard refresh browser to clear stale client bundle
+
+### 11.4 Live mode instability
+
+If external APIs rate-limit or fail, keep `HISTORICAL_DATA=true` for deterministic runs.
+
+## 12. Additional Docs
+
+- `frontend/README.md`
+- `AI-backend/README.md`
+- `frontend/metrics.md` (contract reference)
